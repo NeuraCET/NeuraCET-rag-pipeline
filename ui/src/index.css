@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+:root {
+  font-family: "Iosevka Charon Mono", monospace;
+  color: #ffffff;
+  background: #000000;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background: #000000;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
