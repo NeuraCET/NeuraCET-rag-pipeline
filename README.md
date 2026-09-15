@@ -71,6 +71,15 @@ Ensure Ollama is running in the background, then start the main application usin
 
 uv run main.py
 
+### 6. Run the Kiosk UI
+
+Open a second terminal window, navigate to the frontend directory, and start the development server:
+
+```bash
+cd ui
+npm install
+npm run dev
+
 ## 📍 Catch Us Live!
 
 The system will be live during the AI Summit days of Drishti 2026. Drop by the **NeuraCET booth**, say hi to the team, and ask the bot anything about the festival!
@@ -78,3 +87,4 @@ The system will be live during the AI Summit days of Drishti 2026. Drop by the *
 ## 🤝 Contributing
 
 Built by the members of NeuraCET. If you are part of the team and want to contribute to the UI, data parsing, or search engine logic, please create a new branch and submit a pull request for review.
+```
