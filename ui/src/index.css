@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@theme {
+  --color-gold: #d5b45c;
+  --color-gold-light: #f7e7b0;
+  --color-gold-deep: #8a6a20;
+}
+
 :root {
   font-family: "Iosevka Charon Mono", monospace;
   color: #ffffff;
@@ -30,4 +36,90 @@ button,
 input,
 textarea {
   font: inherit;
+}
+
+/* Brushed gold surface: layered highlights rather than one flat yellow. */
+.gold-surface {
+  background-image: linear-gradient(
+    110deg,
+    #7d5f1c 0%,
+    #b8933f 14%,
+    #f0dda0 30%,
+    #d5b45c 44%,
+    #8a6a20 60%,
+    #e6cf8d 78%,
+    #a98430 100%
+  );
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  transition: background-position 0.8s ease;
+}
+
+.gold-surface:hover {
+  background-position: 100% 50%;
+}
+
+.gold-text {
+  background-image: linear-gradient(
+    100deg,
+    #a98430 0%,
+    #e6cf8d 22%,
+    #fff6d8 38%,
+    #d5b45c 54%,
+    #8a6a20 74%,
+    #e6cf8d 100%
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-sheen 9s ease-in-out infinite;
+}
+
+@keyframes gold-sheen {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Specular streak that sweeps across a gold surface on hover. */
+.gold-glint {
+  position: absolute;
+  top: -50%;
+  bottom: -50%;
+  width: 45%;
+  transform: translateX(-260%) skewX(-20deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.75),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.group:hover .gold-glint {
+  animation: gold-glint-sweep 0.9s ease-out;
+}
+
+@keyframes gold-glint-sweep {
+  from {
+    transform: translateX(-260%) skewX(-20deg);
+  }
+  to {
+    transform: translateX(320%) skewX(-20deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gold-text {
+    animation: none;
+  }
+  .group:hover .gold-glint {
+    animation: none;
+  }
 }
