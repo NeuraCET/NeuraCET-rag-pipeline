@@ -79,6 +79,7 @@ Open a second terminal window, navigate to the frontend directory, and start the
 cd ui
 npm install
 npm run dev
+```
 
 ## 📍 Catch Us Live!
 
@@ -87,4 +88,7 @@ The system will be live during the AI Summit days of Drishti 2026. Drop by the *
 ## 🤝 Contributing
 
 Built by the members of NeuraCET. If you are part of the team and want to contribute to the UI, data parsing, or search engine logic, please create a new branch and submit a pull request for review.
+
+```
+
 ```
