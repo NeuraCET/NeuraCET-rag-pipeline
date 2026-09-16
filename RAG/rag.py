@@ -13,8 +13,6 @@ CLEAN_DATA_PATH = ROOT / "clean_data.json"
 
 
 def load_records():
-    if not CLEAN_DATA_PATH.exists():
-        subprocess.run([sys.executable, str(ROOT / "prepare_data.py")], check=True)
     return json.loads(CLEAN_DATA_PATH.read_text(encoding="utf-8"))
 
 
