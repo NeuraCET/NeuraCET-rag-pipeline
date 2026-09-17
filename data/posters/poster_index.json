@@ -1,0 +1,38 @@
+[
+  {
+    "id": "poster-ai-summit-overview",
+    "image_name": "drishti-2026-ai-summit-overview-poster.png",
+    "description": "Drishti 2026 AI Summit overview poster showing a three-day AI speaker programme with themes in automotive, governance, healthcare, and access to AI.",
+    "search_text": "Drishti 2026 AI Summit overview poster three-day programme automotive governance healthcare access equity women in technology",
+    "festival": "Drishti",
+    "edition": 2026,
+    "kind": "image"
+  },
+  {
+    "id": "poster-ai-summit-day-1",
+    "image_name": "drishti-2026-ai-summit-day-1-poster.png",
+    "description": "Drishti 2026 AI Summit Day 1 poster featuring women in technology, AI in automotive, and cybersecurity governance sessions.",
+    "search_text": "Drishti 2026 AI Summit Day 1 poster women in technology automotive industry cyber fraud governance LLMs",
+    "festival": "Drishti",
+    "edition": 2026,
+    "kind": "image"
+  },
+  {
+    "id": "poster-ai-summit-day-2",
+    "image_name": "drishti-2026-ai-summit-day-2-poster.png",
+    "description": "Drishti 2026 AI Summit Day 2 poster highlighting AI for governance, access and equity in AI, AI-defined vehicles, and medical devices sessions.",
+    "search_text": "Drishti 2026 AI Summit Day 2 poster AI for governance access and equity in AI medical devices AI-defined vehicles",
+    "festival": "Drishti",
+    "edition": 2026,
+    "kind": "image"
+  },
+  {
+    "id": "poster-ai-summit-day-3",
+    "image_name": "drishti-2026-ai-summit-day-3-poster.png",
+    "description": "Drishti 2026 AI Summit Day 3 poster covering AI in healthcare, intelligent cockpit, LLMs in the cockpit, and the future of work panel.",
+    "search_text": "Drishti 2026 AI Summit Day 3 poster AI in healthcare intelligent cockpit LLMs in the cockpit future of jobs",
+    "festival": "Drishti",
+    "edition": 2026,
+    "kind": "image"
+  }
+]

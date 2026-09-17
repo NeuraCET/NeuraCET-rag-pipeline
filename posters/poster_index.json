@@ -1,0 +1,310 @@
+[
+  {
+    "id": "poster-8bit",
+    "image_name": "8bit.jpeg",
+    "image_path": "posters/8bit.jpeg",
+    "description": "Poster image for Drishti 2026: 8bit. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster 8bit AI Summit event festival image 8bit"
+  },
+  {
+    "id": "poster-ansys",
+    "image_name": "ansys.jpeg",
+    "image_path": "posters/ansys.jpeg",
+    "description": "Poster image for Drishti 2026: ansys. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster ansys AI Summit event festival image ansys"
+  },
+  {
+    "id": "poster-arduino",
+    "image_name": "arduino.jpeg",
+    "image_path": "posters/arduino.jpeg",
+    "description": "Poster image for Drishti 2026: arduino. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster arduino AI Summit event festival image arduino"
+  },
+  {
+    "id": "poster-beyondprogresstalk",
+    "image_name": "beyondprogresstalk.jpeg",
+    "image_path": "posters/beyondprogresstalk.jpeg",
+    "description": "Poster image for Drishti 2026: beyondprogresstalk. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster beyondprogresstalk AI Summit event festival image beyondprogresstalk"
+  },
+  {
+    "id": "poster-biennale",
+    "image_name": "biennale.jpeg",
+    "image_path": "posters/biennale.jpeg",
+    "description": "Poster image for Drishti 2026: biennale. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster biennale AI Summit event festival image biennale"
+  },
+  {
+    "id": "poster-cadclash",
+    "image_name": "cadclash.png",
+    "image_path": "posters/cadclash.png",
+    "description": "Poster image for Drishti 2026: cadclash. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster cadclash AI Summit event festival image cadclash"
+  },
+  {
+    "id": "poster-dance",
+    "image_name": "dance.jpeg",
+    "image_path": "posters/dance.jpeg",
+    "description": "Poster image for Drishti 2026: dance. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster dance AI Summit event festival image dance"
+  },
+  {
+    "id": "poster-decodingaiworkshop",
+    "image_name": "decodingaiworkshop.jpeg",
+    "image_path": "posters/decodingaiworkshop.jpeg",
+    "description": "Poster image for Drishti 2026: decodingaiworkshop. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster decodingaiworkshop AI Summit event festival image decodingaiworkshop"
+  },
+  {
+    "id": "poster-dronrace",
+    "image_name": "dronrace.jpg",
+    "image_path": "posters/dronrace.jpg",
+    "description": "Poster image for Drishti 2026: dronrace. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster dronrace AI Summit event festival image dronrace"
+  },
+  {
+    "id": "poster-eafc",
+    "image_name": "eafc.jpeg",
+    "image_path": "posters/eafc.jpeg",
+    "description": "Poster image for Drishti 2026: eafc. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster eafc AI Summit event festival image eafc"
+  },
+  {
+    "id": "poster-efootball",
+    "image_name": "efootball.jpeg",
+    "image_path": "posters/efootball.jpeg",
+    "description": "Poster image for Drishti 2026: efootball. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster efootball AI Summit event festival image efootball"
+  },
+  {
+    "id": "poster-engineworkshop",
+    "image_name": "engineworkshop.jpeg",
+    "image_path": "posters/engineworkshop.jpeg",
+    "description": "Poster image for Drishti 2026: engineworkshop. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster engineworkshop AI Summit event festival image engineworkshop"
+  },
+  {
+    "id": "poster-escaperoom",
+    "image_name": "escaperoom.jpeg",
+    "image_path": "posters/escaperoom.jpeg",
+    "description": "Poster image for Drishti 2026: escaperoom. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster escaperoom AI Summit event festival image escaperoom"
+  },
+  {
+    "id": "poster-etabs",
+    "image_name": "etabs.png",
+    "image_path": "posters/etabs.png",
+    "description": "Poster image for Drishti 2026: etabs. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster etabs AI Summit event festival image etabs"
+  },
+  {
+    "id": "poster-figmyui",
+    "image_name": "figmyui.jpeg",
+    "image_path": "posters/figmyui.jpeg",
+    "description": "Poster image for Drishti 2026: figmyui. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster figmyui AI Summit event festival image figmyui"
+  },
+  {
+    "id": "poster-industrialautomation",
+    "image_name": "industrialautomation.jpeg",
+    "image_path": "posters/industrialautomation.jpeg",
+    "description": "Poster image for Drishti 2026: industrialautomation. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster industrialautomation AI Summit event festival image industrialautomation"
+  },
+  {
+    "id": "poster-learningcirclecloud",
+    "image_name": "learningcirclecloud.jpeg",
+    "image_path": "posters/learningcirclecloud.jpeg",
+    "description": "Poster image for Drishti 2026: learningcirclecloud. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster learningcirclecloud AI Summit event festival image learningcirclecloud"
+  },
+  {
+    "id": "poster-marathon",
+    "image_name": "marathon.jpeg",
+    "image_path": "posters/marathon.jpeg",
+    "description": "Poster image for Drishti 2026: marathon. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster marathon AI Summit event festival image marathon"
+  },
+  {
+    "id": "poster-matlab",
+    "image_name": "matlab.jpeg",
+    "image_path": "posters/matlab.jpeg",
+    "description": "Poster image for Drishti 2026: matlab. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster matlab AI Summit event festival image matlab"
+  },
+  {
+    "id": "poster-modelrocketry",
+    "image_name": "modelrocketry.jpeg",
+    "image_path": "posters/modelrocketry.jpeg",
+    "description": "Poster image for Drishti 2026: modelrocketry. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster modelrocketry AI Summit event festival image modelrocketry"
+  },
+  {
+    "id": "poster-nix&nixos",
+    "image_name": "nix&nixos.jpeg",
+    "image_path": "posters/nix&nixos.jpeg",
+    "description": "Poster image for Drishti 2026: nix&nixos. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster nix&nixos AI Summit event festival image nix&nixos"
+  },
+  {
+    "id": "poster-opencv",
+    "image_name": "opencv.jpeg",
+    "image_path": "posters/opencv.jpeg",
+    "description": "Poster image for Drishti 2026: opencv. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster opencv AI Summit event festival image opencv"
+  },
+  {
+    "id": "poster-overdefined",
+    "image_name": "overdefined.jpeg",
+    "image_path": "posters/overdefined.jpeg",
+    "description": "Poster image for Drishti 2026: overdefined. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster overdefined AI Summit event festival image overdefined"
+  },
+  {
+    "id": "poster-paneldiscussionprivspace",
+    "image_name": "paneldiscussionprivspace.jpeg",
+    "image_path": "posters/paneldiscussionprivspace.jpeg",
+    "description": "Poster image for Drishti 2026: paneldiscussionprivspace. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster paneldiscussionprivspace AI Summit event festival image paneldiscussionprivspace"
+  },
+  {
+    "id": "poster-pcbdesignworkshop",
+    "image_name": "pcbdesignworkshop.jpeg",
+    "image_path": "posters/pcbdesignworkshop.jpeg",
+    "description": "Poster image for Drishti 2026: pcbdesignworkshop. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster pcbdesignworkshop AI Summit event festival image pcbdesignworkshop"
+  },
+  {
+    "id": "poster-pixelcraft",
+    "image_name": "pixelcraft.jpeg",
+    "image_path": "posters/pixelcraft.jpeg",
+    "description": "Poster image for Drishti 2026: pixelcraft. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster pixelcraft AI Summit event festival image pixelcraft"
+  },
+  {
+    "id": "poster-quantumcomputingtech",
+    "image_name": "quantumcomputingtech.jpeg",
+    "image_path": "posters/quantumcomputingtech.jpeg",
+    "description": "Poster image for Drishti 2026: quantumcomputingtech. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster quantumcomputingtech AI Summit event festival image quantumcomputingtech"
+  },
+  {
+    "id": "poster-racecardynamics",
+    "image_name": "racecardynamics.jpeg",
+    "image_path": "posters/racecardynamics.jpeg",
+    "description": "Poster image for Drishti 2026: racecardynamics. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster racecardynamics AI Summit event festival image racecardynamics"
+  },
+  {
+    "id": "poster-rcplane",
+    "image_name": "rcplane.jpeg",
+    "image_path": "posters/rcplane.jpeg",
+    "description": "Poster image for Drishti 2026: rcplane. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster rcplane AI Summit event festival image rcplane"
+  },
+  {
+    "id": "poster-revitx",
+    "image_name": "revitx.png",
+    "image_path": "posters/revitx.png",
+    "description": "Poster image for Drishti 2026: revitx. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster revitx AI Summit event festival image revitx"
+  },
+  {
+    "id": "poster-roboticarmdev",
+    "image_name": "roboticarmdev.jpeg",
+    "image_path": "posters/roboticarmdev.jpeg",
+    "description": "Poster image for Drishti 2026: roboticarmdev. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster roboticarmdev AI Summit event festival image roboticarmdev"
+  },
+  {
+    "id": "poster-robowar",
+    "image_name": "robowar.jpeg",
+    "image_path": "posters/robowar.jpeg",
+    "description": "Poster image for Drishti 2026: robowar. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster robowar AI Summit event festival image robowar"
+  },
+  {
+    "id": "poster-sensorfusion101",
+    "image_name": "sensorfusion101.jpeg",
+    "image_path": "posters/sensorfusion101.jpeg",
+    "description": "Poster image for Drishti 2026: sensorfusion101. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster sensorfusion101 AI Summit event festival image sensorfusion101"
+  },
+  {
+    "id": "poster-shephotography",
+    "image_name": "shephotography.jpeg",
+    "image_path": "posters/shephotography.jpeg",
+    "description": "Poster image for Drishti 2026: shephotography. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster shephotography AI Summit event festival image shephotography"
+  },
+  {
+    "id": "poster-shequiz",
+    "image_name": "shequiz.jpeg",
+    "image_path": "posters/shequiz.jpeg",
+    "description": "Poster image for Drishti 2026: shequiz. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster shequiz AI Summit event festival image shequiz"
+  },
+  {
+    "id": "poster-signalshowdown",
+    "image_name": "signalshowdown.jpeg",
+    "image_path": "posters/signalshowdown.jpeg",
+    "description": "Poster image for Drishti 2026: signalshowdown. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster signalshowdown AI Summit event festival image signalshowdown"
+  },
+  {
+    "id": "poster-soldiworks",
+    "image_name": "soldiworks.jpeg",
+    "image_path": "posters/soldiworks.jpeg",
+    "description": "Poster image for Drishti 2026: soldiworks. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster soldiworks AI Summit event festival image soldiworks"
+  },
+  {
+    "id": "poster-stellarodysseytreasurehunt",
+    "image_name": "stellarodysseytreasurehunt.jpeg",
+    "image_path": "posters/stellarodysseytreasurehunt.jpeg",
+    "description": "Poster image for Drishti 2026: stellarodysseytreasurehunt. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster stellarodysseytreasurehunt AI Summit event festival image stellarodysseytreasurehunt"
+  },
+  {
+    "id": "poster-tinyml",
+    "image_name": "tinyml.jpeg",
+    "image_path": "posters/tinyml.jpeg",
+    "description": "Poster image for Drishti 2026: tinyml. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster tinyml AI Summit event festival image tinyml"
+  },
+  {
+    "id": "poster-unrealengine",
+    "image_name": "unrealengine.jpeg",
+    "image_path": "posters/unrealengine.jpeg",
+    "description": "Poster image for Drishti 2026: unrealengine. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster unrealengine AI Summit event festival image unrealengine"
+  },
+  {
+    "id": "poster-valorant",
+    "image_name": "valorant.jpeg",
+    "image_path": "posters/valorant.jpeg",
+    "description": "Poster image for Drishti 2026: valorant. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster valorant AI Summit event festival image valorant"
+  },
+  {
+    "id": "poster-verilogandfgpa",
+    "image_name": "verilogandfgpa.jpeg",
+    "image_path": "posters/verilogandfgpa.jpeg",
+    "description": "Poster image for Drishti 2026: verilogandfgpa. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster verilogandfgpa AI Summit event festival image verilogandfgpa"
+  },
+  {
+    "id": "poster-webredesign",
+    "image_name": "webredesign.jpeg",
+    "image_path": "posters/webredesign.jpeg",
+    "description": "Poster image for Drishti 2026: webredesign. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster webredesign AI Summit event festival image webredesign"
+  },
+  {
+    "id": "poster-whisperchlng",
+    "image_name": "whisperchlng.jpeg",
+    "image_path": "posters/whisperchlng.jpeg",
+    "description": "Poster image for Drishti 2026: whisperchlng. This poster belongs to the Drishti 2026 AI Summit or event programme series.",
+    "search_text": "Drishti 2026 poster whisperchlng AI Summit event festival image whisperchlng"
+  }
+]
