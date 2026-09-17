@@ -43,7 +43,7 @@ const GhostCursor = ({
   const resizeObsRef = useRef(null);
   const currentMouseRef = useRef(new THREE.Vector2(0.5, 0.5));
   const velocityRef = useRef(new THREE.Vector2(0, 0));
-  const fadeOpacityRef = useRef(1.0);
+  const fadeOpacityRef = useRef(0.0);
   const lastMoveTimeRef = useRef(typeof performance !== 'undefined' ? performance.now() : Date.now());
   const pointerActiveRef = useRef(false);
   const runningRef = useRef(false);
@@ -265,7 +265,7 @@ const GhostCursor = ({
         iResolution: { value: new THREE.Vector3(1, 1, 1) },
         iMouse: { value: new THREE.Vector2(0.5, 0.5) },
         iPrevMouse: { value: trailBufRef.current.map(v => v.clone()) },
-        iOpacity: { value: 1.0 },
+        iOpacity: { value: 0.0 },
         iScale: { value: 1.0 },
         iBaseColor: { value: new THREE.Vector3(baseColor.r, baseColor.g, baseColor.b) },
         iBrightness: { value: brightness },
@@ -425,11 +425,21 @@ const GhostCursor = ({
       const y = THREE.MathUtils.clamp(1 - (e.clientY - rect.top) / Math.max(1, rect.height), 0, 1);
       currentMouseRef.current.set(x, y);
       pointerActiveRef.current = true;
+      fadeOpacityRef.current = 1.0;
       lastMoveTimeRef.current = performance.now();
       ensureLoop();
     };
-    const onPointerEnter = () => {
+    const onPointerEnter = e => {
+      const rect = parent.getBoundingClientRect();
+      const x = THREE.MathUtils.clamp((e.clientX - rect.left) / Math.max(1, rect.width), 0, 1);
+      const y = THREE.MathUtils.clamp(1 - (e.clientY - rect.top) / Math.max(1, rect.height), 0, 1);
+      currentMouseRef.current.set(x, y);
+      if (materialRef.current) {
+        materialRef.current.uniforms.iMouse.value.set(x, y);
+      }
       pointerActiveRef.current = true;
+      fadeOpacityRef.current = 1.0;
+      lastMoveTimeRef.current = performance.now();
       ensureLoop();
     };
     const onPointerLeave = () => {
@@ -443,7 +453,9 @@ const GhostCursor = ({
     parent.addEventListener('pointerleave', onPointerLeave, { passive: true });
     parent.addEventListener('pointerdown', onPointerMove, { passive: true });
 
-    ensureLoop();
+    if (autoIdle) {
+      ensureLoop();
+    }
 
     return () => {
       active = false;
