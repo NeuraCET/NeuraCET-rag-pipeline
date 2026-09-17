@@ -12,6 +12,7 @@ An intelligent, interactive, and offline-capable RAG (Retrieval-Augmented Genera
 
 ## 🌟 Key Highlights
 
+- **Automatic Kiosk Fullscreen & Lock**: Clicking **"Ask a Question"** automatically engages fullscreen kiosk mode and activates keyboard locks to prevent accidental exits. Fullscreen can only be unlocked with the organizer shortcut **`Ctrl + Shift + F`**.
 - **Real-Time Token Streaming**: Words appear live on screen in real time with an authentic typewriter effect straight from the local LLM as tokens are generated.
 - **Instant Screen Transition**: Seamlessly switches from the thinking screen to the answer view the instant prompt evaluation finishes (~15s), with zero timeouts.
 - **Zero Hallucinations & Cheerful Tone**: Strictly grounded in official documents from `dataRAG/`. If information is not in official festival records, it warmly and cheerfully informs the user.
@@ -248,6 +249,25 @@ ollama serve
 cd ui
 npm run dev -- --host --port 5173
 ```
+
+---
+
+## 🔒 Kiosk Fullscreen Mode & Organizer Controls
+
+To provide a seamless and secure unattended kiosk experience during Drishti 2026:
+
+1. **Automatic Fullscreen Launch**:
+   - When a visitor clicks **"Ask a Question"** on the welcome screen, the web application automatically requests browser fullscreen mode.
+2. **Kiosk Escape Prevention**:
+   - The Chromium Keyboard Lock API (`navigator.keyboard.lock(['Escape'])`) is activated to suppress accidental exits via the `Escape` key.
+   - Pressing `Escape` is captured and blocked by the kiosk state machine while locked.
+   - If fullscreen is ever exited through system shortcuts or external dialogs, an automatic **Kiosk Fullscreen Locked** recovery overlay prompts the operator or visitor to tap anywhere on the screen to immediately re-enter fullscreen.
+3. **Organizer Unlock Shortcut**:
+   - To unlock kiosk mode and exit full screen, press:
+     ```text
+     Ctrl + Shift + F   (or Cmd + Shift + F on macOS)
+     ```
+   - This immediately unlocks the keyboard, exits fullscreen mode, and displays a temporary status notification.
 
 ---
 
