@@ -5,13 +5,29 @@ export const placeholderAssistant: AskQuestion = async (
 ): Promise<KioskAnswer> => {
   
   // 1. Send the user's question to your Python FastAPI server
-  const response = await fetch("http://localhost:8000/api/ask", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ question }),
-  });
+  const endpoint = import.meta.env.VITE_API_URL 
+    ? `${import.meta.env.VITE_API_URL}/api/ask` 
+    : "/api/ask";
+
+  let response: Response;
+  try {
+    response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ question }),
+    });
+  } catch {
+    // Fallback directly to localhost:8000 if proxy failed
+    response = await fetch("http://localhost:8000/api/ask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ question }),
+    });
+  }
 
   // 2. If the Python server is off or crashes, throw an error to trigger the ErrorScreen
   if (!response.ok) {

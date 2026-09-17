@@ -1,23 +1,47 @@
+from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import ollama
 
 from RAG.rag import RagIndex, run_query 
 
-app = FastAPI()
+ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = ROOT.parent
+POSTER_DIR = PROJECT_ROOT / "posters"
 
-index = RagIndex()
+app = FastAPI(title="Drishti RAG Assistant API")
+
+if POSTER_DIR.exists():
+    app.mount("/posters", StaticFiles(directory=str(POSTER_DIR)), name="posters")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+    ],
+    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)(:\d+)?",
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+@app.get("/")
+def root():
+    return {"status": "ok", "service": "Drishti RAG Assistant Backend"}
+
+@app.get("/api/health")
+def health():
+    return {"status": "healthy"}
+
 class QueryRequest(BaseModel):
     question: str
+
+index = RagIndex()
 
 @app.post("/api/ask")
 def ask_drishti(request: QueryRequest):
@@ -41,10 +65,14 @@ RULES FOR YOUR RESPONSE:
     if posters:
         user_prompt += f"\n\nRelevant Poster Images to display: {', '.join(posters)}"
     
-    response = ollama.chat(model='qwen3.5:4b', messages=[
-        {'role': 'system', 'content': system_prompt},
-        {'role': 'user', 'content': user_prompt}
-    ])
+    response = ollama.chat(
+        model='qwen3.5:4b',
+        messages=[
+            {'role': 'system', 'content': system_prompt},
+            {'role': 'user', 'content': user_prompt}
+        ],
+        think=False,
+    )
     
     return {
         "answer": response['message']['content'],
