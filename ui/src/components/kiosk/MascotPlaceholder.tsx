@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import GhostCursor from "./GhostCursor";
 
 interface MascotPlaceholderProps {
   size?: string;
@@ -11,9 +12,9 @@ export function MascotPlaceholder({
 }: MascotPlaceholderProps) {
   return (
     <div
-      className={`relative flex aspect-square ${size} items-center justify-center border border-gold/30 ${className}`}
+      className={`relative flex aspect-square ${size} items-center justify-center overflow-hidden rounded-2xl border border-gold/30 bg-black/40 shadow-[0_0_50px_rgba(212,175,55,0.08)] ${className}`}
     >
-      {/* Corner accents, breathing in sequence */}
+      {/* Corner accents */}
       {[
         "-left-px -top-px border-l-2 border-t-2",
         "-right-px -top-px border-r-2 border-t-2",
@@ -29,22 +30,23 @@ export function MascotPlaceholder({
             ease: "easeInOut",
             delay: index * 0.5,
           }}
-          className={`absolute h-8 w-8 border-gold ${corner}`}
+          className={`pointer-events-none absolute h-7 w-7 border-gold/70 ${corner}`}
         />
       ))}
 
-      <motion.div
-        animate={{ y: [-4, 4, -4] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        className="text-center"
-      >
-        <div className="gold-text text-[10px] font-semibold uppercase tracking-[0.35em]">
-          Mascot
-        </div>
-        <div className="mt-2 text-xs uppercase tracking-[0.2em] text-white/20">
-          Coming Soon
-        </div>
-      </motion.div>
+      <GhostCursor
+        color="#d4af37"
+        brightness={1.1}
+        edgeIntensity={0}
+        trailLength={25}
+        inertia={0.3}
+        grainIntensity={0.03}
+        bloomStrength={0.12}
+        bloomRadius={0.8}
+        bloomThreshold={0.06}
+        fadeDelayMs={300}
+        fadeDurationMs={600}
+        autoIdle={true} className={undefined} style={undefined} targetPixels={undefined}      />
     </div>
   );
 }
