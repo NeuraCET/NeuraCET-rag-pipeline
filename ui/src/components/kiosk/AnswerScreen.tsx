@@ -4,24 +4,26 @@ import type { KioskAnswer } from "../../types/kiosk";
 import { GoldButton } from "./GoldButton";
 import { KioskScreen } from "./KioskScreen";
 import { MascotPlaceholder } from "./MascotPlaceholder";
-import ReactMarkdown from 'react-markdown';
-import { useState, useEffect, useRef } from 'react';
+import ReactMarkdown from "react-markdown";
+import { useState, useEffect, useRef, useCallback } from "react";
 
-function useTypewriter(text: string = '', speed: number = 15) {
-  const [displayedText, setDisplayedText] = useState('');
+function useTypewriter(text: string = "", speed: number = 4) {
+  const [displayedText, setDisplayedText] = useState("");
   const [prevText, setPrevText] = useState(text);
 
   if (text !== prevText) {
     setPrevText(text);
-    setDisplayedText('');
+    setDisplayedText("");
   }
 
   useEffect(() => {
     if (!text) return;
 
     let index = 0;
+    // Step 2 chars per tick for smooth, responsive reading speed without 15s artificial lag
+    const step = 2;
     const intervalId = setInterval(() => {
-      index++;
+      index = Math.min(text.length, index + step);
       setDisplayedText(text.slice(0, index));
       if (index >= text.length) {
         clearInterval(intervalId);
@@ -31,35 +33,51 @@ function useTypewriter(text: string = '', speed: number = 15) {
     return () => clearInterval(intervalId);
   }, [text, speed]);
 
-  return displayedText;
+  const finish = useCallback(() => {
+    setDisplayedText(text);
+  }, [text]);
+
+  return {
+    displayedText,
+    isTyping: displayedText.length < text.length,
+    finish,
+  };
 }
 
 interface AnswerScreenProps {
   result: KioskAnswer;
   onAskAnother: () => void;
   onHome: () => void;
+  isStreaming?: boolean;
 }
 
 export function AnswerScreen({
   result,
   onAskAnother,
   onHome,
+  isStreaming = false,
 }: AnswerScreenProps) {
-  
-  const displayedText = useTypewriter(result.answer, 12);
+  const typewriter = useTypewriter(isStreaming ? "" : result.answer, 4);
+  const displayedText = isStreaming ? result.answer : typewriter.displayedText;
+  const isTyping = isStreaming || typewriter.isTyping;
+  const finish = useCallback(() => {
+    if (!isStreaming) {
+      typewriter.finish();
+    }
+  }, [isStreaming, typewriter]);
+
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll whenever displayedText changes
+  // Auto-scroll while typing or streaming
   useEffect(() => {
     if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: 'auto' });
+      bottomRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   }, [displayedText]);
 
   return (
     <KioskScreen className="items-center">
       <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-[1.3fr_0.55fr]">
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -85,35 +103,51 @@ export function AnswerScreen({
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.25, ease: "easeOut" }}
-            className="mt-8 max-h-[42vh] overflow-y-auto pr-2"
+            onClick={finish}
+            title={isTyping ? "Click to show full answer immediately" : undefined}
+            className="mt-6 max-h-[56vh] cursor-pointer overflow-y-auto pr-3 [scrollbar-width:thin] [scrollbar-color:rgba(213,180,92,0.3)_transparent]"
           >
-            <div className="text-white font-sans leading-relaxed max-w-2xl">
+            <div className="max-w-2xl font-sans leading-relaxed text-white">
               <ReactMarkdown
                 components={{
-                  h1: ({ children }) => <h1 className="text-2xl font-bold text-amber-400 mt-4 mb-2">{children}</h1>,
-                  h2: ({ children }) => <h2 className="text-xl font-semibold text-amber-300 mt-4 mb-2">{children}</h2>,
-                  h3: ({ children }) => <h3 className="text-lg font-medium text-amber-200 mt-3 mb-1">{children}</h3>,
-                  p: ({ children }) => <p className="mb-3 text-base text-gray-200 leading-normal">{children}</p>,
-                  ul: ({ children }) => <ul className="list-disc list-inside mb-3 space-y-1 text-gray-200">{children}</ul>,
-                  ol: ({ children }) => <ol className="list-decimal list-inside mb-3 space-y-1 text-gray-200">{children}</ol>,
+                  h1: ({ children }) => (
+                    <h1 className="mb-2 mt-4 text-2xl font-bold text-amber-400">{children}</h1>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="mb-2 mt-4 text-xl font-semibold text-amber-300">{children}</h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="mb-1 mt-3 text-lg font-medium text-amber-200">{children}</h3>
+                  ),
+                  p: ({ children }) => (
+                    <p className="mb-3 text-base leading-normal text-gray-200">{children}</p>
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="mb-3 list-inside list-disc space-y-1 text-gray-200">{children}</ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="mb-3 list-inside list-decimal space-y-1 text-gray-200">{children}</ol>
+                  ),
                   li: ({ children }) => <li className="text-gray-200">{children}</li>,
-                  strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
+                  strong: ({ children }) => (
+                    <strong className="font-semibold text-white">{children}</strong>
+                  ),
                 }}
               >
                 {displayedText}
               </ReactMarkdown>
-              
+
               {/* Blinking cursor while typing */}
-              {displayedText.length < result.answer.length && (
-                <span className="inline-block w-2 h-4 bg-amber-400 animate-pulse ml-1 align-middle" />
+              {isTyping && (
+                <span className="ml-1 inline-block h-4 w-2 animate-pulse align-middle bg-amber-400" />
               )}
-              
+
               {/* Invisible anchor for auto-scrolling */}
               <div ref={bottomRef} />
             </div>
           </motion.div>
 
-          <div className="mt-10 flex flex-wrap items-center gap-6">
+          <div className="mt-8 flex flex-wrap items-center gap-6">
             <GoldButton label="Ask Another Question" onClick={onAskAnother} />
 
             <button
@@ -127,13 +161,29 @@ export function AnswerScreen({
           </div>
         </motion.div>
 
+        {/* Right column: official event poster or fallback mascot */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           className="relative hidden items-center justify-center lg:flex"
         >
-          <MascotPlaceholder size="w-[min(24vw,300px)]" />
+          {result.poster ? (
+            <div className="group relative overflow-hidden border border-gold/40 bg-black/40 p-2 shadow-[0_0_30px_-10px_rgba(213,180,92,0.3)]">
+              <img
+                src={result.poster}
+                alt="Official Event Poster"
+                className="max-h-[54vh] w-auto rounded object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+              />
+              <div className="mt-2 text-center">
+                <span className="gold-text text-[9px] font-semibold uppercase tracking-[0.25em]">
+                  Official Event Poster
+                </span>
+              </div>
+            </div>
+          ) : (
+            <MascotPlaceholder size="w-[min(24vw,300px)]" />
+          )}
         </motion.div>
       </div>
     </KioskScreen>

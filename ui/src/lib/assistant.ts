@@ -41,7 +41,88 @@ export const placeholderAssistant: AskQuestion = async (
   return {
     question: question,
     answer: data.answer,
-    source: data.source || "Official Drishti Event Data"
-    // Add any other fields Ashik's UI expects here (like 'sources' or 'timeTakes')
+    source: data.source || "Official Drishti Event Data",
+    poster: data.poster || null,
   };
 };
+
+export interface StreamQuestionCallbacks {
+  onMeta?: (meta: { poster: string | null; source: string }) => void;
+  onToken?: (token: string) => void;
+  onDone?: () => void;
+}
+
+export async function streamQuestion(
+  question: string,
+  callbacks: StreamQuestionCallbacks,
+  signal?: AbortSignal
+): Promise<void> {
+  const endpoint = import.meta.env.VITE_API_URL
+    ? `${import.meta.env.VITE_API_URL}/api/ask-stream`
+    : "/api/ask-stream";
+
+  let response: Response;
+  try {
+    response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ question }),
+      signal,
+    });
+  } catch (err: unknown) {
+    if (signal?.aborted) return;
+    // Fallback directly to localhost:8000 if proxy failed
+    response = await fetch("http://localhost:8000/api/ask-stream", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ question }),
+      signal,
+    });
+  }
+
+  if (!response.ok || !response.body) {
+    throw new Error(`Failed to connect to backend (status ${response.status})`);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder("utf-8");
+  let buffer = "";
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+        try {
+          const event = JSON.parse(trimmed);
+          if (event.type === "meta") {
+            callbacks.onMeta?.({
+              poster: event.poster || null,
+              source: event.source || "Official Drishti Knowledge Base",
+            });
+          } else if (event.type === "token") {
+            callbacks.onToken?.(event.content);
+          } else if (event.type === "done") {
+            callbacks.onDone?.();
+          }
+        } catch {
+          // Ignore partial or unparseable lines
+        }
+      }
+    }
+  } finally {
+    reader.releaseLock();
+    callbacks.onDone?.();
+  }
+}

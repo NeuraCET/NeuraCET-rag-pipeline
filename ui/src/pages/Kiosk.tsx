@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { AnswerScreen } from "../components/kiosk/AnswerScreen";
 import { AskScreen } from "../components/kiosk/AskScreen";
@@ -7,43 +7,98 @@ import { Header } from "../components/kiosk/Header";
 import { KioskBackground } from "../components/kiosk/KioskBackground";
 import { ThinkingScreen } from "../components/kiosk/ThinkingScreen";
 import { WelcomeScreen } from "../components/kiosk/WelcomeScreen";
-import { placeholderAssistant } from "../lib/assistant";
-import type { AskQuestion, KioskAnswer, KioskState } from "../types/kiosk";
+import { streamQuestion } from "../lib/assistant";
+import type { KioskAnswer, KioskState } from "../types/kiosk";
 
-interface KioskProps {
-  /** Swap in the real retrieval backend without touching the screens. */
-  askQuestion?: AskQuestion;
-}
-
-export function Kiosk({ askQuestion = placeholderAssistant }: KioskProps) {
+export function Kiosk() {
   const [state, setState] = useState<KioskState>("welcome");
   const [question, setQuestion] = useState("");
   const [result, setResult] = useState<KioskAnswer | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isStreaming, setIsStreaming] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  const run = useCallback(
-    async (asked: string) => {
-      setQuestion(asked);
-      setState("thinking");
+  const run = useCallback(async (asked: string) => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    const ac = new AbortController();
+    abortControllerRef.current = ac;
 
-      try {
-        const answer = await askQuestion(asked);
-        setResult(answer);
-        setState("answering");
-      } catch {
-        setErrorMessage(
-          "The assistant could not reach the Drishti knowledge base. Please try again.",
-        );
-        setState("error");
-      }
-    },
-    [askQuestion],
-  );
+    setQuestion(asked);
+    setResult(null);
+    setState("thinking");
+    setIsStreaming(true);
+
+    let currentMeta = {
+      poster: null as string | null,
+      source: "Official Drishti Knowledge Base",
+    };
+    let fullAnswer = "";
+    let hasSwitched = false;
+
+    try {
+      await streamQuestion(
+        asked,
+        {
+          onMeta: (meta) => {
+            currentMeta = meta;
+          },
+          onToken: (token) => {
+            fullAnswer += token;
+            if (!hasSwitched) {
+              hasSwitched = true;
+              setResult({
+                question: asked,
+                answer: fullAnswer,
+                source: currentMeta.source,
+                poster: currentMeta.poster,
+              });
+              // Prompt analysis complete & first token arrived: switch immediately to AnswerScreen!
+              setState("answering");
+            } else {
+              setResult({
+                question: asked,
+                answer: fullAnswer,
+                source: currentMeta.source,
+                poster: currentMeta.poster,
+              });
+            }
+          },
+          onDone: () => {
+            setIsStreaming(false);
+          },
+        },
+        ac.signal,
+      );
+    } catch {
+      if (ac.signal.aborted) return;
+      setErrorMessage(
+        "The assistant could not reach the Drishti knowledge base. Please try again.",
+      );
+      setState("error");
+      setIsStreaming(false);
+    }
+  }, []);
 
   const goHome = useCallback(() => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsStreaming(false);
     setQuestion("");
     setResult(null);
     setState("welcome");
+  }, []);
+
+  const askAnother = useCallback(() => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsStreaming(false);
+    setState("asking");
   }, []);
 
   return (
@@ -72,7 +127,8 @@ export function Kiosk({ askQuestion = placeholderAssistant }: KioskProps) {
           {state === "answering" && result && (
             <AnswerScreen
               result={result}
-              onAskAnother={() => setState("asking")}
+              isStreaming={isStreaming}
+              onAskAnother={askAnother}
               onHome={goHome}
             />
           )}

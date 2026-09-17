@@ -1,80 +1,135 @@
+"""FastAPI Backend Server for Drishti 2026 Assistant.
+
+Provides:
+- POST /api/ask: RAG query endpoint returning answer, source, and 2026 poster
+- GET /api/health: Health check endpoint
+- Static file serving at /posters: Serves festival posters
+"""
+
+from __future__ import annotations
+
+import os
+from contextlib import asynccontextmanager
 from pathlib import Path
-from fastapi import FastAPI
+from typing import Optional
+
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-import ollama
 
-from RAG.rag import RagIndex, run_query 
+from src.poster_registry import POSTERS_DIR
+from src.rag_engine import engine
 
-ROOT = Path(__file__).resolve().parent
-PROJECT_ROOT = ROOT.parent
-POSTER_DIR = PROJECT_ROOT / "posters"
+ROOT_DIR = Path(__file__).resolve().parent.parent
 
-app = FastAPI(title="Drishti RAG Assistant API")
 
-if POSTER_DIR.exists():
-    app.mount("/posters", StaticFiles(directory=str(POSTER_DIR)), name="posters")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Warm up / initialize RAG engine on startup
+    print("[Server] Initializing RAG Knowledge Engine...", flush=True)
+    engine.initialize()
+    print("[Server] RAG Engine ready to serve queries.", flush=True)
 
+    # Pre-warm Ollama model to eliminate cold-start loading latency
+    try:
+        import requests
+        from src.rag_engine import MODEL_NAME, OLLAMA_URL
+        print(f"[Server] Warming up Ollama model '{MODEL_NAME}' in memory...", flush=True)
+        requests.post(
+            f"{OLLAMA_URL}/api/chat",
+            json={
+                "model": MODEL_NAME,
+                "messages": [{"role": "user", "content": "ping"}],
+                "stream": False,
+                "think": False,
+                "keep_alive": -1,
+                "options": {"num_predict": 1},
+            },
+            timeout=15,
+        )
+        print("[Server] Ollama model warmed up and resident in RAM.", flush=True)
+    except Exception as e:
+        print(f"[Server] Note: Ollama pre-warm skipped ({e})", flush=True)
+
+    yield
+
+
+app = FastAPI(
+    title="Drishti 2026 AI Assistant API",
+    version="1.0.0",
+    lifespan=lifespan,
+)
+
+# Enable CORS for local Vite development and kiosk access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-    ],
-    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)(:\d+)?",
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.get("/")
-def root():
-    return {"status": "ok", "service": "Drishti RAG Assistant Backend"}
+# Mount static posters directory
+if POSTERS_DIR.exists():
+    app.mount("/posters", StaticFiles(directory=str(POSTERS_DIR)), name="posters")
 
-@app.get("/api/health")
-def health():
-    return {"status": "healthy"}
 
-class QueryRequest(BaseModel):
+class AskRequest(BaseModel):
     question: str
 
-index = RagIndex()
 
-@app.post("/api/ask")
-def ask_drishti(request: QueryRequest):
-    
-    results, posters, context = run_query(index, request.question)
-    
-    system_prompt = """You are Drishti AI, the official intelligent assistant for the Drishti 2026 festival and AI Summit at CET.
-Answer attendee questions clearly and concisely using only the provided context. If the requested information is not in the context, state that it is currently unavailable.
+class AskResponse(BaseModel):
+    answer: str
+    source: str
+    poster: Optional[str] = None
 
-RULES FOR YOUR RESPONSE:
-1. STRUCTURE: Always use Markdown. Use bold headings, bullet points, and short paragraphs so it is easy to read on a screen.
-2. IMAGES: If the context provides an image URL (like a map, poster, or logo), you MUST include it using Markdown syntax: ![Description](URL).
-3. RECOMMENDATIONS: Act like a proactive guide. If you answer a question about an event, suggest 1 or 2 related events, workshops, or venues mentioned in the context to keep them engaged.
-4. TONE: Be energetic, welcoming, and intelligent. 
-5. ACCURACY: Only use the information provided in the Context. If the answer isn't there, politely apologize and guide them to the main help desk.
-"""
 
-    user_prompt = f"Context provided from database:\n{context}\n\nStudent's Question: {request.question}"
-    
-
-    if posters:
-        user_prompt += f"\n\nRelevant Poster Images to display: {', '.join(posters)}"
-    
-    response = ollama.chat(
-        model='qwen3.5:4b',
-        messages=[
-            {'role': 'system', 'content': system_prompt},
-            {'role': 'user', 'content': user_prompt}
-        ],
-        think=False,
-    )
-    
+@app.get("/api/health")
+async def health_check():
     return {
-        "answer": response['message']['content'],
-        "posters": posters  
+        "status": "ok",
+        "service": "Drishti 2026 Assistant",
+        "knowledge_chunks": len(engine.chunks) if engine.initialized else 0,
     }
+
+
+@app.post("/api/ask", response_model=AskResponse)
+async def ask_question(req: AskRequest):
+    question = req.question.strip()
+    if not question:
+        raise HTTPException(status_code=400, detail="Question cannot be empty.")
+
+    try:
+        result = engine.ask(question)
+        return AskResponse(
+            answer=result["answer"],
+            source=result.get("source", "Official Drishti Knowledge Base"),
+            poster=result.get("poster"),
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error generating answer: {str(e)}")
+
+
+@app.post("/api/ask-stream")
+async def ask_question_stream(req: AskRequest):
+    question = req.question.strip()
+    if not question:
+        raise HTTPException(status_code=400, detail="Question cannot be empty.")
+
+    return StreamingResponse(
+        engine.stream_ask(question),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("src.server:app", host="0.0.0.0", port=port, reload=False)

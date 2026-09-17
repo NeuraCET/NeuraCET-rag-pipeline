@@ -140,11 +140,11 @@ def start_backend() -> subprocess.Popen:
         "0.0.0.0",
         "--port",
         str(BACKEND_PORT),
+        "--reload",
     ]
-    if (ROOT_DIR / ".venv").exists():
-        uv_bin = shutil_which("uv")
-        if uv_bin:
-            cmd = ["uv", "run", "uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", str(BACKEND_PORT)]
+    venv_py = ROOT_DIR / ".venv" / "bin" / "python"
+    if venv_py.exists():
+        cmd = [str(venv_py), "-m", "uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", str(BACKEND_PORT), "--reload"]
 
     proc = subprocess.Popen(
         cmd,
