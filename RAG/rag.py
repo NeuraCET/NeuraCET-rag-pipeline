@@ -459,29 +459,6 @@ def run_query(index: RagIndex, query, k=6, max_listing_results=30):
     return results, posters, context
 
 
-def get_context(query):
-    """
-    This function bridges search logic with FastAPI server.
-    It returns a single formatted string of context, and a list of sources.
-    """
-    matches, filters = metadata_search(query)
-    
-
-    if filters["is_listing"] and (filters["day"] or filters["date"] or filters["category"]):
-        if not matches:
-            return "No scheduled events found for this criteria.", []
-        
-        context_string = "\n".join([record["source_text"] for record in matches])
-        sources = [record["event_name"] for record in matches]
-        return context_string, sources
-        
-    results = semantic_search(query, k=5) 
-    
-    context_string = "\n".join([record["source_text"] for record, score in results])
-    sources = [record["event_name"] for record, score in results]
-    
-    return context_string, sources
-
 if __name__ == "__main__":
     index = RagIndex()
     if "--audit-posters" in sys.argv:
