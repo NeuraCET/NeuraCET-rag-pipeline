@@ -9,6 +9,7 @@ dependencies = [
     "fastapi>=0.141.1",
     "numpy>=2.5.3",
     "ollama>=0.6.2",
+    "rank-bm25>=0.2.2",
     "sentence-transformers>=6.0.1",
     "uvicorn>=0.53.0",
 ]

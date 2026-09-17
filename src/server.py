@@ -3,9 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import ollama
 
-from RAG.rag import get_context 
+from RAG.rag import RagIndex, run_query 
 
 app = FastAPI()
+
+index = RagIndex()
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,7 +22,7 @@ class QueryRequest(BaseModel):
 @app.post("/api/ask")
 def ask_drishti(request: QueryRequest):
     
-    real_context, document_source = get_context(request.question)
+    results, posters, context = run_query(index, request.question)
     
     system_prompt = """You are Drishti AI, the official intelligent assistant for the Drishti 2026 festival and AI Summit at CET.
 Answer attendee questions clearly and concisely using only the provided context. If the requested information is not in the context, state that it is currently unavailable.
@@ -33,7 +35,11 @@ RULES FOR YOUR RESPONSE:
 5. ACCURACY: Only use the information provided in the Context. If the answer isn't there, politely apologize and guide them to the main help desk.
 """
 
-    user_prompt = f"Context provided from database: {real_context}\n\nStudent's Question: {request.question}"
+    user_prompt = f"Context provided from database:\n{context}\n\nStudent's Question: {request.question}"
+    
+
+    if posters:
+        user_prompt += f"\n\nRelevant Poster Images to display: {', '.join(posters)}"
     
     response = ollama.chat(model='qwen3.5:4b', messages=[
         {'role': 'system', 'content': system_prompt},
@@ -41,5 +47,6 @@ RULES FOR YOUR RESPONSE:
     ])
     
     return {
-        "answer": response['message']['content']
+        "answer": response['message']['content'],
+        "posters": posters  
     }
