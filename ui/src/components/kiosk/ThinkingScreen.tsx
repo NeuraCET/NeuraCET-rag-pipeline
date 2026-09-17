@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { KioskScreen } from "./KioskScreen";
 import { MascotPlaceholder } from "./MascotPlaceholder";
 
+
 const STATUSES = ["Searching Drishti Knowledge", "Formulating Answer"];
 
 interface ThinkingScreenProps {
