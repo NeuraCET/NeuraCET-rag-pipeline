@@ -130,9 +130,12 @@ def start_backend() -> subprocess.Popen:
     """Start the FastAPI backend with uvicorn."""
     log("Backend", GREEN, f"Starting FastAPI backend on port {BACKEND_PORT}...")
     
-    # Use uv run if uv is present, otherwise fallback to current python interpreter
+    # Run uvicorn with reload scoped to src/ directory and unbuffered stdout
+    src_dir = str(ROOT_DIR / "src")
+    venv_py = ROOT_DIR / ".venv" / "bin" / "python"
+    base_py = str(venv_py) if venv_py.exists() else sys.executable
     cmd = [
-        sys.executable,
+        base_py,
         "-m",
         "uvicorn",
         "src.server:app",
@@ -141,10 +144,12 @@ def start_backend() -> subprocess.Popen:
         "--port",
         str(BACKEND_PORT),
         "--reload",
+        "--reload-dir",
+        src_dir,
     ]
-    venv_py = ROOT_DIR / ".venv" / "bin" / "python"
-    if venv_py.exists():
-        cmd = [str(venv_py), "-m", "uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", str(BACKEND_PORT), "--reload"]
+
+    env = os.environ.copy()
+    env["PYTHONUNBUFFERED"] = "1"
 
     proc = subprocess.Popen(
         cmd,
@@ -153,6 +158,7 @@ def start_backend() -> subprocess.Popen:
         stderr=subprocess.STDOUT,
         text=True,
         bufsize=1,
+        env=env,
     )
     processes.append(proc)
     threading.Thread(
@@ -162,11 +168,11 @@ def start_backend() -> subprocess.Popen:
     ).start()
 
     # Wait for backend to be ready
-    health_url = f"http://localhost:{BACKEND_PORT}/api/health"
+    health_url = f"http://127.0.0.1:{BACKEND_PORT}/api/health"
     start_time = time.time()
     while time.time() - start_time < 30:
         if check_url(health_url, timeout=1.0):
-            log("Backend", GREEN, f"FastAPI backend is ready at http://localhost:{BACKEND_PORT}")
+            log("Backend", GREEN, f"FastAPI backend is ready at http://127.0.0.1:{BACKEND_PORT}")
             break
         if proc.poll() is not None:
             log("Backend", RED, f"Backend process exited prematurely with code {proc.returncode}")

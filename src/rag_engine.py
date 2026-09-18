@@ -23,15 +23,22 @@ OLLAMA_URL = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
 MODEL_NAME = "qwen3.5:4b"
 
 SYSTEM_PROMPT = """You are the friendly, cheerful, and enthusiastic AI guide for Drishti Fest at the College of Engineering Trivandrum (CET)!
-Your tone is always bright, warm, cheerful, happy, and genuinely informative!
+Your tone is bright, warm, cheerful, positive, energetic, and genuinely helpful!
 
-CRITICAL INSTRUCTIONS & ANTI-HALLUCINATION POLICY:
-1. You only have knowledge about Drishti Fest events based on the provided Context.
-2. If the user asks ANY question about topics, trivia, or events not present in the Context (or general world knowledge outside of Drishti), DO NOT ANSWER IT using external knowledge.
-3. If no information is found in the Context, respond cheerfully and warmly with:
-"Hello! 😊 I'd love to help, but there is no information available about that in the official Drishti records! Feel free to ask me about any of our exciting Drishti 2026 events, workshops, competitions, or AI Summit talks!"
-4. For events from past editions (e.g. Drishti 2024 or 2022), happily share the facts found in the Context and mention cheerfully that they occurred during previous editions of Drishti.
-5. Provide complete, accurate details (Event Name, Dates, Venue, Fees, Requirements, Coordinators with phone numbers) in clean Markdown bullet points. Be direct, cheerful, and crisp without filler padding, and ensure all information is fully stated.
+CORE GUIDELINES:
+1. GREETINGS & CASUAL CONVERSATION:
+   - If the user greets you (e.g. "hello", "hi", "hello bro", "hey", "what's up"), asks how you are, or engages in casual small talk, reply warmly, naturally, and cheerfully!
+   - Greet them with festive energy, introduce yourself as the Drishti AI guide, and enthusiastically invite them to ask about Drishti 2026 events, workshops, hackathons, and competitions.
+2. FESTIVAL QUESTIONS:
+   - Provide complete, accurate details based on the provided Context (Event Name, Dates, Venue, Fees, Requirements, Coordinators with phone numbers).
+   - Use clean Markdown formatting with bullet points. Be direct, cheerful, and crisp.
+   - For past festival editions (2024 or 2022), share the facts happily and mention that they occurred during previous editions of Drishti.
+3. OFF-TOPIC & UNRELATED QUESTIONS:
+   - If the user asks about topics completely unrelated to Drishti Fest (general trivia, celebrities, programming tutorials, world history, etc.), respond cheerfully and playfully in your festival persona!
+   - Politely explain that as CET's Drishti AI, you're focused on everything happening at Drishti Fest, and invite them to explore our festival events and workshops.
+4. ANTI-HALLUCINATION & MISSING RECORDS:
+   - Never invent fake event names, dates, prizes, or contact numbers that are not in the Context.
+   - If someone asks for a specific festival detail that is not in the records, respond cheerfully and warmly explaining that it's not currently listed in the official records, and offer to help with other exciting events.
 """
 
 
@@ -146,25 +153,23 @@ class RAGEngine:
         # 1. Resolve 2026 poster directly from user query
         poster_url = registry.get_poster_for_query(question)
 
-        # 2. Retrieve relevant chunks (maintaining full context)
+        # 2. Retrieve relevant chunks
         top_results, raw_max_bm, raw_max_dense = self.retrieve(question, top_k=3)
 
-        # Strict out-of-domain detection: if no keyword match AND semantic similarity < 0.35
-        if raw_max_bm == 0.0 and raw_max_dense < 0.35:
-            return {
-                "answer": "Hello! 😊 I'd love to help, but there is no information available about that in the official Drishti records! Feel free to ask me about any of our exciting Drishti 2026 events, workshops, competitions, or AI Summit talks!",
-                "source": "Official Drishti Knowledge Base",
-                "poster": None,
-            }
+        # Check if query retrieved relevant festival context
+        has_context = (raw_max_bm > 0.0 or raw_max_dense >= 0.28)
 
-        # Format context for prompt - PRESERVING FULL CONTEXT AS REQUESTED
-        context_texts = []
-        for i, (chunk, score) in enumerate(top_results):
-            source = chunk.metadata.get("source", "Drishti Data")
-            edition = chunk.metadata.get("edition", "2026")
-            context_texts.append(f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}")
-        
-        full_context = "\n\n".join(context_texts)
+        if has_context:
+            context_texts = []
+            for i, (chunk, score) in enumerate(top_results):
+                source = chunk.metadata.get("source", "Drishti Data")
+                edition = chunk.metadata.get("edition", "2026")
+                context_texts.append(f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}")
+            full_context = "\n\n".join(context_texts)
+            user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. If details are not found in the records, cheerfully state so:"
+        else:
+            full_context = "(No specific festival records matched this casual message or general question.)"
+            user_instruction = "Provide a cheerful, natural, and helpful response according to your guidelines (greet warmly if greeted, or cheerfully guide the user to Drishti 2026 events):"
 
         # 3. Generate response via Ollama with think: False and no token cutoff
         try:
@@ -174,14 +179,14 @@ class RAGEngine:
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {
                         "role": "user",
-                        "content": f"Context:\n{full_context}\n\nQuestion: {question}\n\nProvide a cheerful, happy, and complete answer based STRICTLY on the Context above. If not in the context, say no information is available:",
+                        "content": f"Context:\n{full_context}\n\nUser Question: {question}\n\n{user_instruction}",
                     },
                 ],
                 "stream": False,
                 "think": False,
                 "keep_alive": -1,
                 "options": {
-                    "temperature": 0.2,
+                    "temperature": 0.2 if has_context else 0.6,
                     "top_p": 0.9,
                     "num_ctx": 2048,
                     "num_predict": 800,  # Generous budget so answers are never truncated
@@ -210,7 +215,7 @@ class RAGEngine:
         # 1. Resolve 2026 poster directly from user query
         poster_url = registry.get_poster_for_query(question)
 
-        # 2. Retrieve relevant chunks (maintaining full context)
+        # 2. Retrieve relevant chunks
         top_results, raw_max_bm, raw_max_dense = self.retrieve(question, top_k=3)
 
         # Emit initial metadata event
@@ -220,25 +225,20 @@ class RAGEngine:
             "source": "Official Drishti Knowledge Base",
         }) + "\n"
 
-        # Strict out-of-domain detection: if no keyword match AND semantic similarity < 0.35
-        if raw_max_bm == 0.0 and raw_max_dense < 0.35:
-            msg = (
-                "Hello! 😊 I'd love to help, but there is no information available about that "
-                "in the official Drishti records! Feel free to ask me about any of our exciting "
-                "Drishti 2026 events, workshops, competitions, or AI Summit talks!"
-            )
-            yield json.dumps({"type": "token", "content": msg}) + "\n"
-            yield json.dumps({"type": "done"}) + "\n"
-            return
+        # Check if query retrieved relevant festival context
+        has_context = (raw_max_bm > 0.0 or raw_max_dense >= 0.28)
 
-        # Format context for prompt - PRESERVING FULL CONTEXT AS REQUESTED
-        context_texts = []
-        for i, (chunk, score) in enumerate(top_results):
-            source = chunk.metadata.get("source", "Drishti Data")
-            edition = chunk.metadata.get("edition", "2026")
-            context_texts.append(f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}")
-
-        full_context = "\n\n".join(context_texts)
+        if has_context:
+            context_texts = []
+            for i, (chunk, score) in enumerate(top_results):
+                source = chunk.metadata.get("source", "Drishti Data")
+                edition = chunk.metadata.get("edition", "2026")
+                context_texts.append(f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}")
+            full_context = "\n\n".join(context_texts)
+            user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. If details are not found in the records, cheerfully state so:"
+        else:
+            full_context = "(No specific festival records matched this casual message or general question.)"
+            user_instruction = "Provide a cheerful, natural, and helpful response according to your guidelines (greet warmly if greeted, or cheerfully guide the user to Drishti 2026 events):"
 
         # 3. Stream response via Ollama
         try:
@@ -248,14 +248,14 @@ class RAGEngine:
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {
                         "role": "user",
-                        "content": f"Context:\n{full_context}\n\nQuestion: {question}\n\nProvide a cheerful, happy, and complete answer based STRICTLY on the Context above. If not in the context, say no information is available:",
+                        "content": f"Context:\n{full_context}\n\nUser Question: {question}\n\n{user_instruction}",
                     },
                 ],
                 "stream": True,
                 "think": False,
                 "keep_alive": -1,
                 "options": {
-                    "temperature": 0.2,
+                    "temperature": 0.2 if has_context else 0.6,
                     "top_p": 0.9,
                     "num_ctx": 2048,
                     "num_predict": 800,

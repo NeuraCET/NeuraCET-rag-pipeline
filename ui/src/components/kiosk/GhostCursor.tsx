@@ -1,3 +1,4 @@
+import type React from 'react';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
@@ -6,7 +7,28 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import './GhostCursor.css';
 
-const GhostCursor = ({
+export interface GhostCursorProps {
+  className?: string;
+  style?: React.CSSProperties;
+  trailLength?: number;
+  inertia?: number;
+  grainIntensity?: number;
+  bloomStrength?: number;
+  bloomRadius?: number;
+  bloomThreshold?: number;
+  brightness?: number;
+  color?: string;
+  mixBlendMode?: string;
+  edgeIntensity?: number;
+  maxDevicePixelRatio?: number;
+  targetPixels?: number;
+  fadeDelayMs?: number;
+  fadeDurationMs?: number;
+  zIndex?: number;
+  autoIdle?: boolean;
+}
+
+const GhostCursor: React.FC<GhostCursorProps> = ({
   className,
   style,
   trailLength = 25,
@@ -29,18 +51,18 @@ const GhostCursor = ({
   zIndex = 10,
   autoIdle = false
 }) => {
-  const containerRef = useRef(null);
-  const rendererRef = useRef(null);
-  const composerRef = useRef(null);
-  const materialRef = useRef(null);
-  const bloomPassRef = useRef(null);
-  const filmPassRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const composerRef = useRef<EffectComposer | null>(null);
+  const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+  const bloomPassRef = useRef<UnrealBloomPass | null>(null);
+  const filmPassRef = useRef<ShaderPass | null>(null);
 
-  const trailBufRef = useRef([]);
-  const headRef = useRef(0);
+  const trailBufRef = useRef<THREE.Vector2[]>([]);
+  const headRef = useRef<number>(0);
 
-  const rafRef = useRef(null);
-  const resizeObsRef = useRef(null);
+  const rafRef = useRef<number | null>(null);
+  const resizeObsRef = useRef<ResizeObserver | null>(null);
   const currentMouseRef = useRef(new THREE.Vector2(0.5, 0.5));
   const velocityRef = useRef(new THREE.Vector2(0, 0));
   const fadeOpacityRef = useRef(0.0);
@@ -207,7 +229,7 @@ const GhostCursor = ({
     []
   );
 
-  function calculateScale(el) {
+  function calculateScale(el: HTMLElement) {
     const r = el.getBoundingClientRect();
     const base = 600;
     const current = Math.min(Math.max(1, r.width), Math.max(1, r.height));
@@ -356,6 +378,10 @@ const GhostCursor = ({
 
       const mat = materialRef.current;
       const comp = composerRef.current;
+      if (!mat || !comp) {
+        rafRef.current = requestAnimationFrame(animate);
+        return;
+      }
 
       if (pointerActiveRef.current) {
         velocityRef.current.set(
@@ -397,8 +423,9 @@ const GhostCursor = ({
       mat.uniforms.iOpacity.value = fadeOpacityRef.current;
       mat.uniforms.iTime.value = t;
 
-      if (filmPassRef.current?.uniforms?.iTime) {
-        filmPassRef.current.uniforms.iTime.value = t;
+      const filmPass = filmPassRef.current as any;
+      if (filmPass?.uniforms?.iTime) {
+        filmPass.uniforms.iTime.value = t;
       }
 
       comp.render();
@@ -419,7 +446,7 @@ const GhostCursor = ({
       }
     };
 
-    const onPointerMove = e => {
+    const onPointerMove = (e: MouseEvent | PointerEvent) => {
       const rect = parent.getBoundingClientRect();
       const x = THREE.MathUtils.clamp((e.clientX - rect.left) / Math.max(1, rect.width), 0, 1);
       const y = THREE.MathUtils.clamp(1 - (e.clientY - rect.top) / Math.max(1, rect.height), 0, 1);
@@ -429,7 +456,7 @@ const GhostCursor = ({
       lastMoveTimeRef.current = performance.now();
       ensureLoop();
     };
-    const onPointerEnter = e => {
+    const onPointerEnter = (e: MouseEvent | PointerEvent) => {
       const rect = parent.getBoundingClientRect();
       const x = THREE.MathUtils.clamp((e.clientX - rect.left) / Math.max(1, rect.width), 0, 1);
       const y = THREE.MathUtils.clamp(1 - (e.clientY - rect.top) / Math.max(1, rect.height), 0, 1);
@@ -448,10 +475,10 @@ const GhostCursor = ({
       ensureLoop();
     };
 
-    parent.addEventListener('pointermove', onPointerMove, { passive: true });
-    parent.addEventListener('pointerenter', onPointerEnter, { passive: true });
-    parent.addEventListener('pointerleave', onPointerLeave, { passive: true });
-    parent.addEventListener('pointerdown', onPointerMove, { passive: true });
+    parent.addEventListener('pointermove', onPointerMove as EventListener, { passive: true });
+    parent.addEventListener('pointerenter', onPointerEnter as EventListener, { passive: true });
+    parent.addEventListener('pointerleave', onPointerLeave as EventListener, { passive: true });
+    parent.addEventListener('pointerdown', onPointerMove as EventListener, { passive: true });
 
     if (autoIdle) {
       ensureLoop();
@@ -465,10 +492,10 @@ const GhostCursor = ({
       runningRef.current = false;
       rafRef.current = null;
 
-      parent.removeEventListener('pointermove', onPointerMove);
-      parent.removeEventListener('pointerenter', onPointerEnter);
-      parent.removeEventListener('pointerleave', onPointerLeave);
-      parent.removeEventListener('pointerdown', onPointerMove);
+      parent.removeEventListener('pointermove', onPointerMove as EventListener);
+      parent.removeEventListener('pointerenter', onPointerEnter as EventListener);
+      parent.removeEventListener('pointerleave', onPointerLeave as EventListener);
+      parent.removeEventListener('pointerdown', onPointerMove as EventListener);
       resizeObsRef.current?.disconnect();
 
       scene.clear();
@@ -526,8 +553,9 @@ const GhostCursor = ({
   }, [edgeIntensity]);
 
   useEffect(() => {
-    if (filmPassRef.current?.uniforms?.intensity) {
-      filmPassRef.current.uniforms.intensity.value = grainIntensity;
+    const filmPass = filmPassRef.current as any;
+    if (filmPass?.uniforms?.intensity) {
+      filmPass.uniforms.intensity.value = grainIntensity;
     }
   }, [grainIntensity]);
 

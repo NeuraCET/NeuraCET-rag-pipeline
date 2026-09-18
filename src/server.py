@@ -32,26 +32,30 @@ async def lifespan(app: FastAPI):
     engine.initialize()
     print("[Server] RAG Engine ready to serve queries.", flush=True)
 
-    # Pre-warm Ollama model to eliminate cold-start loading latency
-    try:
-        import requests
-        from src.rag_engine import MODEL_NAME, OLLAMA_URL
-        print(f"[Server] Warming up Ollama model '{MODEL_NAME}' in memory...", flush=True)
-        requests.post(
-            f"{OLLAMA_URL}/api/chat",
-            json={
-                "model": MODEL_NAME,
-                "messages": [{"role": "user", "content": "ping"}],
-                "stream": False,
-                "think": False,
-                "keep_alive": -1,
-                "options": {"num_predict": 1},
-            },
-            timeout=15,
-        )
-        print("[Server] Ollama model warmed up and resident in RAM.", flush=True)
-    except Exception as e:
-        print(f"[Server] Note: Ollama pre-warm skipped ({e})", flush=True)
+    # Pre-warm Ollama model in background thread to avoid delaying server readiness
+    def _warmup():
+        try:
+            import requests
+            from src.rag_engine import MODEL_NAME, OLLAMA_URL
+            print(f"[Server] Warming up Ollama model '{MODEL_NAME}' in memory...", flush=True)
+            requests.post(
+                f"{OLLAMA_URL}/api/chat",
+                json={
+                    "model": MODEL_NAME,
+                    "messages": [{"role": "user", "content": "ping"}],
+                    "stream": False,
+                    "think": False,
+                    "keep_alive": -1,
+                    "options": {"num_predict": 1},
+                },
+                timeout=20,
+            )
+            print("[Server] Ollama model warmed up and resident in RAM.", flush=True)
+        except Exception as e:
+            print(f"[Server] Note: Ollama pre-warm skipped ({e})", flush=True)
+
+    import threading
+    threading.Thread(target=_warmup, daemon=True).start()
 
     yield
 

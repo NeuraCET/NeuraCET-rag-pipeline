@@ -18,9 +18,19 @@ export const placeholderAssistant: AskQuestion = async (
       },
       body: JSON.stringify({ question }),
     });
+    // If proxy returned 502/503/504 Bad Gateway, try directly contacting backend
+    if (!response.ok && (response.status === 502 || response.status === 503 || response.status === 504) && !endpoint.includes(":8000")) {
+      response = await fetch("http://127.0.0.1:8000/api/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question }),
+      });
+    }
   } catch {
-    // Fallback directly to localhost:8000 if proxy failed
-    response = await fetch("http://localhost:8000/api/ask", {
+    // Fallback directly to 127.0.0.1:8000 if network failed
+    response = await fetch("http://127.0.0.1:8000/api/ask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,10 +81,21 @@ export async function streamQuestion(
       body: JSON.stringify({ question }),
       signal,
     });
+    // If proxy returned 502/503/504 Bad Gateway, try directly contacting backend
+    if (!response.ok && (response.status === 502 || response.status === 503 || response.status === 504) && !endpoint.includes(":8000")) {
+      response = await fetch("http://127.0.0.1:8000/api/ask-stream", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question }),
+        signal,
+      });
+    }
   } catch (err: unknown) {
     if (signal?.aborted) return;
-    // Fallback directly to localhost:8000 if proxy failed
-    response = await fetch("http://localhost:8000/api/ask-stream", {
+    // Fallback directly to 127.0.0.1:8000 if fetch rejected
+    response = await fetch("http://127.0.0.1:8000/api/ask-stream", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
