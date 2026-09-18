@@ -76,13 +76,15 @@ def ensure_ollama() -> subprocess.Popen | None:
 
     if not check_url(f"{OLLAMA_HOST}/api/tags", timeout=1.5):
         log("Ollama", YELLOW, f"Ollama not detected at {OLLAMA_HOST}. Starting 'ollama serve'...")
+        ollama_bin = shutil.which("ollama") or ("ollama.exe" if sys.platform == "win32" else "ollama")
         try:
             ollama_proc = subprocess.Popen(
-                ["ollama", "serve"],
+                [ollama_bin, "serve"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
                 bufsize=1,
+                shell=(sys.platform == "win32"),
             )
             processes.append(ollama_proc)
             threading.Thread(
@@ -115,7 +117,8 @@ def ensure_ollama() -> subprocess.Popen | None:
                 log("Ollama", GREEN, f"Model '{MODEL_NAME}' is ready.")
             else:
                 log("Ollama", YELLOW, f"Model '{MODEL_NAME}' not found locally. Pulling model...")
-                pull_code = subprocess.call(["ollama", "pull", MODEL_NAME])
+                ollama_bin = shutil.which("ollama") or ("ollama.exe" if sys.platform == "win32" else "ollama")
+                pull_code = subprocess.call([ollama_bin, "pull", MODEL_NAME], shell=(sys.platform == "win32"))
                 if pull_code == 0:
                     log("Ollama", GREEN, f"Model '{MODEL_NAME}' pulled successfully.")
                 else:
@@ -132,7 +135,10 @@ def start_backend() -> subprocess.Popen:
     
     # Run uvicorn with reload scoped to src/ directory and unbuffered stdout
     src_dir = str(ROOT_DIR / "src")
-    venv_py = ROOT_DIR / ".venv" / "bin" / "python"
+    if sys.platform == "win32":
+        venv_py = ROOT_DIR / ".venv" / "Scripts" / "python.exe"
+    else:
+        venv_py = ROOT_DIR / ".venv" / "bin" / "python"
     base_py = str(venv_py) if venv_py.exists() else sys.executable
     cmd = [
         base_py,
@@ -188,15 +194,18 @@ def start_frontend() -> subprocess.Popen:
     """Start Vite dev server for the kiosk UI."""
     log("Frontend", MAGENTA, "Starting Vite Kiosk Frontend...")
     
+    npm_bin = shutil.which("npm.cmd") if sys.platform == "win32" else shutil.which("npm")
+    npm_cmd = npm_bin or ("npm.cmd" if sys.platform == "win32" else "npm")
+
     # Ensure node_modules exists
     if not (UI_DIR / "node_modules").exists():
         log("Frontend", YELLOW, "node_modules missing in ui/. Running 'npm install'...")
-        npm_code = subprocess.call(["npm", "install"], cwd=str(UI_DIR))
+        npm_code = subprocess.call([npm_cmd, "install"], cwd=str(UI_DIR), shell=(sys.platform == "win32"))
         if npm_code != 0:
             log("Frontend", RED, "npm install failed.")
             sys.exit(1)
 
-    cmd = ["npm", "run", "dev", "--", "--host", "--port", str(FRONTEND_PORT)]
+    cmd = [npm_cmd, "run", "dev", "--", "--host", "--port", str(FRONTEND_PORT)]
     proc = subprocess.Popen(
         cmd,
         cwd=str(UI_DIR),
@@ -204,6 +213,7 @@ def start_frontend() -> subprocess.Popen:
         stderr=subprocess.STDOUT,
         text=True,
         bufsize=1,
+        shell=(sys.platform == "win32"),
     )
     processes.append(proc)
     threading.Thread(
@@ -215,7 +225,7 @@ def start_frontend() -> subprocess.Popen:
     # Wait for frontend dev server
     start_time = time.time()
     while time.time() - start_time < 15:
-        if check_url(f"http://localhost:{FRONTEND_PORT}", timeout=1.0):
+        if check_url(f"http://127.0.0.1:{FRONTEND_PORT}", timeout=1.0):
             log("Frontend", GREEN, f"Vite Kiosk UI is ready at http://localhost:{FRONTEND_PORT}")
             break
         if proc.poll() is not None:

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { AnswerScreen } from "../components/kiosk/AnswerScreen";
 import { AskScreen } from "../components/kiosk/AskScreen";
@@ -16,7 +16,32 @@ export function Kiosk() {
   const [result, setResult] = useState<KioskAnswer | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(
+    typeof document !== "undefined" ? !!document.fullscreenElement : false
+  );
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  const enterFullscreen = useCallback(async () => {
+    try {
+      if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen();
+      }
+    } catch {
+      // Ignored if user dismissed or cancelled
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
 
   const run = useCallback(async (asked: string) => {
     if (abortControllerRef.current) {
@@ -115,7 +140,12 @@ export function Kiosk() {
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           {state === "welcome" && (
-            <WelcomeScreen onStart={() => setState("asking")} />
+            <WelcomeScreen
+              onStart={() => {
+                enterFullscreen();
+                setState("asking");
+              }}
+            />
           )}
 
           {state === "asking" && (
@@ -142,6 +172,33 @@ export function Kiosk() {
           )}
         </motion.div>
       </AnimatePresence>
+
+      {/* Mandatory full screen overlay: kiosk requires full screen to operate */}
+      {!isFullscreen && (
+        <div
+          onClick={enterFullscreen}
+          className="fixed inset-0 z-50 flex cursor-pointer flex-col items-center justify-center bg-black/90 p-6 text-center backdrop-blur-md select-none"
+        >
+          <div className="max-w-md rounded-2xl border border-gold/40 bg-zinc-950/95 p-8 shadow-[0_0_50px_rgba(212,175,55,0.2)] transition-transform active:scale-95">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-2xl text-gold">
+              ⛶
+            </div>
+            <h2 className="text-xl font-bold uppercase tracking-wider text-white">
+              Full Screen Required
+            </h2>
+            <p className="mt-3 text-sm text-white/70">
+              Drishti 2026 AI Kiosk operates exclusively in full screen mode. Click anywhere to enter full screen.
+            </p>
+            <button
+              onClick={enterFullscreen}
+              className="gold-surface mt-6 inline-flex items-center gap-2 rounded-xl px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-black shadow-lg"
+            >
+              <span>Enter Full Screen</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

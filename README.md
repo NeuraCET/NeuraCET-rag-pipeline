@@ -92,26 +92,16 @@ NeuraCET-rag-pipeline/
 
 Before setting up, ensure your system has the following tools installed:
 
-- **Python 3.10+** (Python 3.11 or 3.12 recommended)
-- **Node.js 18+** & **npm**
-- **Ollama**: Download and install from [ollama.com](https://ollama.com)
-- **`poppler-utils`** (recommended for clean PDF text extraction via `pdftotext`):
-  - **Debian / Ubuntu / Mint**:
-    ```bash
-    sudo apt update && sudo apt install -y poppler-utils
-    ```
-  - **macOS (Homebrew)**:
-    ```bash
-    brew install poppler
-    ```
-  - **Arch Linux**:
-    ```bash
-    sudo pacman -S poppler
-    ```
-  - **Windows (WSL2)**:
-    ```bash
-    sudo apt update && sudo apt install -y poppler-utils
-    ```
+- **Python 3.10+** (Python 3.11 or 3.12 recommended across all platforms)
+- **Node.js 18+** & **npm** (Download from [nodejs.org](https://nodejs.org))
+- **Ollama**: Download and install from [ollama.com](https://ollama.com) (Available for Windows, macOS, and Linux)
+- **PDF Extraction (Cross-Platform)**:
+  - Text extraction is powered by `pypdf` which is automatically installed via dependencies and works 100% out-of-the-box on **Windows**, **macOS**, and **Linux**.
+  - *(Optional)* For advanced paragraph formatting using `pdftotext`:
+    - **Windows**: `winget install -e --id Xpdf.poppler` or `choco install poppler`
+    - **macOS**: `brew install poppler`
+    - **Debian / Ubuntu / Mint**: `sudo apt update && sudo apt install -y poppler-utils`
+    - **Arch Linux**: `sudo pacman -S poppler`
 
 ---
 
@@ -132,7 +122,7 @@ Ensure the Ollama service is running, then pull the lightweight 4B parameter mod
 # Start Ollama service (if not already running)
 ollama serve
 
-# Pull the model (in another terminal)
+# In another terminal / PowerShell window:
 ollama pull qwen3.5:4b
 ```
 
@@ -140,28 +130,34 @@ ollama pull qwen3.5:4b
 
 ### 4. Python Environment Setup
 
-You can use [`uv`](https://github.com/astral-sh/uv) (recommended for fast installs) or standard `venv`:
-
-#### Using `uv` (Recommended):
-```bash
-# Create virtual environment
-uv venv
-
-# Install all backend dependencies
-uv pip install -e .
-```
-
-#### Using Standard `python3 -m venv`:
+#### On Linux & macOS:
 ```bash
 # Create virtual environment
 python3 -m venv .venv
 
 # Activate virtual environment
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+source .venv/bin/activate
 
-# Install dependencies
+# Install all backend dependencies
 pip install -e .
 ```
+
+#### On Windows (PowerShell or Command Prompt):
+```powershell
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment in PowerShell
+.\.venv\Scripts\Activate.ps1
+
+# (If running Command Prompt instead)
+# .venv\Scripts\activate.bat
+
+# Install all backend dependencies
+pip install -e .
+```
+
+*(Optional alternative for fast installs: `uv venv && uv pip install -e .`)*
 
 ---
 
@@ -181,11 +177,20 @@ cd ..
 
 Copy the sample environment template:
 
-```bash
-cp .env.example .env
-```
+- **Linux & macOS**:
+  ```bash
+  cp .env.example .env
+  ```
+- **Windows (PowerShell)**:
+  ```powershell
+  Copy-Item .env.example .env
+  ```
+- **Windows (Command Prompt)**:
+  ```cmd
+  copy .env.example .env
+  ```
 
-The default values are configured for local execution and require no changes under normal circumstances:
+The default values are configured for local execution and require no changes:
 
 ```env
 # Ollama service endpoint
@@ -210,14 +215,19 @@ VITE_API_URL=http://localhost:8000
 
 ## 💻 Running the Application
 
-### Quick Start (Single Command)
+### Quick Start (Single Command — All Platforms)
 
-To launch the full stack (Ollama status check, FastAPI backend with auto-reload, and Vite frontend dev server):
+To launch the full stack (Ollama check, FastAPI backend with auto-reload, and Vite frontend dev server):
 
-```bash
-# Run with the virtual environment's python
-.venv/bin/python main.py
-```
+- **Linux & macOS**:
+  ```bash
+  .venv/bin/python main.py
+  ```
+- **Windows (PowerShell or CMD)**:
+  ```powershell
+  .\.venv\Scripts\python.exe main.py
+  ```
+  *(Or if your virtual environment is already activated, simply: `python main.py`)*
 
 Once launched, access the application in your browser:
 - 🖥️ **Kiosk Frontend**: [http://localhost:5173](http://localhost:5173)
@@ -226,6 +236,15 @@ Once launched, access the application in your browser:
 - 🖼️ **Static Festival Posters**: `http://localhost:8000/posters/<poster-filename>`
 
 To stop all services simultaneously, press `Ctrl+C` in the terminal.
+
+---
+
+## ⛶ Fullscreen Kiosk Mode
+
+The Drishti 2026 AI Assistant is designed to run exclusively in **Full Screen Mode** on kiosk hardware:
+1. **Automatic Fullscreen Prompt**: When the application is opened, if the browser is not in fullscreen mode, a full-screen blocker is displayed.
+2. **One-Touch Activation**: Clicking anywhere on the screen or clicking **"Ask a Question"** instantly launches the browser into full screen.
+3. **Exit Protection**: If the browser leaves full screen for any reason, the application safely pauses and displays the full screen prompt until full screen is restored, ensuring an uninterrupted festival showcase.
 
 ---
 
@@ -239,9 +258,8 @@ ollama serve
 ```
 
 #### Terminal 2 — FastAPI Backend:
-```bash
-.venv/bin/python -m uvicorn src.server:app --host 0.0.0.0 --port 8000 --reload
-```
+- **Linux/macOS**: `.venv/bin/python -m uvicorn src.server:app --host 0.0.0.0 --port 8000 --reload`
+- **Windows**: `.\.venv\Scripts\python.exe -m uvicorn src.server:app --host 0.0.0.0 --port 8000 --reload`
 
 #### Terminal 3 — Vite Frontend:
 ```bash
