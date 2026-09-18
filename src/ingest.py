@@ -30,6 +30,32 @@ class DocumentChunk:
     metadata: Dict[str, Any]
 
 
+def reconstruct_pdf_lines(raw_text: str) -> str:
+    """Reconstruct lines from PDFs where tokens/words are emitted on individual lines."""
+    if not raw_text:
+        return ""
+    lines = raw_text.split("\n")
+    cleaned_paras = []
+    current_para = []
+    blank_count = 0
+
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            blank_count += 1
+        else:
+            if blank_count >= 2 and current_para:
+                cleaned_paras.append(" ".join(current_para))
+                current_para = [stripped]
+            else:
+                current_para.append(stripped)
+            blank_count = 0
+    if current_para:
+        cleaned_paras.append(" ".join(current_para))
+
+    return "\n\n".join(cleaned_paras)
+
+
 def extract_pdf_text(pdf_path: Path) -> str:
     """Extract text from PDF using pdftotext first (clean layout), falling back to pypdf."""
     # 1. Try pdftotext CLI for pristine paragraph formatting
@@ -46,14 +72,15 @@ def extract_pdf_text(pdf_path: Path) -> str:
     except Exception:
         pass
 
-    # 2. Fallback to pypdf
+    # 2. Fallback to pypdf with robust line reconstruction
     try:
         from pypdf import PdfReader
         reader = PdfReader(str(pdf_path))
         pages = [page.extract_text() or "" for page in reader.pages]
-        text = "\n\n".join(pages).strip()
-        if text:
-            return clean_whitespace(text)
+        raw_text = "\n".join(pages).strip()
+        if raw_text:
+            cleaned = reconstruct_pdf_lines(raw_text)
+            return clean_whitespace(cleaned)
     except Exception:
         pass
 
@@ -89,10 +116,10 @@ def extract_docx_text(docx_path: Path) -> str:
 
 def clean_whitespace(text: str) -> str:
     """Normalize excess newlines and whitespace."""
-    # Fix words split by line breaks
-    text = re.sub(r"(\b\w+)\n(\w+\b)", r"\1 \2", text)
     # Collapse multiple blank lines
     text = re.sub(r"\n{3,}", "\n\n", text)
+    # Collapse multiple spaces or tabs
+    text = re.sub(r"[ \t]+", " ", text)
     return text.strip()
 
 

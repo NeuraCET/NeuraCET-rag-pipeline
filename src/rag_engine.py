@@ -42,9 +42,50 @@ CORE GUIDELINES:
 """
 
 
+STOPWORDS = {
+    "a", "an", "and", "are", "as", "at", "be", "by", "for", "from",
+    "has", "he", "in", "is", "it", "its", "of", "on", "that", "the",
+    "to", "was", "were", "will", "with", "what", "where", "who", "which",
+    "when", "how", "can", "could", "should", "would", "do", "does", "did",
+    "there", "this", "these", "those", "tell", "me", "about", "give",
+    "i", "you", "my", "your", "we", "our", "all", "any", "some"
+}
+
+
 def simple_tokenize(text: str) -> List[str]:
-    """Basic word tokenizer for BM25."""
+    """Basic word tokenizer for BM25 indexing."""
     return re.findall(r"\w+", text.lower())
+
+
+def tokenize_query(text: str) -> List[str]:
+    """Tokenize query for BM25 retrieval, filtering out common stopwords."""
+    words = re.findall(r"\w+", text.lower())
+    content_words = [w for w in words if w not in STOPWORDS and len(w) > 1]
+    return content_words if content_words else words
+
+
+def detect_target_editions(query: str) -> List[int]:
+    """Determine relevant festival editions from user query.
+    
+    Defaults to [2026] since the assistant is dedicated to Drishti 2026.
+    If the user explicitly asks about past editions (2024, 2022, past, history),
+    past editions are included or targeted.
+    """
+    lower = query.lower()
+    asks_2024 = any(k in lower for k in ["2024", "'24", "drishti 24", "drishti'24"])
+    asks_2022 = any(k in lower for k in ["2022", "'22", "drishti 22", "drishti'22"])
+    asks_past = any(k in lower for k in ["previous edition", "previous year", "past edition", "history of drishti", "past drishti", "earlier edition"])
+    asks_2026 = any(k in lower for k in ["2026", "'26", "drishti 26", "drishti'26", "this year", "upcoming"])
+
+    if (asks_2024 or asks_2022 or asks_past) and asks_2026:
+        return [2026, 2024, 2022]
+    if asks_2024:
+        return [2024]
+    if asks_2022:
+        return [2022]
+    if asks_past:
+        return [2024, 2022]
+    return [2026]
 
 
 class RAGEngine:
@@ -106,7 +147,7 @@ class RAGEngine:
         except Exception as e:
             print(f"[RAG] Note: Dense embeddings unavailable ({e}), using keyword retrieval.", flush=True)
 
-    def retrieve(self, query: str, top_k: int = 3) -> Tuple[List[Tuple[DocumentChunk, float]], float, float]:
+    def retrieve(self, query: str, top_k: int = 5) -> Tuple[List[Tuple[DocumentChunk, float]], float, float]:
         """Hybrid retrieval combining BM25 keyword ranking and dense semantic similarity."""
         if not self.chunks:
             return [], 0.0, 0.0
@@ -116,9 +157,9 @@ class RAGEngine:
         raw_max_bm = 0.0
         raw_max_dense = 0.0
 
-        # BM25 scoring
+        # BM25 scoring with stopword-filtered content tokens
         if self.bm25:
-            tokens = simple_tokenize(query)
+            tokens = tokenize_query(query)
             if tokens:
                 raw_bm25 = np.array(self.bm25.get_scores(tokens))
                 raw_max_bm = float(np.max(raw_bm25)) if len(raw_bm25) > 0 else 0.0
@@ -142,7 +183,23 @@ class RAGEngine:
         else:
             final_scores = dense_scores
 
-        top_indices = np.argsort(final_scores)[::-1][:top_k]
+        # Smart edition filtering
+        target_editions = detect_target_editions(query)
+        candidate_indices = [
+            i for i, c in enumerate(self.chunks)
+            if c.metadata.get("edition") in target_editions
+        ]
+
+        # If user asked about 2026 by default, but no 2026 chunk matched well and a past chunk is a strong match, allow fallback
+        if target_editions == [2026] and candidate_indices:
+            top_2026_score = max([final_scores[i] for i in candidate_indices])
+            if top_2026_score < 0.32:
+                candidate_indices = list(range(n_chunks))
+        elif not candidate_indices:
+            candidate_indices = list(range(n_chunks))
+
+        sorted_candidates = sorted(candidate_indices, key=lambda idx: final_scores[idx], reverse=True)
+        top_indices = sorted_candidates[:top_k]
         results = [(self.chunks[idx], float(final_scores[idx])) for idx in top_indices]
         return results, raw_max_bm, raw_max_dense
 
@@ -154,10 +211,20 @@ class RAGEngine:
         poster_url = registry.get_poster_for_query(question)
 
         # 2. Retrieve relevant chunks
-        top_results, raw_max_bm, raw_max_dense = self.retrieve(question, top_k=3)
+        top_results, raw_max_bm, raw_max_dense = self.retrieve(question, top_k=5)
 
         # Check if query retrieved relevant festival context
-        has_context = (raw_max_bm > 0.0 or raw_max_dense >= 0.28)
+        has_context = (raw_max_bm > 0.0 or raw_max_dense >= 0.32)
+
+        # Poster resolution: only return poster if relevant festival context is matched
+        if not has_context:
+            poster_url = None
+        elif not poster_url and top_results:
+            top_chunk, top_score = top_results[0]
+            if top_chunk.metadata.get("edition") == 2026 and (top_score >= 0.40 or raw_max_bm > 0):
+                ev_name = top_chunk.metadata.get("event_name", "")
+                if ev_name:
+                    poster_url = registry.get_poster_for_query(ev_name)
 
         if has_context:
             context_texts = []
@@ -166,7 +233,7 @@ class RAGEngine:
                 edition = chunk.metadata.get("edition", "2026")
                 context_texts.append(f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}")
             full_context = "\n\n".join(context_texts)
-            user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. If details are not found in the records, cheerfully state so:"
+            user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. Use clear Markdown bullet points. If details are not found in the records, cheerfully state so:"
         else:
             full_context = "(No specific festival records matched this casual message or general question.)"
             user_instruction = "Provide a cheerful, natural, and helpful response according to your guidelines (greet warmly if greeted, or cheerfully guide the user to Drishti 2026 events):"
@@ -188,9 +255,9 @@ class RAGEngine:
                 "options": {
                     "temperature": 0.2 if has_context else 0.6,
                     "top_p": 0.9,
-                    "num_ctx": 2048,
-                    "num_predict": 800,  # Generous budget so answers are never truncated
-                    "num_thread": 10,    # 10 threads benchmarked fastest on 6-core/12-thread Ryzen CPU
+                    "num_ctx": 4096,
+                    "num_predict": 1500,
+                    "num_thread": 10,
                 },
             }
 
@@ -216,7 +283,20 @@ class RAGEngine:
         poster_url = registry.get_poster_for_query(question)
 
         # 2. Retrieve relevant chunks
-        top_results, raw_max_bm, raw_max_dense = self.retrieve(question, top_k=3)
+        top_results, raw_max_bm, raw_max_dense = self.retrieve(question, top_k=5)
+
+        # Check if query retrieved relevant festival context
+        has_context = (raw_max_bm > 0.0 or raw_max_dense >= 0.32)
+
+        # Poster resolution: only return poster if relevant festival context is matched
+        if not has_context:
+            poster_url = None
+        elif not poster_url and top_results:
+            top_chunk, top_score = top_results[0]
+            if top_chunk.metadata.get("edition") == 2026 and (top_score >= 0.40 or raw_max_bm > 0):
+                ev_name = top_chunk.metadata.get("event_name", "")
+                if ev_name:
+                    poster_url = registry.get_poster_for_query(ev_name)
 
         # Emit initial metadata event
         yield json.dumps({
@@ -226,7 +306,7 @@ class RAGEngine:
         }) + "\n"
 
         # Check if query retrieved relevant festival context
-        has_context = (raw_max_bm > 0.0 or raw_max_dense >= 0.28)
+        has_context = (raw_max_bm > 0.0 or raw_max_dense >= 0.32)
 
         if has_context:
             context_texts = []
@@ -235,7 +315,7 @@ class RAGEngine:
                 edition = chunk.metadata.get("edition", "2026")
                 context_texts.append(f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}")
             full_context = "\n\n".join(context_texts)
-            user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. If details are not found in the records, cheerfully state so:"
+            user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. Use clear Markdown bullet points. If details are not found in the records, cheerfully state so:"
         else:
             full_context = "(No specific festival records matched this casual message or general question.)"
             user_instruction = "Provide a cheerful, natural, and helpful response according to your guidelines (greet warmly if greeted, or cheerfully guide the user to Drishti 2026 events):"
@@ -257,8 +337,8 @@ class RAGEngine:
                 "options": {
                     "temperature": 0.2 if has_context else 0.6,
                     "top_p": 0.9,
-                    "num_ctx": 2048,
-                    "num_predict": 800,
+                    "num_ctx": 4096,
+                    "num_predict": 1500,
                     "num_thread": 10,
                 },
             }
@@ -267,6 +347,11 @@ class RAGEngine:
             for line in resp.iter_lines():
                 if line:
                     chunk = json.loads(line.decode("utf-8"))
+                    if "error" in chunk:
+                        err_msg = f"Language model error: {chunk.get('error')}"
+                        yield json.dumps({"type": "token", "content": err_msg}) + "\n"
+                        yield json.dumps({"type": "done"}) + "\n"
+                        return
                     token = chunk.get("message", {}).get("content", "")
                     if token:
                         yield json.dumps({"type": "token", "content": token}) + "\n"

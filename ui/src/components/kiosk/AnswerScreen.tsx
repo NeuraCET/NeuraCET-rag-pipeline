@@ -57,14 +57,20 @@ export function AnswerScreen({
   onHome,
   isStreaming = false,
 }: AnswerScreenProps) {
-  const typewriter = useTypewriter(isStreaming ? "" : result.answer, 4);
-  const displayedText = isStreaming ? result.answer : typewriter.displayedText;
-  const isTyping = isStreaming || typewriter.isTyping;
+  // Track if this answer was delivered via live token streaming
+  const hasStreamedRef = useRef(isStreaming);
+  if (isStreaming) {
+    hasStreamedRef.current = true;
+  }
+
+  const typewriter = useTypewriter(!hasStreamedRef.current ? result.answer : "", 4);
+  const displayedText = hasStreamedRef.current ? result.answer : typewriter.displayedText;
+  const isTyping = isStreaming || (!hasStreamedRef.current && typewriter.isTyping);
   const finish = useCallback(() => {
-    if (!isStreaming) {
+    if (!hasStreamedRef.current) {
       typewriter.finish();
     }
-  }, [isStreaming, typewriter]);
+  }, [typewriter]);
 
   const bottomRef = useRef<HTMLDivElement>(null);
 

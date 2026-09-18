@@ -18,6 +18,7 @@ import time
 import urllib.request
 import urllib.error
 from pathlib import Path
+import shutil
 
 ROOT_DIR = Path(__file__).resolve().parent
 UI_DIR = ROOT_DIR / "ui"
