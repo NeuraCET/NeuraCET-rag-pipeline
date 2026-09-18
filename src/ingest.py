@@ -3,6 +3,7 @@
 Parses all files in dataRAG/:
 - new.json (new & updated 2026 events)
 - combined_events.json (2026 events)
+- DAY1.pdf (2026 Day 1 official itinerary)
 - Drishti-26.pdf (2026 overview & schedule)
 - ai_summit_data.pdf (2026 AI Summit)
 - Drishti'24.docx.pdf (2024 historical archive)
@@ -220,6 +221,54 @@ def load_all_chunks(data_dir: Path = DATA_DIR) -> List[DocumentChunk]:
                     chunk_id=f"drishti26_pdf_{chunk_counter}",
                     text=f"[Drishti 2026 Overview & Schedule]\n{sub_chunk}",
                     metadata={"source": "Drishti-26.pdf", "edition": 2026},
+                )
+            )
+            chunk_counter += 1
+
+    # 3. Ingest DAY1.pdf (Official Drishti 2026 Day 1 Itinerary - Today, September 18, 2026)
+    day1_path = data_dir / "DAY1.pdf"
+    if not day1_path.exists():
+        for p in data_dir.glob("DAY1*"):
+            if p.is_file():
+                day1_path = p
+                break
+
+    if day1_path.exists():
+        text = extract_pdf_text(day1_path)
+        # Full itinerary chunk for holistic Day 1 schedule queries
+        all_chunks.append(
+            DocumentChunk(
+                chunk_id=f"day1_itinerary_complete_{chunk_counter}",
+                text=(
+                    f"[Drishti 2026 Day 1 Official Complete Itinerary (Today, September 18, 2026)]\n"
+                    f"Date: September 18, 2026 (Day 1 / Today)\n"
+                    f"Schedule & Venue Timetable:\n{text}"
+                ),
+                metadata={
+                    "source": "DAY1.pdf",
+                    "edition": 2026,
+                    "day": 1,
+                    "date": "2026-09-18",
+                },
+            )
+        )
+        chunk_counter += 1
+
+        # Section chunks for specific event and timing lookups
+        for sub_chunk in chunk_document(text, chunk_size=800, overlap=100):
+            all_chunks.append(
+                DocumentChunk(
+                    chunk_id=f"day1_itinerary_part_{chunk_counter}",
+                    text=(
+                        f"[Drishti 2026 Day 1 Official Itinerary (Today, September 18, 2026)]\n"
+                        f"Date: September 18, 2026 (Day 1 / Today)\n{sub_chunk}"
+                    ),
+                    metadata={
+                        "source": "DAY1.pdf",
+                        "edition": 2026,
+                        "day": 1,
+                        "date": "2026-09-18",
+                    },
                 )
             )
             chunk_counter += 1
