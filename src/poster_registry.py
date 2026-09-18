@@ -77,6 +77,7 @@ POSTER_MAPPINGS: Dict[str, str] = {
     "shecet photography": "shephotography.jpeg",
     "she quiz": "shequiz.jpeg",
     "women in tech quiz": "shequiz.jpeg",
+    "quiz competition - women in tech": "shequiz.jpeg",
     "signal showdown": "signalshowdown.jpeg",
     "solidworks": "soldiworks.jpeg",
     "stellar odyssey": "stellarodysseytreasurehunt.jpeg",

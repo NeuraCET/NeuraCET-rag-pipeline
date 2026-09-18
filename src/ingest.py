@@ -1,6 +1,7 @@
 """Document Ingestion & Chunking for Drishti RAG Knowledge Base.
 
 Parses all files in dataRAG/:
+- new.json (new & updated 2026 events)
 - combined_events.json (2026 events)
 - Drishti-26.pdf (2026 overview & schedule)
 - ai_summit_data.pdf (2026 AI Summit)
@@ -152,41 +153,62 @@ def load_all_chunks(data_dir: Path = DATA_DIR) -> List[DocumentChunk]:
     all_chunks: List[DocumentChunk] = []
     chunk_counter = 0
 
-    # 1. Ingest combined_events.json (2026 events)
+    # 1. Ingest 2026 events from new.json and combined_events.json
+    events_to_ingest: List[tuple[dict[str, Any], str]] = []
+    seen_event_names = set()
+
+    # Load new.json first so updated/new records take precedence
+    new_json_path = data_dir / "new.json"
+    if new_json_path.exists():
+        with open(new_json_path, "r", encoding="utf-8") as f:
+            new_events = json.load(f)
+        for ev in new_events:
+            events_to_ingest.append((ev, "new.json"))
+            name = ev.get("event_name", "").strip().lower()
+            if name:
+                seen_event_names.add(name)
+
+    # Load combined_events.json, skipping duplicate event names already loaded from new.json
     json_path = data_dir / "combined_events.json"
     if json_path.exists():
         with open(json_path, "r", encoding="utf-8") as f:
-            events = json.load(f)
-        for ev in events:
-            name = ev.get("event_name", "Unknown Event")
-            edition = ev.get("edition", 2026)
-            days = ev.get("days", [])
-            dates = ev.get("dates", [])
-            categories = ", ".join(ev.get("categories", []))
-            source_text = ev.get("source_text", "")
-            search_text = ev.get("search_text", "")
+            combined_events = json.load(f)
+        for ev in combined_events:
+            name = ev.get("event_name", "").strip().lower()
+            if name and name in seen_event_names:
+                continue
+            events_to_ingest.append((ev, "combined_events.json"))
 
-            chunk_content = (
-                f"Event Name: {name}\n"
-                f"Edition: Drishti {edition}\n"
-                f"Dates: {', '.join(dates) if dates else 'N/A'} (Days: {', '.join(map(str, days)) if days else 'N/A'})\n"
-                f"Categories: {categories}\n"
-                f"Details:\n{source_text}\n"
-                f"Summary: {search_text}"
+    for ev, src_file in events_to_ingest:
+        name = ev.get("event_name", "Unknown Event")
+        edition = ev.get("edition", 2026)
+        days = ev.get("days", [])
+        dates = ev.get("dates", [])
+        categories = ", ".join(ev.get("categories", []))
+        source_text = ev.get("source_text", "")
+        search_text = ev.get("search_text", "")
+
+        chunk_content = (
+            f"Event Name: {name}\n"
+            f"Edition: Drishti {edition}\n"
+            f"Dates: {', '.join(dates) if dates else 'N/A'} (Days: {', '.join(map(str, days)) if days else 'N/A'})\n"
+            f"Categories: {categories}\n"
+            f"Details:\n{source_text}\n"
+            f"Summary: {search_text}"
+        )
+        all_chunks.append(
+            DocumentChunk(
+                chunk_id=f"event_2026_{chunk_counter}",
+                text=chunk_content,
+                metadata={
+                    "source": src_file,
+                    "edition": edition,
+                    "event_name": name,
+                    "categories": ev.get("categories", []),
+                },
             )
-            all_chunks.append(
-                DocumentChunk(
-                    chunk_id=f"event_2026_{chunk_counter}",
-                    text=chunk_content,
-                    metadata={
-                        "source": "combined_events.json",
-                        "edition": 2026,
-                        "event_name": name,
-                        "categories": ev.get("categories", []),
-                    },
-                )
-            )
-            chunk_counter += 1
+        )
+        chunk_counter += 1
 
     # 2. Ingest Drishti-26.pdf
     d26_path = data_dir / "Drishti-26.pdf"
