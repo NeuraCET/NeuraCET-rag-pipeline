@@ -1,0 +1,1075 @@
+[
+  {
+    "event_name": "Panel Discussion: Women in Tech - Building Tech Where Everyone Belongs",
+    "edition": 2026,
+    "days": [
+      1
+    ],
+    "dates": [
+      "2026-09-18"
+    ],
+    "categories": [
+      "panel",
+      "discussion"
+    ],
+    "is_listable": true,
+    "search_text": "Women in Tech Building Tech Where Everyone Belongs panel discussion Drishti 2026 AI Summit. Speakers Jeevadas K Y (Manager, Account and Delivery, Semiconductor), Dr Aswathy Udayan (Co-Founder and CTO, Accubits Invent Pvt Limited), Mariyam Vidhu Vijayan (CEO, Crink.app). Schedule September 18, 2026, 12:00 to 1:00 PM at the CGPU Hall. Poster features portraits of the three speakers.",
+    "source_text": "Event: Panel Discussion: Women in Tech - Building Tech Where Everyone Belongs\nOrganized by: Drishti 2026 (AI Summit)\nSpeakers: Jeevadas K Y (Manager, Account and Delivery, Semiconductor), Dr Aswathy Udayan (Co-Founder and CTO, Accubits Invent Pvt Limited), Mariyam Vidhu Vijayan (CEO, Crink.app)\nCategory: Panel Discussion\nDate: September 18, 2026 (Day 1)\nVenue: CGPU Hall\nTime: 12:00 PM to 1:00 PM\nCoordinators / Contact: Aiveen\nPoster: ![Women in Tech Panel](images/image_44724b.jpg)",
+    "_merged_from": [
+      "ai_summit_events.json",
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Panel Discussion: AI in Automotive Industry",
+    "edition": 2026,
+    "days": [
+      1
+    ],
+    "dates": [
+      "2026-09-18"
+    ],
+    "categories": [
+      "panel",
+      "talk"
+    ],
+    "is_listable": true,
+    "search_text": "AI in Automotive Industry panel discussion Drishti 2026 AI Summit. Speakers Dr Shivoh Chirayil Nandakumar (Founder and CEO, RideScan AI), Tony Thomas (Advisor, EQT). Schedule September 18, 2026, 1:30 to 2:30 PM at the CETAA Hall. Poster features portraits of the two speakers.",
+    "source_text": "Event: Panel Discussion: AI in Automotive Industry\nOrganized by: Drishti 2026 (AI Summit)\nSpeakers: Dr Shivoh Chirayil Nandakumar (Founder and CEO, RideScan AI), Tony Thomas (Advisor, EQT)\nCategory: Panel Discussion\nDate: September 18, 2026 (Day 1)\nVenue: CETAA Hall\nTime: 1:30 PM to 2:30 PM\nCoordinators / Contact: Devika Sajeesh (Dr Shivoh Chirayil Nandakumar), Aiveen (Tony Thomas)\nPoster: ![AI in Automotive Industry Panel](automotive_wa.png)",
+    "_merged_from": [
+      "ai_summit_events.json"
+    ]
+  },
+  {
+    "event_name": "Talk Session: Victims of Cyber Fraud - Governance Against LLM-Driven Attacks",
+    "edition": 2026,
+    "days": [
+      1
+    ],
+    "dates": [
+      "2026-09-18"
+    ],
+    "categories": [
+      "talk"
+    ],
+    "is_listable": true,
+    "search_text": "Victims of Cyber Fraud Governance Against LLM-Driven Attacks talk session Drishti 2026 AI Summit. Speaker Advocate Jince T Thomas, High Court of Kerala, Research Scholar in Digital Forensics and Incident Investigation. Schedule September 18, 2026, 2:30 to 3:30 PM at the EEE Seminar Hall. Poster features portrait of Adv. Jince T Thomas.",
+    "source_text": "Event: Talk Session: Victims of Cyber Fraud - Governance Against LLM-Driven Attacks\nOrganized by: Drishti 2026 (AI Summit)\nSpeaker: Advocate Jince T Thomas (High Court of Kerala; Research Scholar, Digital Forensics and Incident Investigation)\nCategory: Talk\nDate: September 18, 2026 (Day 1)\nVenue: EEE Seminar Hall\nTime: 2:30 PM to 3:30 PM\nCoordinators / Contact: Akshay V Sarma\nPoster: ![Victims of Cyber Fraud Talk](cyber_wa.png)",
+    "_merged_from": [
+      "ai_summit_events.json"
+    ]
+  },
+  {
+    "event_name": "Building Startups in the AI Age",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "talk"
+    ],
+    "is_listable": true,
+    "search_text": "Building Startups in the AI Age talk session Drishti 2026 AI Summit. Speaker Anoop Ambika, CEO of Kerala Startup Mission (KSUM). Schedule September 19, 2026, 10:00 to 11:00 AM at the J C Alexander Hall. Poster features portrait of Anoop Ambika.",
+    "source_text": "Event: Building Startups in the AI Age\nOrganized by: Drishti 2026 (AI Summit)\nSpeaker: Anoop Ambika (CEO, Kerala Startup Mission - KSUM)\nCategory: Talk\nDate: September 19, 2026 (Day 2)\nVenue: J C Alexander Hall\nTime: 10:00 AM to 11:00 AM\nCoordinators / Contact: Gautam\nPoster: ![Building Startups in the AI Age](building_startups_WA.png)",
+    "_merged_from": [
+      "ai_summit_events.json"
+    ]
+  },
+  {
+    "event_name": "Medical Devices: From Past to Future - The Global Journey and India's Position",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "talk"
+    ],
+    "is_listable": true,
+    "search_text": "Medical Devices From Past to Future The Global Journey and India's Position talk session Drishti 2026 AI Summit. Speaker Anoop Gopinathan, Scientist at Sree Chitra Tirunal Institute for Medical Sciences and Technology (SCTIMST). Schedule September 19, 2026, 10:30 to 11:30 AM at the EEE Seminar Hall. Poster features portrait of Anoop Gopinathan.",
+    "source_text": "Event: Medical Devices: From Past to Future - The Global Journey and India's Position\nOrganized by: Drishti 2026 (AI Summit)\nSpeaker: Anoop Gopinathan (Scientist, Sree Chitra Tirunal Institute for Medical Sciences and Technology - SCTIMST)\nCategory: Talk\nDate: September 19, 2026 (Day 2)\nVenue: EEE Seminar Hall\nTime: 10:30 AM to 11:30 AM\nCoordinators / Contact: Aiveen\nPoster: ![Medical Devices Talk](images/image_446ea6.jpg)",
+    "_merged_from": [
+      "ai_summit_events.json",
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Panel Discussion: AI for Governance",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "panel",
+      "talk"
+    ],
+    "is_listable": true,
+    "search_text": "AI for Governance panel discussion Drishti 2026 AI Summit. Speakers Dr Sabarish Karunakaran (Head of E-Governance, KSITM), Ankit Asokan IPS (SP, Kerala Police Cyber Dome). Schedule September 19, 2026, 10:30 to 11:30 AM at the CGPU Hall. Poster features portraits of the two speakers.",
+    "source_text": "Event: Panel Discussion: AI for Governance\nOrganized by: Drishti 2026 (AI Summit)\nSpeakers: Dr Sabarish Karunakaran (Head of E-Governance, KSITM), Ankit Asokan IPS (SP, Kerala Police Cyber Dome)\nCategory: Panel Discussion\nDate: September 19, 2026 (Day 2)\nVenue: CGPU Hall\nTime: 10:30 AM to 11:30 AM\nCoordinators / Contact: Avaneesh (Dr Sabarish Karunakaran), Abhimanyu (Ankit Asokan IPS)\nPoster: ![AI for Governance Panel](AI_FOR_GOVERNANCE_WA.png)",
+    "_merged_from": [
+      "ai_summit_events.json"
+    ]
+  },
+  {
+    "event_name": "Panel Discussion: AI for Everyone - Who Gets to Be Intelligent?",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "panel",
+      "talk"
+    ],
+    "is_listable": true,
+    "search_text": "AI for Everyone Who Gets to Be Intelligent panel discussion Drishti 2026 AI Summit. Speakers Sreejith Vadakara (CTO, Cymonic Technologies), Akhil Pulikkal Nandakumar (AI Architect, Cymonic Technologies). Schedule September 19, 2026, 1:00 to 2:00 PM at the CETAA Hall. Poster features portraits of the two speakers.",
+    "source_text": "Event: Panel Discussion: AI for Everyone - Who Gets to Be Intelligent?\nOrganized by: Drishti 2026 (AI Summit)\nSpeakers: Sreejith Vadakara (Chief Technology Officer, Cymonic Technologies), Akhil Pulikkal Nandakumar (AI Architect, Cymonic Technologies)\nCategory: Panel Discussion\nDate: September 19, 2026 (Day 2)\nVenue: CETAA Hall\nTime: 1:00 PM to 2:00 PM\nCoordinators / Contact: Aiveen\nPoster: ![AI for Everyone Panel](AI_4_Everyone_WA.png)",
+    "_merged_from": [
+      "ai_summit_events.json"
+    ]
+  },
+  {
+    "event_name": "Panel Discussion: AI Defined Vehicles - Transforming the Industry",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "panel",
+      "talk"
+    ],
+    "is_listable": true,
+    "search_text": "AI Defined Vehicles Transforming the Industry panel discussion Drishti 2026 AI Summit. Speakers from Quest Global Automotive Vertical: Jeena Paulson (Project Manager), Deepak P (Program Manager), Divya M S (Principal Architect), Rakesh V M (Senior Technical Architect). Schedule September 19, 2026, 2:00 to 3:00 PM at the CETAA Hall. Poster features portraits of the four speakers.",
+    "source_text": "Event: Panel Discussion: AI Defined Vehicles - Transforming the Industry\nOrganized by: Drishti 2026 (AI Summit)\nSpeakers: Jeena Paulson (Project Manager), Deepak P (Program Manager), Divya M S (Principal Architect), Rakesh V M (Senior Technical Architect) - all Automotive Vertical, Quest Global\nCategory: Panel Discussion\nDate: September 19, 2026 (Day 2)\nVenue: CETAA Hall\nTime: 2:00 PM to 3:00 PM\nCoordinators / Contact: Aiveen\nPoster: ![AI Defined Vehicles Panel](AI_DEFINED_WA.png)",
+    "_merged_from": [
+      "ai_summit_events.json"
+    ]
+  },
+  {
+    "event_name": "Talk Session: AI in Healthcare - Diagnosing Fast",
+    "edition": 2026,
+    "days": [
+      3
+    ],
+    "dates": [
+      "2026-09-20"
+    ],
+    "categories": [
+      "talk"
+    ],
+    "is_listable": true,
+    "search_text": "AI in Healthcare Diagnosing Fast talk session Drishti 2026 AI Summit. Speaker Anup G Prasad, Lead AI Engineer at Equipo Health. Schedule September 20, 2026, 10:00 to 11:00 AM at the EEE Seminar Hall. Poster features portrait of Anup G Prasad.",
+    "source_text": "Event: Talk Session: AI in Healthcare - Diagnosing Fast\nOrganized by: Drishti 2026 (AI Summit)\nSpeaker: Anup G Prasad (Lead AI Engineer, Equipo Health)\nCategory: Talk\nDate: September 20, 2026 (Day 3)\nVenue: EEE Seminar Hall\nTime: 10:00 AM to 11:00 AM\nCoordinators / Contact: Aiveen\nPoster: ![AI in Healthcare Talk](AI_IN_HEALTHCARE_WA.png)",
+    "_merged_from": [
+      "ai_summit_events.json"
+    ]
+  },
+  {
+    "event_name": "The Car That Talks Back: LLMs in the Cockpit from Voice Assistant to Co-Driver",
+    "edition": 2026,
+    "days": [
+      3
+    ],
+    "dates": [
+      "2026-09-20"
+    ],
+    "categories": [
+      "talk",
+      "panel"
+    ],
+    "is_listable": true,
+    "search_text": "The Car That Talks Back LLMs in the Cockpit from Voice Assistant to Co-Driver talk session Drishti 2026 AI Summit. Speakers from Quest Global Automotive Vertical: Siva Prasad V (Technical Architect), Girish Vadakkeparambath (Technical Architect), Lal Kishor (Program Manager), Anu A (Project Manager). Schedule September 20, 2026, 10:30 to 11:30 AM at the CGPU Hall. Poster features portraits of the four speakers.",
+    "source_text": "Event: The Car That Talks Back: LLMs in the Cockpit from Voice Assistant to Co-Driver\nOrganized by: Drishti 2026 (AI Summit)\nSpeakers: Siva Prasad V, Girish Vadakkeparambath, Lal Kishor, Anu A (Quest Global - Automotive Vertical)\nCategory: Talk / Panel\nDate: September 20, 2026 (Day 3)\nVenue: CGPU Hall\nTime: 10:30 AM to 11:30 AM\nCoordinators / Contact: Aiveen\nPoster: ![The Car That Talks Back](images/image_44e5cb.jpg)",
+    "_merged_from": [
+      "ai_summit_events.json",
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Intelligent Cockpit: The Car That Learns",
+    "edition": 2026,
+    "days": [
+      3
+    ],
+    "dates": [
+      "2026-09-20"
+    ],
+    "categories": [
+      "talk",
+      "panel"
+    ],
+    "is_listable": true,
+    "search_text": "Intelligent Cockpit The Car That Learns talk session Drishti 2026 AI Summit. Speakers from Quest Global Automotive Vertical: Nishad Azeez (Program Manager), Lim Gopinath (Delivery Manager), Shiney A John (Program Manager), Vineesh C (Senior Technical Architect). Schedule September 20, 2026, 1:30 to 2:30 PM at the CGPU Hall. Poster features portraits of the four speakers.",
+    "source_text": "Event: Intelligent Cockpit: The Car That Learns\nOrganized by: Drishti 2026 (AI Summit)\nSpeakers: Nishad Azeez, Lim Gopinath, Shiney A John, Vineesh C (Quest Global - Automotive Vertical)\nCategory: Talk / Panel\nDate: September 20, 2026 (Day 3)\nVenue: CGPU Hall\nTime: 1:30 PM to 2:30 PM\nCoordinators / Contact: Aiveen\nPoster: ![Intelligent Cockpit](images/image_4466ac.jpg)",
+    "_merged_from": [
+      "ai_summit_events.json",
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Will AI Take Our Jobs?",
+    "edition": 2026,
+    "days": [
+      3
+    ],
+    "dates": [
+      "2026-09-20"
+    ],
+    "categories": [
+      "panel",
+      "talk"
+    ],
+    "is_listable": true,
+    "search_text": "Will AI Take Our Jobs panel talk Drishti 2026 AI Summit. Speakers Varghese Cherian (Head of Technology, UST), Rejah Rahim (Co-Founder and CEO, Beagle Security), Akhil A Vijay (Global Leader - Talent Marketing and Referral Hiring, Quest Global). Schedule September 20, 2026, 2:30 to 3:30 PM at the CETAA Hall. Poster features portraits of the three speakers.",
+    "source_text": "Event: Will AI Take Our Jobs?\nOrganized by: Drishti 2026 (AI Summit)\nSpeakers: Varghese Cherian (Head of Technology, UST), Rejah Rahim (Co-Founder and CEO, Beagle Security), Akhil A Vijay (Global Leader - Talent Marketing and Referral Hiring, Quest Global)\nCategory: Talk / Panel\nDate: September 20, 2026 (Day 3)\nVenue: CETAA Hall\nTime: 2:30 PM to 3:30 PM\nCoordinators / Contact: Aiveen\nPoster: ![AI Panel](images/image_44eaa6.jpg)",
+    "_merged_from": [
+      "ai_summit_events.json",
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Building an 8-Bit Computer Workshop",
+    "edition": 2026,
+    "days": [
+      1
+    ],
+    "dates": [
+      "2026-09-18"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Building an 8-Bit Computer Workshop Drishti 2026 organized by Her Aura. Registration fee 99. Ensure laptops for the session. KTU points available. Schedule September 18, 2026. Contact Gurupriya +91 87142 79437, Padma +91 83018 71915. Poster features colorful logic gates.",
+    "source_text": "Event: Building an 8-Bit Computer Workshop\nOrganized by: Her Aura (Drishti 2026)\nCategory: Workshop\nDate: September 18, 2026 (Day 1)\nRegistration Fee: ₹99/-\nRequirements: Laptops required. KTU points provided.\nCoordinators / Contact: Gurupriya (+91 87142 79437), Padma (+91 83018 71915)\nPoster: ![8-Bit Computer Workshop](images/image_3a721f.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Ansys Workshop",
+    "edition": 2026,
+    "days": [
+      1
+    ],
+    "dates": [
+      "2026-09-18"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Ansys Workshop Drishti 2026 organized by ASME CET Student Section. Speaker Mr. Jishnu Reghunath, Application Engineer ARK (ANSYS's Distributor in India). Registration fee 149. Ensure laptops for the session. KTU points available. Schedule September 18, 2026. Contact Shivahari +91 79079 45281, Harikrishnan +91 89210 91759. Poster features a colorful 3D aerodynamic car model.",
+    "source_text": "Event: Ansys Workshop\nOrganized by: ASME CET Student Section (Drishti 2026)\nSpeaker: Mr. Jishnu Reghunath (Application Engineer, ARK)\nCategory: Workshop\nDate: September 18, 2026 (Day 1)\nRegistration Fee: ₹149/-\nRequirements: Laptops required. KTU points provided.\nCoordinators / Contact: Shivahari (+91 79079 45281), Harikrishnan (+91 89210 91759)\nPoster: ![Ansys Workshop](images/image_3a725f.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Arduino Workshop Offline",
+    "edition": 2026,
+    "days": [
+      3
+    ],
+    "dates": [
+      "2026-09-20"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Arduino Workshop Offline Drishti 2026 organized by SAEINDIA CET and Herakles. Registration fee 999 per participant. Takeaway kits provided, limited slots available. KTU points available. Schedule September 20, 2026. Contact Abja 9447477394. Poster features a black and white Arduino Uno board.",
+    "source_text": "Event: Arduino Workshop Offline\nOrganized by: SAEINDIA CET & Herakles (Drishti 2026)\nCategory: Workshop\nDate: September 20, 2026 (Day 3)\nRegistration Fee: ₹999/participant\nDetails: Takeaway kits provided. Limited slots available. KTU points provided.\nCoordinators / Contact: Abja (9447477394)\nPoster: ![Arduino Workshop](images/image_3a7567.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Biennale Art Expo",
+    "edition": 2026,
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "dates": [
+      "2026-09-18",
+      "2026-09-19",
+      "2026-09-20"
+    ],
+    "categories": [
+      "expo"
+    ],
+    "is_listable": true,
+    "search_text": "Biennale Art Expo Drishti 2026 presented by College Union 2025-26, College of Engineering Trivandrum. Art exhibition located at Gazebo. Schedule September 18, September 19, September 20, 2026. Poster features a dark hallway with famous paintings embedded in gold text.",
+    "source_text": "Event: Biennale Art Expo\nOrganized by: College Union 2025-26, College of Engineering Trivandrum (Drishti 2026)\nCategory: Expo / Exhibition\nDates: September 18, 19, and 20, 2026 (Days 1, 2, and 3)\nLocation: Gazebo\nPoster: ![Biennale Expo](images/image_3a75be.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Dance Workshop",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Dance Workshop Drishti 2026 organized by CET. Instructor Nadeem. Sponsored by Durodesigns Home Decors Pvt. Ltd. Registration fee 250 for CETians, 300 for non-CETians. Schedule September 19, 2026. Contact Vishal +91 83010 31242, Anupam +91 79072 00513.",
+    "source_text": "Event: Dance Workshop\nOrganized by: CET (Drishti 2026)\nInstructor: Nadeem\nCategory: Workshop\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹250/- (CETians), ₹300/- (Non-CETians)\nSponsor: Durodesigns Home Decors Pvt. Ltd.\nCoordinators / Contact: Vishal (+91 83010 31242), Anupam (+91 79072 00513)\nPoster: ![Dance Workshop](images/image_3a795e.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Decoding AI Workshop: Understanding Models and Prompt Grammar",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Decoding AI Workshop Understanding Models and Prompt Grammer Drishti 2026. Speaker Dr. Deepak Mishra, Professor Avionics Department IIST Thiruvananthapuram. Registration fee 160. KTU points available. Schedule September 19, 2026. Contact Aromal +91 85901 47038, Sibin +91 62387 61277.",
+    "source_text": "Event: Decoding AI Workshop (Understanding Models and Prompt Grammar)\nOrganized by: Drishti 2026\nSpeaker: Dr. Deepak Mishra (Professor, Avionics Department, IIST, Thiruvananthapuram)\nCategory: Workshop\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹160/-\nDetails: KTU points provided.\nCoordinators / Contact: Aromal (+91 85901 47038), Sibin (+91 62387 61277)\nPoster: ![Decoding AI Workshop](images/image_3a7984.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "FPV Drone Sim-Racing",
+    "edition": 2026,
+    "days": [
+      1,
+      2
+    ],
+    "dates": [
+      "2026-09-18",
+      "2026-09-19"
+    ],
+    "categories": [
+      "competition"
+    ],
+    "is_listable": true,
+    "search_text": "FPV Drone Sim-Racing competition Drishti 2026 organized by AeroCET. Registration fee 49. Prize pool 500. Schedule September 18, September 19, 2026. Contact Akul +91 94474 25533, Arya +91 73060 98390. Poster features a drone.",
+    "source_text": "Event: FPV Drone Sim-Racing\nOrganized by: AeroCET (Drishti 2026)\nCategory: Competition\nDates: September 18 and 19, 2026 (Days 1 and 2)\nRegistration Fee: ₹49/-\nPrize Pool: ₹500/-\nCoordinators / Contact: Akul (+91 94474 25533), Arya (+91 73060 98390)\nPoster: ![FPV Drone Sim-Racing](images/image_3a79c1.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "EA FC 26 (PS5) E-Games",
+    "edition": 2026,
+    "days": [
+      3
+    ],
+    "dates": [
+      "2026-09-20"
+    ],
+    "categories": [
+      "competition"
+    ],
+    "is_listable": true,
+    "search_text": "EA FC 26 PS5 E-Games esports tournament Drishti 2026 organized by LOGINN and ESAK (Esports Association of Kerala). Registration fee 200. Prize pool 10,000. Finals on September 20, 2026. Poster features football players.",
+    "source_text": "Event: EA FC 26 (PS5) E-Games\nOrganized by: LOGINN & ESAK (Esports Association of Kerala) (Drishti 2026)\nCategory: Competition (Esports)\nDates: Finals on September 20, 2026 (Day 3)\nRegistration Fee: ₹200/-\nPrize Pool: ₹10,000/-\nPoster: ![EA FC 26 E-Games](images/image_445724.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "E-Football E-Games",
+    "edition": 2026,
+    "days": [
+      1,
+      2
+    ],
+    "dates": [
+      "2026-09-17",
+      "2026-09-18",
+      "2026-09-19"
+    ],
+    "categories": [
+      "competition"
+    ],
+    "is_listable": true,
+    "search_text": "E-Football E-Games esports tournament Drishti 2026 organized by LOGINN and ESAK (Esports Association of Kerala). Registration fee 100. Prize pool 10,000. Qualifiers September 17 and 18, Finals September 19, 2026. Poster features Lionel Messi.",
+    "source_text": "Event: E-Football E-Games\nOrganized by: LOGINN & ESAK (Esports Association of Kerala) (Drishti 2026)\nCategory: Competition (Esports)\nDates: Qualifiers on September 17 (Pre-event) and 18 (Day 1). Finals on September 19, 2026 (Day 2)\nRegistration Fee: ₹100/-\nPrize Pool: ₹10,000/-\nPoster: ![E-Football E-Games](images/image_445782.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Engine Workshop Featuring Mahindra Maxximo Supro Engine",
+    "edition": 2026,
+    "days": [
+      1
+    ],
+    "dates": [
+      "2026-09-18"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Engine Workshop Featuring Mahindra Maxximo Supro Engine Drishti 2026 organized by Her Aura. Speaker Dr. Gopa Kumar S, Mechanical Department GEC Barton Hill Thiruvananthapuram. Registration fee 199. KTU points available. Schedule September 18, 2026. Contact Hridya +91 85904 13905, Aleena +91 70341 23818. Poster features portrait of Dr. Gopa Kumar S.",
+    "source_text": "Event: Engine Workshop Featuring Mahindra Maxximo Supro Engine\nOrganized by: Her Aura (Drishti 2026)\nSpeaker: Dr. Gopa Kumar S (Mechanical Department, Government Engineering College Barton Hill, Thiruvananthapuram)\nCategory: Workshop\nDate: September 18, 2026 (Day 1)\nRegistration Fee: ₹199/-\nDetails: KTU points provided.\nCoordinators / Contact: Hridya (+91 85904 13905), Aleena (+91 70341 23818)\nPoster: ![Engine Workshop](images/image_445842.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Escape Room",
+    "edition": 2026,
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "dates": [
+      "2026-09-18",
+      "2026-09-19",
+      "2026-09-20"
+    ],
+    "categories": [
+      "competition"
+    ],
+    "is_listable": true,
+    "search_text": "Escape Room competition Drishti 2026 organized by Chathuranga'26. Registration fee 20 per person. Prize pool 3000. Schedule September 18, September 19, September 20, 2026. Contact Viswajith +91 94474 79698, Prathyush +91 79075 91151. Poster features a cryptex cylinder lock.",
+    "source_text": "Event: Escape Room\nOrganized by: Chathuranga'26 (Drishti 2026)\nCategory: Competition\nDates: September 18, 19, and 20, 2026 (Days 1, 2, and 3)\nRegistration Fee: ₹20/- Per Person\nPrize Pool: ₹3000/-\nCoordinators / Contact: Viswajith (+91 94474 79698), Prathyush (+91 79075 91151)\nPoster: ![Escape Room](images/image_445b29.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "ETABS Workshop",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "ETABS Workshop Drishti 2026 organized by Civilianz Skillz and LCE. Registration fee 249. KTU points available. Schedule September 19, 2026. Contact Gowri +91 80752 39739, Hibha +91 80896 70332. Poster features a 3D structural building model.",
+    "source_text": "Event: ETABS Workshop\nOrganized by: Civilianz Skillz & LCE (Drishti 2026)\nCategory: Workshop\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹249/-\nDetails: KTU points provided.\nCoordinators / Contact: Gowri (+91 80752 39739), Hibha (+91 80896 70332)\nPoster: ![ETABS Workshop](images/image_445b67.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "FIG MY UI (Figma Workshop)",
+    "edition": 2026,
+    "days": [
+      1
+    ],
+    "dates": [
+      "2026-09-18"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "FIG MY UI Figma Workshop Drishti 2026 organized by TinkerHub CET. Ensure laptops for the session. Schedule September 18, 2026. Contact Adheeja +91 95676 44670, Vishnusree +91 62382 73188. Poster features a 3D Figma logo button.",
+    "source_text": "Event: FIG MY UI (Figma Workshop)\nOrganized by: TinkerHub CET (Drishti 2026)\nCategory: Workshop\nDate: September 18, 2026 (Day 1)\nRequirements: Laptops required.\nCoordinators / Contact: Adheeja (+91 95676 44670), Vishnusree (+91 62382 73188)\nPoster: ![Figma Workshop](images/image_445bc6.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Industrial Automation",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Industrial Automation workshop Drishti 2026 organized by EXCELERATORS CET. Registration fee 199. Schedule September 19, 2026. Contact Akash +91 70346 14141, Jishnu +91 96457 64301. Poster features a KUKA robotic arm.",
+    "source_text": "Event: Industrial Automation\nOrganized by: EXCELERATORS CET (Drishti 2026)\nCategory: Workshop\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹199/-\nCoordinators / Contact: Akash (+91 70346 14141), Jishnu (+91 96457 64301)\nPoster: ![Industrial Automation Workshop](images/image_445c00.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Learning Circle on Cloud Computing and Agentic AI",
+    "edition": 2026,
+    "days": [
+      3
+    ],
+    "dates": [
+      "2026-09-20"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Learning Circle on Cloud Computing and Agentic AI Drishti 2026 organized by μLearn CET and Google for Developers. Reward $5 Google Cloud credit per participant. Schedule September 20, 2026. Contact Netheesh +91 97783 58686, Shirin +91 91881 30830. Poster features a 3D cloud network icon.",
+    "source_text": "Event: Learning Circle on Cloud Computing and Agentic AI\nOrganized by: μLearn CET & Google for Developers (Drishti 2026)\nCategory: Learning Circle / Workshop\nDate: September 20, 2026 (Day 3)\nRewards: $5 Google Cloud credit per participant\nCoordinators / Contact: Netheesh (+91 97783 58686), Shirin (+91 91881 30830)\nPoster: ![Learning Circle](images/image_446a49.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "D'Run Marathon: Call For Volunteers",
+    "edition": 2026,
+    "days": [],
+    "dates": [
+      "2026-09-13"
+    ],
+    "categories": [
+      "marathon",
+      "volunteering"
+    ],
+    "is_listable": true,
+    "search_text": "D'Run Marathon Call For Volunteers Drishti 2026 organized by College Union 2025-26, College of Engineering Trivandrum. Schedule September 13, 2026. Poster features a golden robotic figure running.",
+    "source_text": "Event: D'Run Marathon (Call For Volunteers)\nOrganized by: College Union 2025-26, College of Engineering Trivandrum (Drishti 2026)\nCategory: Marathon / Volunteering\nDate: September 13, 2026 (Pre-event)\nPoster: ![D'Run Marathon](images/image_446a85.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "MATLAB Workshop Online",
+    "edition": 2026,
+    "days": [],
+    "dates": [
+      "2026-09-16"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "MATLAB Workshop Online Drishti 2026 organized by SAEINDIA CET and Herakles. Registration fee 199. Ensure laptops for online workshops. KTU points available. Schedule September 16, 2026, 5PM-8PM. Contact Lekshmi +91 7736458019. Poster features a 3D surface plot graph.",
+    "source_text": "Event: MATLAB Workshop Online\nOrganized by: SAEINDIA CET & Herakles (Drishti 2026)\nCategory: Workshop\nDate: September 16, 2026 (Pre-event)\nTime: 5:00 PM - 8:00 PM\nRegistration Fee: ₹199/-\nDetails: Online workshop, laptops required. KTU points provided.\nCoordinators / Contact: Lekshmi (+91 7736458019)\nPoster: ![MATLAB Workshop](images/image_446ac1.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Model Rocketry 101 Workshop",
+    "edition": 2026,
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "dates": [
+      "2026-09-18",
+      "2026-09-19",
+      "2026-09-20"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Model Rocketry 101 Workshop Drishti 2026 organized by VeloCET. Registration fee 1-Day Theory Pass 499, Full Program 1,499. KTU points available. Schedule September 18, 19, 20, 2026. Contact Adithyan +91 85473 36534, Aadhil +91 96713 17977. Poster features a vintage-style rocket sketch.",
+    "source_text": "Event: Model Rocketry 101 Workshop\nOrganized by: VeloCET (Drishti 2026)\nCategory: Workshop\nDates: September 18, 19, and 20, 2026 (Days 1, 2, and 3)\nRegistration Fee: ₹499/- (1-Day Theory Pass), ₹1,499/- (Full Program)\nDetails: KTU points provided.\nCoordinators / Contact: Adithyan (+91 85473 36534), Aadhil (+91 96713 17977)\nPoster: ![Model Rocketry 101](images/image_44716a.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Nix it once, Run it forever: Workshop on Nix and NixOS",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Nix it once, Run it forever Workshop on Nix and NixOS Drishti 2026. Speaker Vysakh Premkumar, Nix Aficionado, DevOps Guy, Free Software Hacker. Registration fee 49. Ensure laptops for the session. KTU points available. Schedule September 19, 2026. Contact Nikhil +91 90741 07930, Johan +91 94954 04263. Poster features portrait of Vysakh Premkumar.",
+    "source_text": "Event: Nix it once, Run it forever: Workshop on Nix and NixOS\nOrganized by: Drishti 2026\nSpeaker: Vysakh Premkumar (Nix Aficionado, DevOps Guy, Free Software Hacker)\nCategory: Workshop\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹49/-\nRequirements: Laptops required. KTU points provided.\nCoordinators / Contact: Nikhil (+91 90741 07930), Johan (+91 94954 04263)\nPoster: ![Nix and NixOS Workshop](images/image_447190.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "OpenCV Workshop on Computer Vision",
+    "edition": 2026,
+    "days": [
+      1
+    ],
+    "dates": [
+      "2026-09-18"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "OpenCV Workshop on Computer Vision Drishti 2026 organized by AstroCET. Registration fee 149. Ensure laptops for the session. KTU points available. Schedule September 18, 2026. Contact Avnita +91 89218 46552, Inayath +91 83308 05747. Poster features a robotic cyborg eye.",
+    "source_text": "Event: OpenCV Workshop on Computer Vision\nOrganized by: AstroCET (Drishti 2026)\nCategory: Workshop\nDate: September 18, 2026 (Day 1)\nRegistration Fee: ₹149/-\nRequirements: Laptops required. KTU points provided.\nCoordinators / Contact: Avnita (+91 89218 46552), Inayath (+91 83308 05747)\nPoster: ![OpenCV Workshop](images/image_4471c9.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Overdefined 11 HR CAD Hackathon",
+    "edition": 2026,
+    "days": [
+      2,
+      3
+    ],
+    "dates": [
+      "2026-09-19",
+      "2026-09-20"
+    ],
+    "categories": [
+      "hackathon",
+      "competition"
+    ],
+    "is_listable": true,
+    "search_text": "Overdefined 11 HR CAD Hackathon Drishti 2026 organized by Farrago. Registration fee Individual 249, Team of 2 399. Prize pool 5000. Ensure laptops for the session. KTU points available. Schedule September 19, 20, 2026. Contact Ghanasyam +91 96337 67013, Niranjan +91 99471 65237. Poster features a 3D mechanical CAD assembly.",
+    "source_text": "Event: Overdefined 11 HR CAD Hackathon\nOrganized by: Farrago (Drishti 2026)\nCategory: Hackathon / Competition\nDates: September 19 and 20, 2026 (Days 2 and 3)\nRegistration Fee: ₹249/- (Individual), ₹399/- (Team of 2)\nPrize Pool: ₹5000/-\nRequirements: Laptops required. KTU points provided.\nCoordinators / Contact: Ghanasyam (+91 96337 67013), Niranjan (+91 99471 65237)\nPoster: ![Overdefined Hackathon](images/image_44720c.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Panel Discussion: Privatisation of Space Industry",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "panel",
+      "discussion"
+    ],
+    "is_listable": true,
+    "search_text": "Panel Discussion Privatisation of Space Industry Drishti 2026 organized by Aeronautical Society of India. Speakers: Mr. K.S Nandhakumar (Group Head Programme Planning ISU, ISRO), Mr. G Levin (CEO KSPACE), Mr. Jayakumar B (Project Director Atri Space Private Limited), Mr. Aravind M B (Co-Founder, COO HEX20). Schedule September 19, 2026. Contact Harikrishnan +91 89210 91759, Sethulakshmi +91 79071 08381. Poster features portraits of the four speakers.",
+    "source_text": "Event: Panel Discussion: Privatisation of Space Industry\nOrganized by: Aeronautical Society of India (Drishti 2026)\nSpeakers: Mr. K.S Nandhakumar, Mr. G Levin, Mr. Jayakumar B, Mr. Aravind M B\nCategory: Panel Discussion\nDate: September 19, 2026 (Day 2)\nCoordinators / Contact: Harikrishnan (+91 89210 91759), Sethulakshmi (+91 79071 08381)\nPoster: ![Space Industry Panel](images/image_44792d.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "PCB Design Workshop",
+    "edition": 2026,
+    "days": [
+      2,
+      3
+    ],
+    "dates": [
+      "2026-09-19",
+      "2026-09-20"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "PCB Design Workshop Drishti 2026 organized by IET (The Institution of Engineering and Technology). Speakers: Sarah Abraham (Product Developer Innovin Labs) and Vishnupriya PK (Electrical Engineer HEX20). Registration fee 699. Software Altium Designer, hardware fabrication included. Ensure laptops for the session. KTU points available. Schedule September 19, 20, 2026. Contact Adithya +91 90747 16506, Agnel +91 97447 45805.",
+    "source_text": "Event: PCB Design Workshop\nOrganized by: IET (Drishti 2026)\nSpeakers: Sarah Abraham (Innovin Labs), Vishnupriya PK (HEX20)\nCategory: Workshop\nDates: September 19 and 20, 2026 (Days 2 and 3)\nRegistration Fee: ₹699/-\nDetails: Software Altium Designer, Hardware fabrication included. Laptops required. KTU points provided.\nCoordinators / Contact: Adithya (+91 90747 16506), Agnel (+91 97447 45805)\nPoster: ![PCB Design Workshop](images/image_447987.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Pixelcraft",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "competition",
+      "design"
+    ],
+    "is_listable": true,
+    "search_text": "Pixelcraft design competition Drishti 2026. Registration fee 100. Prize pool 3000. KTU points available. Schedule September 19, 2026. Contact Rayan +91 85906 39173, Neha +91 88481 60300. Poster features a 3D Figma logo.",
+    "source_text": "Event: Pixelcraft\nOrganized by: Drishti 2026\nCategory: Competition / Design\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹100/-\nPrize Pool: ₹3000/-\nDetails: KTU points provided.\nCoordinators / Contact: Rayan (+91 85906 39173), Neha (+91 88481 60300)\nPoster: ![Pixelcraft](images/image_4479ab.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "When Light Goes Quantum: Photons and Technology",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "talk"
+    ],
+    "is_listable": true,
+    "search_text": "When Light Goes Quantum: Photons and Technology A Talk Session on Quantum Computing and Quantum Technology Drishti 2026. Speaker Dr. Ashok Kumar, Associate Professor Department of Physics IIST Thiruvananthapuram. Schedule September 19, 2026. Contact Aromal +91 85901 47038, Sibin +91 62387 61277.",
+    "source_text": "Event: \"When Light Goes Quantum: Photons and Technology\" (Talk Session on Quantum Computing and Quantum Technology)\nOrganized by: Drishti 2026\nSpeaker: Dr. Ashok Kumar (Associate Professor, Department of Physics, IIST, Thiruvananthapuram)\nCategory: Talk\nDate: September 19, 2026 (Day 2)\nCoordinators / Contact: Aromal (+91 85901 47038), Sibin (+91 62387 61277)\nPoster: ![Quantum Talk](images/image_4479ec.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Race Car Dynamics Workshop",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Race Car Dynamics Workshop Drishti 2026 organized by Zenith. Registration fee 399. KTU points available. Schedule September 19, 2026. Contact Akhiljith +91 79079 82102, Antony +91 99958 35108. Poster features an aerodynamic 3D render of a formula race car.",
+    "source_text": "Event: Race Car Dynamics Workshop\nOrganized by: Zenith (Drishti 2026)\nCategory: Workshop\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹399/-\nDetails: KTU points provided.\nCoordinators / Contact: Akhiljith (+91 79079 82102), Antony (+91 99958 35108)\nPoster: ![Race Car Dynamics Workshop](images/image_44cb85.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "RC Plane Workshop",
+    "edition": 2026,
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "dates": [
+      "2026-09-18",
+      "2026-09-19",
+      "2026-09-20"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "RC Plane Workshop Drishti 2026 organized by AeroCET. Registration fee 1-Day Theory Pass 549 per person, Full Build Package 3995 per team. Ensure laptops for online workshops. KTU points available. Schedule September 18, 19, 20, 2026. Contact Akul +91 94474 25533, Arya +91 73060 98390. Poster features a white remote control fighter jet.",
+    "source_text": "Event: RC Plane Workshop\nOrganized by: AeroCET (Drishti 2026)\nCategory: Workshop\nDates: September 18, 19, and 20, 2026 (Days 1, 2, and 3)\nRegistration Fee: ₹549/person (1-Day Theory Pass), ₹3,995/team (Full Build Package)\nDetails: Laptops required for online workshops. KTU points provided.\nCoordinators / Contact: Akul (+91 94474 25533), Arya (+91 73060 98390)\nPoster: ![RC Plane Workshop](images/image_44cbe1.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "RevitX: Workshop on Autodesk Revit and BIM",
+    "edition": 2026,
+    "days": [
+      3
+    ],
+    "dates": [
+      "2026-09-20"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "RevitX Workshop on Autodesk Revit and BIM Drishti 2026 organized by InterCAD Systems Pvt. Ltd. Speaker Sujin G S, Technical Team Head InterCAD Systems Pvt. Ltd. Registration fee 149. Ensure laptops for the session. KTU points available. Schedule September 20, 2026. Contact Aliya +91 98959 50930, Amrutha +91 85903 32585.",
+    "source_text": "Event: RevitX: Workshop on Autodesk Revit and BIM\nOrganized by: InterCAD Systems Pvt. Ltd. (Drishti 2026)\nSpeaker: Sujin G S (Technical Team Head, InterCAD Systems Pvt. Ltd.)\nCategory: Workshop\nDate: September 20, 2026 (Day 3)\nRegistration Fee: ₹149/-\nRequirements: Laptops required. KTU points provided.\nCoordinators / Contact: Aliya (+91 98959 50930), Amrutha (+91 85903 32585)\nPoster: ![RevitX Workshop](images/image_44cc60.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Robotic Arm Development Workshop",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Robotic Arm Development Workshop Drishti 2026 organized by AstroCET. Registration fee 199. Ensure laptops for online workshops. KTU points available. Schedule September 19, 2026. Contact Shanil +91 90372 82286, Pranav +91 80780 37145. Poster features a 3D robotic hand pointing up.",
+    "source_text": "Event: Robotic Arm Development Workshop\nOrganized by: AstroCET (Drishti 2026)\nCategory: Workshop\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹199/-\nDetails: Laptops required for online workshops. KTU points provided.\nCoordinators / Contact: Shanil (+91 90372 82286), Pranav (+91 80780 37145)\nPoster: ![Robotic Arm Workshop](images/image_44d723.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Robowar & Robosoccer",
+    "edition": 2026,
+    "days": [],
+    "dates": [],
+    "categories": [
+      "competition",
+      "robotics"
+    ],
+    "is_listable": true,
+    "search_text": "Robowar & Robosoccer competition Drishti 2026 organized by RoboCET. Combo Offer at 3499 (original 3997). Categories: Robowar 8KG, Robowar 25KG, Robosoccer 5KG. Poster features a black and gold combat robot with spikes.",
+    "source_text": "Event: Robowar & Robosoccer\nOrganized by: RoboCET (Drishti 2026)\nCategory: Competition / Robotics\nRegistration Fee: ₹3499/- (Combo Offer, original ₹3997/-)\nDetails: Includes Robowar 8KG, Robowar 25KG, Robosoccer 5KG.\nPoster: ![Robowar & Robosoccer](images/image_44d762.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Sensor Fusion 101 Workshop",
+    "edition": 2026,
+    "days": [
+      1
+    ],
+    "dates": [
+      "2026-09-18"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Sensor Fusion 101 Workshop Drishti 2026 organized by VeloCET. Registration fee 349. KTU points available. Schedule September 18, 2026. Contact Govind +91 70255 60765, Karthik +91 85479 20916. Poster features a blue electronic sensor module with pins.",
+    "source_text": "Event: Sensor Fusion 101 Workshop\nOrganized by: VeloCET (Drishti 2026)\nCategory: Workshop\nDate: September 18, 2026 (Day 1)\nRegistration Fee: ₹349/-\nDetails: KTU points provided.\nCoordinators / Contact: Govind (+91 70255 60765), Karthik (+91 85479 20916)\nPoster: ![Sensor Fusion 101](images/image_44d7a2.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Photography Competition",
+    "edition": 2026,
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "dates": [
+      "2026-09-18",
+      "2026-09-19",
+      "2026-09-20"
+    ],
+    "categories": [
+      "competition",
+      "photography"
+    ],
+    "is_listable": true,
+    "search_text": "Photography Competition Drishti 2026 organized by SheCet. Registration fee 49. Prize pool 1000. Schedule September 18, 19, 20, 2026. Contact Hiba +91 95673 18138, Upama +91 88489 05009. Poster features a vintage black and gold camera.",
+    "source_text": "Event: Photography Competition\nOrganized by: SheCet (Drishti 2026)\nCategory: Competition / Photography\nDates: September 18, 19, and 20, 2026 (Days 1, 2, and 3)\nRegistration Fee: ₹49/-\nPrize Pool: ₹1000/-\nCoordinators / Contact: Hiba (+91 95673 18138), Upama (+91 88489 05009)\nPoster: ![Photography Competition](images/image_44d7c3.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Quiz Competition on Women in Tech",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "competition",
+      "quiz"
+    ],
+    "is_listable": true,
+    "search_text": "Quiz Competition on Women in Tech Drishti 2026 organized by SheCet. Registration fee 30. Prize pool 500. Schedule September 19, 2026. Contact Hiba +91 95673 18138, Upama +91 88489 05009. Poster features a black box with a white question mark.",
+    "source_text": "Event: Quiz Competition on Women in Tech\nOrganized by: SheCet (Drishti 2026)\nCategory: Competition / Quiz\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹30/-\nPrize Pool: ₹500/-\nCoordinators / Contact: Hiba (+91 95673 18138), Upama (+91 88489 05009)\nPoster: ![Women in Tech Quiz](images/image_44da87.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Signal Showdown",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "competition"
+    ],
+    "is_listable": true,
+    "search_text": "Signal Showdown competition Drishti 2026 organized by IET (The Institution of Engineering and Technology). Registration fee 149. Prize pool 3000. KTU points available. Schedule September 19, 2026. Contact Uma +91 97785 31420, Ardra +91 62823 87011. Poster features a metallic waveform signal.",
+    "source_text": "Event: Signal Showdown\nOrganized by: IET (Drishti 2026)\nCategory: Competition\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹149/-\nPrize Pool: ₹3000/-\nDetails: KTU points provided.\nCoordinators / Contact: Uma (+91 97785 31420), Ardra (+91 62823 87011)\nPoster: ![Signal Showdown](images/image_44daaa.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "SolidWorks Workshop Online",
+    "edition": 2026,
+    "days": [],
+    "dates": [
+      "2026-09-16"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "SolidWorks Workshop Online Drishti 2026 organized by SAEINDIA CET and Herakles. Registration fee 199. Ensure laptops for online workshops. KTU points available. Schedule September 16, 2026, 5PM-8PM. Contact Lekshmi +91 7736458019. Poster features a 3D CAD model of a mechanical part.",
+    "source_text": "Event: SolidWorks Workshop Online\nOrganized by: SAEINDIA CET & Herakles (Drishti 2026)\nCategory: Workshop\nDate: September 16, 2026 (Pre-event)\nTime: 5:00 PM - 8:00 PM\nRegistration Fee: ₹199/-\nDetails: Online workshop, laptops required. KTU points provided.\nCoordinators / Contact: Lekshmi (+91 7736458019)\nPoster: ![SolidWorks Workshop Online](images/image_44dae6.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Stellar Odyssey Treasure Hunt",
+    "edition": 2026,
+    "days": [],
+    "dates": [
+      "2026-09-15"
+    ],
+    "categories": [
+      "competition",
+      "treasure hunt"
+    ],
+    "is_listable": true,
+    "search_text": "Stellar Odyssey Treasure Hunt Drishti 2026 organized by AstroCET. Registration fee 99 per team. Prize pool 2000. Schedule September 15, 2026. Contact Akshay +91 90740 85750, Adithyan +91 99611 02958. Poster features a glowing wooden treasure chest.",
+    "source_text": "Event: Stellar Odyssey Treasure Hunt\nOrganized by: AstroCET (Drishti 2026)\nCategory: Competition / Treasure Hunt\nDate: September 15, 2026 (Pre-event)\nRegistration Fee: ₹99/- Per Team\nPrize Pool: ₹2000/-\nCoordinators / Contact: Akshay (+91 90740 85750), Adithyan (+91 99611 02958)\nPoster: ![Stellar Odyssey](images/image_44e301.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "TinyML: From Zero to Edge Intelligence Workshop",
+    "edition": 2026,
+    "days": [
+      1,
+      2
+    ],
+    "dates": [
+      "2026-09-18",
+      "2026-09-19"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "TinyML From Zero to Edge Intelligence Workshop Drishti 2026 organized by IEEE SB CET, IEEE Computational Intelligence Society, IEEE Robotics & Automation Society. Speaker Abhinav Krishna N, Ranger Seeed Studio. Registration fee 399. Ensure laptops for the session. KTU points available. Schedule 18, 19 Sept 2026. Contact Meera +91 79074 99956, Madhav +91 80787 08396.",
+    "source_text": "Event: TinyML: From Zero to Edge Intelligence Workshop\nOrganized by: IEEE SB CET, IEEE CIS, IEEE RAS (Drishti 2026)\nSpeaker: Abhinav Krishna N (Ranger, Seeed Studio)\nCategory: Workshop\nDates: September 18 and 19, 2026 (Days 1 and 2)\nRegistration Fee: ₹399/-\nRequirements: Laptops required. KTU points provided.\nCoordinators / Contact: Meera (+91 79074 99956), Madhav (+91 80787 08396)\nPoster: ![TinyML Workshop](images/image_44e60c.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Unreal Engine Introduction to Game Development",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Unreal Engine Introduction to Game Development Drishti 2026 organized by Glitch. Speaker Muhammed Faizal PK, Founder CUSTODIAN GAMES. Registration fee 249. Ensure laptops for the session. KTU points available. Schedule 19 Sept 2026. Contact Anne +91 97780 37496, Rohan +91 80899 90317.",
+    "source_text": "Event: Unreal Engine Introduction to Game Development\nOrganized by: Glitch (Drishti 2026)\nSpeaker: Muhammed Faizal PK (Founder, CUSTODIAN GAMES)\nCategory: Workshop\nDate: September 19, 2026 (Day 2)\nRegistration Fee: ₹249/-\nRequirements: Laptops required. KTU points provided.\nCoordinators / Contact: Anne (+91 97780 37496), Rohan (+91 80899 90317)\nPoster: ![Unreal Engine Workshop](images/image_44e64b.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "E-Games Valorant Tournament",
+    "edition": 2026,
+    "days": [
+      1,
+      3
+    ],
+    "dates": [
+      "2026-09-17",
+      "2026-09-18",
+      "2026-09-20"
+    ],
+    "categories": [
+      "competition",
+      "esports",
+      "gaming"
+    ],
+    "is_listable": true,
+    "search_text": "E-Games Valorant Tournament Drishti 2026 organized by ESAK Esports Association of Kerala and Loginn. Registration fee 200 per person. Prize pool 30,000. Schedule Qualifiers 17th and 18th Sept, Finals 20th Sept 2026. Poster features an illustration of the character Jett from Valorant.",
+    "source_text": "Event: E-Games Valorant Tournament\nOrganized by: ESAK & Loginn (Drishti 2026)\nCategory: Competition / Esports / Gaming\nDates: September 17 and 18 (Qualifiers), September 20, 2026 (Finals)\nRegistration Fee: ₹200/- per person\nPrize Pool: ₹30,000/-\nPoster: ![Valorant Tournament](images/image_44e66c.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Verilog and FPGA Workshop",
+    "edition": 2026,
+    "days": [
+      1
+    ],
+    "dates": [
+      "2026-09-18"
+    ],
+    "categories": [
+      "workshop"
+    ],
+    "is_listable": true,
+    "search_text": "Verilog and FPGA Workshop Drishti 2026 organized by RoboCET. Registration fee 399. Ensure laptops for the session. KTU points available. Schedule 18 Sept 2026. Contact Sisira +91 95447 58104, Rohan +91 89218 91926. Poster features a Digilent Basys 3 FPGA board.",
+    "source_text": "Event: Verilog and FPGA Workshop\nOrganized by: RoboCET (Drishti 2026)\nCategory: Workshop\nDate: September 18, 2026 (Day 1)\nRegistration Fee: ₹399/-\nRequirements: Laptops required. KTU points provided.\nCoordinators / Contact: Sisira (+91 95447 58104), Rohan (+91 89218 91926)\nPoster: ![Verilog and FPGA Workshop](images/image_44e9a9.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Website Re:Design Competition",
+    "edition": 2026,
+    "days": [
+      2
+    ],
+    "dates": [
+      "2026-09-19"
+    ],
+    "categories": [
+      "competition",
+      "design"
+    ],
+    "is_listable": true,
+    "search_text": "Website Re:Design Competition Drishti 2026 organized by TinkerHub CET. Prize pool 1500. Schedule 19 Sept 2026. Contact Rohit +91 62350 23093, Rose +91 79940 16940. Poster features 3D web browser interfaces.",
+    "source_text": "Event: Website Re:Design Competition\nOrganized by: TinkerHub CET (Drishti 2026)\nCategory: Competition / Design\nDate: September 19, 2026 (Day 2)\nPrize Pool: ₹1500/-\nCoordinators / Contact: Rohit (+91 62350 23093), Rose (+91 79940 16940)\nPoster: ![Website Re:Design Competition](images/image_44ea2c.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  },
+  {
+    "event_name": "Whisper Challenge",
+    "edition": 2026,
+    "days": [
+      3
+    ],
+    "dates": [
+      "2026-09-20"
+    ],
+    "categories": [
+      "competition",
+      "games"
+    ],
+    "is_listable": true,
+    "search_text": "Whisper Challenge Drishti 2026 organized by SheCet. Registration fee 30. Prize pool 500. Schedule 20 Sept 2026. Contact Hiba +91 95673 18138, Upama +91 88489 05009. Poster features a 3D speech bubble wearing headphones.",
+    "source_text": "Event: Whisper Challenge\nOrganized by: SheCet (Drishti 2026)\nCategory: Competition / Games\nDate: September 20, 2026 (Day 3)\nRegistration Fee: ₹30/-\nPrize Pool: ₹500/-\nCoordinators / Contact: Hiba (+91 95673 18138), Upama (+91 88489 05009)\nPoster: ![Whisper Challenge](images/image_44ea4c.jpg)",
+    "_merged_from": [
+      "images_desc.json"
+    ]
+  }
+]
