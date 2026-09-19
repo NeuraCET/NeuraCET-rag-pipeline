@@ -1,0 +1,200 @@
+itinerary
+Day 2
+
+Robowar (8kg) - Robocet
+08:00 AM - 12:00 PM
+Golden Walkway
+
+Race Car Dynamics - Zenith
+08:00 AM - 07:00 PM
+Mechanical PG Seminar Hall
+
+CAD CLASH - ICI
+09:00 AM - 11:00 AM
+CAD Lab
+
+VoiceBOT - Buildclub
+09:00 AM - 12:00 PM
+CS116
+
+Model Rocketry 101 - Velocet
+09:00 AM - 01:00 PM
+A321
+
+PCB Design Workshop - IET
+09:00 AM - 01:00 PM
+EEE Seminar Hall
+
+NixOS Workshop - FOSS CET
+09:00 AM - 01:00 PM
+CS201
+
+TinyML: Zero to Edge Intelligence - IEEE
+09:00 AM - 02:00 PM
+EE306
+
+RC Plane Workshop - Aerocet
+09:00 AM - 05:00 PM
+ECERB 301
+
+Industrial Automation - Excellerators
+09:00 AM - 05:00 PM
+A322
+
+01
+
+ETAB Workshop - ICI
+09:00 AM - 06:00 PM
+CE1 103
+
+Gaming Room - ESAK
+09:00 AM - 07:00 PM
+EE PG Seminar Hall
+
+Dance Workshop
+09:00 AM - 12:00 PM
+Electrical Canteen
+
+Talk Session: Anoop Ambika - CEO KSUM
+10:00 AM - 11:00 AM
+JC Alexander Hall
+
+Fresher Formula
+10:00 AM - 11:00 AM
+CS304
+
+Talk Session on Quantum Computing - BSS
+10:00 AM - 11:00 AM
+CETAA Hall
+
+Stock Market Masterclass
+10:00 AM - 11:30 AM
+CS301
+
+Startup 101 - Drishti for Juniors Quiz
+10:00 AM - 12:00 PM
+Civil Seminar Hall 2
+
+Competition - SHE CET
+10:00 AM - 12:00 PM
+EEE 207
+
+Pixel Craft - ISTE
+10:00 AM - 12:00 PM
+EC152
+
+GROOM STUDIO
+10:00 AM - 12:00 PM
+Mech Seminar Hall 1
+
+02
+
+OptiX
+10:00 AM - 01:00 PM
+Mech Seminar Hall 2
+
+Website Re:design - Tinkerhub
+10:00 AM - 01:00 PM
+CS305
+
+Crochet Workshop & Promptless - NSS
+10:00 AM - 01:00 PM
+CE305
+
+Space Industry Panel Discussion - AESI
+10:00 AM - 01:00 PM
+CGPU Hall
+
+Robotic Arm Workshop - Astrocet
+10:00 AM - 01:00 PM
+ECE RB101
+
+AUTO SHOW
+10:00 AM - 02:00 PM
+College Ground
+
+Talk Session: Medical Devices - From Past to Future
+10:00 AM - 02:00 PM
+EEE Seminar Hall
+
+Panel Discussion: AI for Governance
+10:30 AM - 11:30 AM
+CETAA Hall
+
+Escape Room - Chaturanga CET
+11:00 AM - 12:00 PM
+EC155
+
+Unreal Engines Workshop - Glitch
+11:00 AM - 03:00 PM
+EC RB201
+
+03
+
+Panel Discussion: AI for Everyone
+12:00 PM - 01:00 PM
+CETAA Hall
+
+Founders Talk Session
+01:00 PM - 02:00 PM
+CETAA Hall
+
+DaVinci Event - Wazin
+01:00 PM - 04:00 PM
+EE205
+
+Blender Workshop - Shutterbugs
+01:00 PM - 04:00 PM
+EE206
+
+Shark Tank - Final Pitching Session
+01:00 PM - 05:00 PM
+CGPU Hall
+
+Beyond the Frame - Shutterbugs
+01:00 PM - 05:00 PM
+EE Seminar Hall
+
+Robowar (25kg) - Robocet
+01:00 PM - 06:00 PM
+Golden Walkway
+
+Panel Discussion: AI Defined Vehicles - Quest Global Panel
+02:00 PM - 03:00 PM
+CETAA Hall
+
+Signal Showdown - IET
+02:00 PM - 06:00 PM
+ECE RB101
+
+Influencers Conclave
+03:00 PM - 04:00 PM
+CETAA Hall
+
+Skateboard Show
+03:00 PM - 05:00 PM
+Mech Front
+
+04
+
+SHAAN RAHMAN CONCERT
+06:00 PM - 09:00 PM
+College Ground
+
+SCTIMST Expo
+Full Day
+Mech Seminar Hall 3
+
+Startup Expo
+Full Day
+Mech Seminar Hall 3
+
+FPV Drone Sim Racing - Aerocet
+Full Day
+Mech Lobby
+
+ROBOTIC EXPO
+Full Day
+ECE Seminar Hall
+
+05

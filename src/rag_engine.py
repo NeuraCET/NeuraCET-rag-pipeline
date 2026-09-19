@@ -26,15 +26,17 @@ SYSTEM_PROMPT = """You are the friendly, cheerful, and enthusiastic AI guide for
 Your tone is bright, warm, cheerful, positive, energetic, and genuinely helpful!
 
 CURRENT FESTIVAL TIMELINE & DATE:
-- Today's date is September 18, 2026 — Day 1 of Drishti 2026!
-- Tomorrow is September 19, 2026 — Day 2 of Drishti 2026.
-- The final day is September 20, 2026 — Day 3 of Drishti 2026.
-- When the user asks about "today", "today's events", "today's schedule", or "what is happening now", refer directly to the Day 1 (September 18, 2026) schedule, workshops, competitions, talks, and exhibitions!
+- Today's date is September 19, 2026 — Day 2 of Drishti 2026!
+- Yesterday was September 18, 2026 — Day 1 of Drishti 2026.
+- Tomorrow is September 20, 2026 — Day 3 (the grand finale) of Drishti 2026.
+- When the user asks about "today", "today's events", "today's schedule", or "what is happening now", refer directly to the Day 2 (September 19, 2026) schedule, workshops, competitions, talks, and exhibitions!
+- When the user asks about "yesterday", refer to Day 1 (September 18, 2026).
+- When the user asks about "tomorrow", refer to Day 3 (September 20, 2026).
 
 CORE GUIDELINES:
 1. GREETINGS & CASUAL CONVERSATION:
    - If the user greets you (e.g. "hello", "hi", "hello bro", "hey", "what's up"), asks how you are, or engages in casual small talk, reply warmly, naturally, and cheerfully!
-   - Greet them with festive energy, introduce yourself as the Drishti AI guide, and enthusiastically invite them to ask about Drishti 2026 events, workshops, hackathons, and competitions happening today and throughout the fest!
+   - Greet them with festive energy, introduce yourself as the Drishti AI guide, and enthusiastically invite them to ask about Drishti 2026 events, workshops, hackathons, and competitions happening today (Day 2) and throughout the fest!
 2. FESTIVAL QUESTIONS:
    - Provide complete, accurate details based on the provided Context (Event Name, Dates, Venue, Fees, Requirements, Coordinators with phone numbers).
    - Use clean Markdown formatting with bullet points. Be direct, cheerful, and crisp.
@@ -81,7 +83,7 @@ def detect_target_editions(query: str) -> List[int]:
     asks_2024 = any(k in lower for k in ["2024", "'24", "drishti 24", "drishti'24"])
     asks_2022 = any(k in lower for k in ["2022", "'22", "drishti 22", "drishti'22"])
     asks_past = any(k in lower for k in ["previous edition", "previous year", "past edition", "history of drishti", "past drishti", "earlier edition"])
-    asks_2026 = any(k in lower for k in ["2026", "'26", "drishti 26", "drishti'26", "this year", "upcoming", "today", "tomorrow", "day 1", "day 2", "day 3"])
+    asks_2026 = any(k in lower for k in ["2026", "'26", "drishti 26", "drishti'26", "this year", "upcoming", "today", "yesterday", "tomorrow", "day 1", "day 2", "day 3"])
 
     if (asks_2024 or asks_2022 or asks_past) and asks_2026:
         return [2026, 2024, 2022]
@@ -153,7 +155,7 @@ class RAGEngine:
         except Exception as e:
             print(f"[RAG] Note: Dense embeddings unavailable ({e}), using keyword retrieval.", flush=True)
 
-    def retrieve(self, query: str, top_k: int = 5) -> Tuple[List[Tuple[DocumentChunk, float]], float, float]:
+    def retrieve(self, query: str, top_k: int = 6) -> Tuple[List[Tuple[DocumentChunk, float]], float, float]:
         """Hybrid retrieval combining BM25 keyword ranking and dense semantic similarity."""
         if not self.chunks:
             return [], 0.0, 0.0
@@ -187,7 +189,18 @@ class RAGEngine:
         if raw_max_bm > 0:
             final_scores = 0.65 * bm25_scores + 0.35 * dense_scores
         else:
-            final_scores = dense_scores
+            final_scores = dense_scores.copy()
+
+        # Boost day-specific queries
+        lower_q = query.lower()
+        if any(w in lower_q for w in ["today", "today's", "happening now", "current schedule", "day 2", "day2", "19th"]):
+            for i, c in enumerate(self.chunks):
+                if c.metadata.get("day") == 2:
+                    final_scores[i] += 0.35
+        elif any(w in lower_q for w in ["yesterday", "yesterday's", "day 1", "day1", "18th"]):
+            for i, c in enumerate(self.chunks):
+                if c.metadata.get("day") == 1:
+                    final_scores[i] += 0.35
 
         # Smart edition filtering
         target_editions = detect_target_editions(query)
@@ -217,7 +230,7 @@ class RAGEngine:
         poster_url = registry.get_poster_for_query(question)
 
         # 2. Retrieve relevant chunks
-        top_results, raw_max_bm, raw_max_dense = self.retrieve(question, top_k=5)
+        top_results, raw_max_bm, raw_max_dense = self.retrieve(question, top_k=6)
 
         # Check if query retrieved relevant festival context
         has_context = (raw_max_bm > 0.0 or raw_max_dense >= 0.32)
@@ -289,7 +302,7 @@ class RAGEngine:
         poster_url = registry.get_poster_for_query(question)
 
         # 2. Retrieve relevant chunks
-        top_results, raw_max_bm, raw_max_dense = self.retrieve(question, top_k=5)
+        top_results, raw_max_bm, raw_max_dense = self.retrieve(question, top_k=6)
 
         # Check if query retrieved relevant festival context
         has_context = (raw_max_bm > 0.0 or raw_max_dense >= 0.32)
