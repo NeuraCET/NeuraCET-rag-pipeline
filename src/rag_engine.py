@@ -47,6 +47,11 @@ CORE GUIDELINES:
 4. ANTI-HALLUCINATION & MISSING RECORDS:
    - Never invent fake event names, dates, prizes, or contact numbers that are not in the Context.
    - If someone asks for a specific festival detail that is not in the records, respond cheerfully and warmly explaining that it's not currently listed in the official records, and offer to help with other exciting events.
+5. PROSHOWS, CONCERTS, DANCE & SINGING:
+   - When the user asks about proshows, pro-show, dance, dancing, singing, singers, songs, concerts, or musical nights, always connect and highlight our two star celebrity proshow events:
+     * **Shaan Rahman Live in Concert (Proshow)**: Happening **today, September 19, 2026 (Day 2)** from **6:00 PM to 9:00 PM** at the **College Ground**, starring universal music director & singer Shaan Rahman (Shan Rahman) performing live with Sachin Warrier, Anila Rajeev, Niranj Suresh, Bharath Sajikumar, and Punya Pradeep!
+     * **Dhvani Bhanushali Live in Concert (Proshow)**: Happening **tomorrow, September 20, 2026 (Day 3 Grand Finale)** at **CET / College Ground**, starring pop sensation & playback singer Dhvani Bhanushali for an electrifying night of live singing, dancing, and music!
+   - If the user asks specifically about dance workshops or day sessions, also highlight the **Dance Workshop** (Day 2, 9:00 AM – 12:00 PM at Electrical Canteen)!
 """
 
 
@@ -83,7 +88,11 @@ def detect_target_editions(query: str) -> List[int]:
     asks_2024 = any(k in lower for k in ["2024", "'24", "drishti 24", "drishti'24"])
     asks_2022 = any(k in lower for k in ["2022", "'22", "drishti 22", "drishti'22"])
     asks_past = any(k in lower for k in ["previous edition", "previous year", "past edition", "history of drishti", "past drishti", "earlier edition"])
-    asks_2026 = any(k in lower for k in ["2026", "'26", "drishti 26", "drishti'26", "this year", "upcoming", "today", "yesterday", "tomorrow", "day 1", "day 2", "day 3"])
+    asks_2026 = any(k in lower for k in [
+        "2026", "'26", "drishti 26", "drishti'26", "this year", "upcoming",
+        "today", "yesterday", "tomorrow", "day 1", "day 2", "day 3",
+        "proshow", "proshows", "pro show", "pro-show", "dhvani", "shaan", "shan rahman", "dance", "singing"
+    ])
 
     if (asks_2024 or asks_2022 or asks_past) and asks_2026:
         return [2026, 2024, 2022]
@@ -201,6 +210,24 @@ class RAGEngine:
             for i, c in enumerate(self.chunks):
                 if c.metadata.get("day") == 1:
                     final_scores[i] += 0.35
+
+        # Boost proshow / dance / singing queries so Shaan Rahman and Dhvani Bhanushali are always prioritized
+        PROSHOW_DANCE_SINGING_TERMS = [
+            "proshow", "pro-show", "pro show", "proshows", "pro-shows",
+            "dance", "dancing", "dancer", "dancers",
+            "sing", "singing", "singer", "singers", "song", "songs",
+            "concert", "concerts", "musical night", "music night", "cultural night",
+            "shan rahman", "shaan rahman", "dhvani", "dhvani bhanushali", "dhwani"
+        ]
+        if any(term in lower_q for term in PROSHOW_DANCE_SINGING_TERMS):
+            for i, c in enumerate(self.chunks):
+                txt_lower = c.text.lower()
+                c_name = str(c.metadata.get("event_name", "")).lower()
+                # Prioritize Shaan Rahman, Dhvani Bhanushali, and the Proshow Guide summary
+                if any(k in txt_lower or k in c_name for k in ["shaan rahman", "shan rahman", "dhvani", "proshow", "pro show"]):
+                    final_scores[i] += 0.45
+                elif "dance" in lower_q and "dance workshop" in c_name:
+                    final_scores[i] += 0.40
 
         # Smart edition filtering
         target_editions = detect_target_editions(query)

@@ -438,10 +438,33 @@ def load_all_chunks(data_dir: Path = DATA_DIR) -> List[DocumentChunk]:
         edition = ev.get("edition", 2026)
         days = ev.get("days", [])
         dates = ev.get("dates", [])
-        categories = ", ".join(ev.get("categories", []))
+        categories_list = list(ev.get("categories", []))
         source_text = ev.get("source_text", "")
         search_text = ev.get("search_text", "")
 
+        extra_info = ""
+        lower_name = name.lower()
+        if "shaan" in lower_name or ("shan" in lower_name and "rahman" in lower_name):
+            if "Proshow" not in categories_list:
+                categories_list.extend(["Proshow", "Music", "Singing", "Dance"])
+            extra_info = (
+                "\nProshow & Entertainment Highlights: Star-studded Drishti 2026 Day 2 Proshow concert taking place today, "
+                "September 19, 2026 from 6:00 PM to 9:00 PM at College Ground! Universal music director, composer, and singer Shaan Rahman "
+                "(also referred to as Shan Rahman) performs live along with a star-studded medley of Sachin Warrier, Anila Rajeev, "
+                "Niranj Suresh, Bharath Sajikumar, and Punya Pradeep. High-voltage celebrity proshow featuring live singing, hit songs, "
+                "dancing, and musical celebration!"
+            )
+        elif "dhvani" in lower_name:
+            if "Proshow" not in categories_list:
+                categories_list.extend(["Proshow", "Music", "Singing", "Dance"])
+            extra_info = (
+                "\nProshow & Entertainment Highlights: Star-studded Drishti 2026 Day 3 Grand Finale Proshow concert taking place tomorrow, "
+                "September 20, 2026 at CET / College Ground! Pop music sensation and playback singer Dhvani Bhanushali (Dhvani) "
+                "brings the stage to life with electric live singing, dance performances, and popular songs. "
+                "Get ready to sing, dance, and celebrate the grand finale proshow of Drishti!"
+            )
+
+        categories = ", ".join(categories_list)
         chunk_content = (
             f"Event Name: {name}\n"
             f"Edition: Drishti {edition}\n"
@@ -449,6 +472,7 @@ def load_all_chunks(data_dir: Path = DATA_DIR) -> List[DocumentChunk]:
             f"Categories: {categories}\n"
             f"Details:\n{source_text}\n"
             f"Summary: {search_text}"
+            f"{extra_info}"
         )
         all_chunks.append(
             DocumentChunk(
@@ -458,7 +482,7 @@ def load_all_chunks(data_dir: Path = DATA_DIR) -> List[DocumentChunk]:
                     "source": src_file,
                     "edition": edition,
                     "event_name": name,
-                    "categories": ev.get("categories", []),
+                    "categories": categories_list,
                 },
             )
         )
@@ -596,6 +620,13 @@ def load_all_chunks(data_dir: Path = DATA_DIR) -> List[DocumentChunk]:
                 f"Category / Type: {ev['type']}\n"
                 f"Details: Official Drishti 2026 Day 2 event '{ev['name']}' organized by {ev['club']} taking place today, September 19, 2026 from {ev['time']} at venue {ev['venue']}."
             )
+            if "shaan" in ev['name'].lower() or "rahman" in ev['name'].lower():
+                ev_chunk_text += (
+                    "\nProshow & Entertainment Highlights: Star-studded Drishti 2026 Day 2 Proshow concert taking place tonight! "
+                    "Universal music director and singer Shaan Rahman (Shan Rahman) performs live in concert with Sachin Warrier, "
+                    "Anila Rajeev, Niranj Suresh, Bharath Sajikumar, and Punya Pradeep from 6:00 PM to 9:00 PM at the College Ground. "
+                    "The premier musical and singing proshow event of Day 2 with dancing, singing, and live band performance!"
+                )
             all_chunks.append(
                 DocumentChunk(
                     chunk_id=f"day2_event_{chunk_counter}",
@@ -606,7 +637,7 @@ def load_all_chunks(data_dir: Path = DATA_DIR) -> List[DocumentChunk]:
                         "day": 2,
                         "date": "2026-09-19",
                         "event_name": ev["name"],
-                        "categories": [ev["type"]],
+                        "categories": [ev["type"], "Proshow", "Music", "Singing", "Dance"] if "shaan" in ev['name'].lower() or "rahman" in ev['name'].lower() else [ev["type"]],
                     },
                 )
             )
@@ -652,6 +683,42 @@ def load_all_chunks(data_dir: Path = DATA_DIR) -> List[DocumentChunk]:
                     metadata={"source": "drishti2022.docx", "edition": 2022},
                 )
             )
-            chunk_counter += 1
+    # 6. Dedicated Drishti 2026 Proshows, Concerts, Dance & Singing Events Summary Chunk
+    proshow_summary_text = (
+        "[Drishti 2026 Proshows, Live Concerts, Dance & Singing Headliners Summary]\n"
+        "Edition: Drishti 2026\n"
+        "Dates: September 18-20, 2026\n\n"
+        "Drishti 2026 features two premier celebrity proshow concerts celebrating music, live singing, and high-energy dancing:\n\n"
+        "1. Shaan Rahman Live in Concert (Proshow - Day 2 / Today, September 19, 2026):\n"
+        "   - Event Name: Shaan Rahman Live in Concert (Proshow / Musical Night)\n"
+        "   - Artists / Performers: Universal music director and playback singer Shaan Rahman (Shan Rahman) performing with Sachin Warrier, Anila Rajeev, Niranj Suresh, Bharath Sajikumar, and Punya Pradeep.\n"
+        "   - Time: 6:00 PM - 9:00 PM\n"
+        "   - Venue: College Ground, College of Engineering Trivandrum (CET)\n"
+        "   - Highlights: The first college campus concert of its kind in Kerala! A star-studded medley with hit songs, singing, dancing, and high-voltage live music.\n"
+        "   - Associated Keywords: proshow, pro show, proshows, concert, concerts, singing, songs, dance, dancing, music, musical night, shan rahman, shaan rahman, live band.\n\n"
+        "2. Dhvani Bhanushali Live in Concert (Proshow - Day 3 / Tomorrow, September 20, 2026):\n"
+        "   - Event Name: Dhvani Bhanushali Live in Concert (Proshow / Grand Finale Musical Night)\n"
+        "   - Artist / Performer: Dhvani Bhanushali (Dhvani) - captivating pop sensation and playback singer.\n"
+        "   - Date: September 20, 2026 (Day 3 / Grand Finale)\n"
+        "   - Venue: CET / College Ground\n"
+        "   - Highlights: An electric performer with a voice that has won millions of hearts. Get ready to sing, dance, and lose yourself in the magic of live music and chartbuster songs!\n"
+        "   - Associated Keywords: proshow, pro show, proshows, dhvani, dhvani bhanushali, singing, songs, singer, dance, dancing, concert, live music, grand finale, celebrity night.\n\n"
+        "3. Cultural Dance & Music Workshops:\n"
+        "   - Dance Workshop: September 19, 2026 (Day 2 / Today), 09:00 AM - 12:00 PM at Electrical Canteen. An energetic workshop for dancers and choreography enthusiasts.\n"
+        "   - 23HZ Band Performance: September 18, 2026 (Day 1 / Yesterday), 06:00 PM - 09:00 PM at College Ground.\n"
+    )
+    all_chunks.append(
+        DocumentChunk(
+            chunk_id=f"proshow_singing_dance_summary_{chunk_counter}",
+            text=proshow_summary_text,
+            metadata={
+                "source": "Official Drishti Proshow Guide",
+                "edition": 2026,
+                "event_name": "Drishti 2026 Proshows (Shaan Rahman & Dhvani Bhanushali)",
+                "categories": ["Proshow", "Concert", "Dance", "Singing", "Music"],
+            },
+        )
+    )
+    chunk_counter += 1
 
     return all_chunks
