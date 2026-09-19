@@ -6,44 +6,7 @@ import { KioskScreen } from "./KioskScreen";
 import { MascotPlaceholder } from "./MascotPlaceholder";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useState, useEffect, useRef, useCallback } from "react";
-
-function useTypewriter(text: string = "", speed: number = 4) {
-  const [displayedText, setDisplayedText] = useState("");
-  const [prevText, setPrevText] = useState(text);
-
-  if (text !== prevText) {
-    setPrevText(text);
-    setDisplayedText("");
-  }
-
-  useEffect(() => {
-    if (!text) return;
-
-    let index = 0;
-    // Step 2 chars per tick for smooth, responsive reading speed without 15s artificial lag
-    const step = 2;
-    const intervalId = setInterval(() => {
-      index = Math.min(text.length, index + step);
-      setDisplayedText(text.slice(0, index));
-      if (index >= text.length) {
-        clearInterval(intervalId);
-      }
-    }, speed);
-
-    return () => clearInterval(intervalId);
-  }, [text, speed]);
-
-  const finish = useCallback(() => {
-    setDisplayedText(text);
-  }, [text]);
-
-  return {
-    displayedText,
-    isTyping: displayedText.length < text.length,
-    finish,
-  };
-}
+import { useEffect, useRef } from "react";
 
 interface AnswerScreenProps {
   result: KioskAnswer;
@@ -58,20 +21,10 @@ export function AnswerScreen({
   onHome,
   isStreaming = false,
 }: AnswerScreenProps) {
-  // Track if this answer was delivered via live token streaming
-  const hasStreamedRef = useRef(isStreaming);
-  if (isStreaming) {
-    hasStreamedRef.current = true;
-  }
-
-  const typewriter = useTypewriter(!hasStreamedRef.current ? result.answer : "", 4);
-  const displayedText = hasStreamedRef.current ? result.answer : typewriter.displayedText;
-  const isTyping = isStreaming || (!hasStreamedRef.current && typewriter.isTyping);
-  const finish = useCallback(() => {
-    if (!hasStreamedRef.current) {
-      typewriter.finish();
-    }
-  }, [typewriter]);
+  // Directly render result.answer: live tokens appear seamlessly in real-time,
+  // completely eliminating UTF-16 surrogate slicing bugs on emojis (🌟, 🚗, ✨) that froze the typewriter.
+  const displayedText = result.answer;
+  const isTyping = isStreaming;
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -110,9 +63,7 @@ export function AnswerScreen({
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.25, ease: "easeOut" }}
-            onClick={finish}
-            title={isTyping ? "Click to show full answer immediately" : undefined}
-            className="mt-6 max-h-[56vh] cursor-pointer overflow-y-auto pr-3 [scrollbar-width:thin] [scrollbar-color:rgba(213,180,92,0.3)_transparent]"
+            className="mt-6 max-h-[56vh] overflow-y-auto pr-3 [scrollbar-width:thin] [scrollbar-color:rgba(213,180,92,0.3)_transparent]"
           >
             <div className="w-full max-w-3xl font-sans leading-relaxed text-white">
               <ReactMarkdown

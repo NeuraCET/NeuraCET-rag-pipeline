@@ -39,6 +39,7 @@ CORE GUIDELINES:
    - Greet them with festive energy, introduce yourself as the Drishti AI guide, and enthusiastically invite them to ask about Drishti 2026 events, workshops, hackathons, and competitions happening today (Day 2) and throughout the fest!
 2. FESTIVAL QUESTIONS:
    - Provide complete, accurate details based on the provided Context (Event Name, Dates, Venue, Fees, Requirements, Coordinators with phone numbers).
+   - DIRECT FACTS FIRST: When answering specific event queries (e.g. "when is...", "where is...", "what time is...", or details regarding a competition, workshop, or show), immediately and directly state the essential event facts (Date, Time, Venue, Organized by) in the first sentence or bullet points. Do NOT start with prolonged conversational greetings or multi-sentence pleasantries before giving the answer.
    - Format:
      * By default, use clean Markdown formatting with bullet points. Be direct, cheerful, and crisp.
      * When the user asks for a table, schedule table, tabular format, or asks to "render as table" / "show in table", format the requested events and information in a clean, complete Markdown table with clear column headers (such as | Event Name | Time / Date | Venue | Details |).
@@ -307,10 +308,15 @@ class RAGEngine:
 
         if has_context:
             context_texts = []
+            total_chars = 0
             for i, (chunk, score) in enumerate(top_results):
                 source = chunk.metadata.get("source", "Drishti Data")
                 edition = chunk.metadata.get("edition", "2026")
-                context_texts.append(f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}")
+                chunk_str = f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}"
+                if total_chars + len(chunk_str) > 3500 and i >= 2:
+                    break
+                context_texts.append(chunk_str)
+                total_chars += len(chunk_str)
             full_context = "\n\n".join(context_texts)
             if is_table_query:
                 user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. Format the requested information as a clean Markdown table with clear column headers (such as Event Name, Time / Date, Venue, Key Details). If details are not found in the records, cheerfully state so:"
@@ -397,10 +403,15 @@ class RAGEngine:
 
         if has_context:
             context_texts = []
+            total_chars = 0
             for i, (chunk, score) in enumerate(top_results):
                 source = chunk.metadata.get("source", "Drishti Data")
                 edition = chunk.metadata.get("edition", "2026")
-                context_texts.append(f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}")
+                chunk_str = f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}"
+                if total_chars + len(chunk_str) > 3500 and i >= 2:
+                    break
+                context_texts.append(chunk_str)
+                total_chars += len(chunk_str)
             full_context = "\n\n".join(context_texts)
             if is_table_query:
                 user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. Format the requested information as a clean Markdown table with clear column headers (such as Event Name, Time / Date, Venue, Key Details). If details are not found in the records, cheerfully state so:"
