@@ -277,6 +277,99 @@ DAY2_EVENTS_DATA: List[Dict[str, str]] = [
     {"name": "ROBOTIC EXPO", "club": "Robocet / Drishti", "time": "Full Day", "venue": "ECE Seminar Hall", "type": "Robotics & Autonomous Systems Exhibition"}
 ]
 
+DAKSHA_DAY1_EVENTS: List[Dict[str, str]] = [
+    {
+        "name": "Trading Workshop",
+        "timing": "11:00 AM - 02:00 PM (11 - 2)",
+        "venue": "Mech Seminar Hall 2",
+        "poc": "Jiya",
+        "moderator": "",
+        "resource": "",
+        "details": "Interactive stock trading and market strategies workshop under Daksha management track at Mech Seminar Hall 2 on Day 1 (September 18, 2026). POC: Jiya.",
+    },
+    {
+        "name": "Market verse",
+        "timing": "Full Day",
+        "venue": "Classroom IE Block",
+        "poc": "",
+        "moderator": "",
+        "resource": "",
+        "details": "Full-day market simulation and business ecosystem challenge under Daksha in Classroom IE Block on Day 1 (September 18, 2026).",
+    },
+    {
+        "name": "People's Manager",
+        "timing": "Full Day",
+        "venue": "Classroom IE Block (Class Roonm IE Block)",
+        "poc": "",
+        "moderator": "",
+        "resource": "",
+        "details": "HR, leadership, and crisis management event testing organizational skills under Daksha in Classroom IE Block on Day 1 (September 18, 2026).",
+    },
+    {
+        "name": "Dare and Deliver",
+        "timing": "Full Day",
+        "venue": "Classroom IE Block",
+        "poc": "",
+        "moderator": "",
+        "resource": "",
+        "details": "High-energy spontaneous marketing and problem-solving competition under Daksha in Classroom IE Block on Day 1 (September 18, 2026).",
+    },
+    {
+        "name": "Corporate Roadies (Coorporate Roadies)",
+        "timing": "Full Day",
+        "venue": "Classroom IE Block",
+        "poc": "",
+        "moderator": "",
+        "resource": "",
+        "details": "Intense corporate endurance challenge testing stress tolerance, teamwork, and business acumen under Daksha on Day 1 (September 18, 2026) in Classroom IE Block.",
+    },
+    {
+        "name": "CR Final and Prize Distribution",
+        "timing": "02:00 PM - 05:00 PM (02PM-5 pm)",
+        "venue": "JC Alexander Hall",
+        "poc": "",
+        "moderator": "",
+        "resource": "",
+        "details": "Grand finale round and prize distribution ceremony for Corporate Roadies (CR) at JC Alexander Hall from 2:00 PM to 5:00 PM on Day 1 (September 18, 2026).",
+    },
+    {
+        "name": "Alumni Conclave (Alumini Conclave)",
+        "timing": "10:00 AM - 11:00 AM",
+        "venue": "CETAA Hall",
+        "poc": "Meenakshi",
+        "moderator": "Isabel",
+        "resource": "TN Krishnakumar (Alumni Entrepreneur)",
+        "details": "Inspiring entrepreneurship conclave with distinguished alumnus entrepreneur TN Krishnakumar. Taking place on Day 1 (September 18, 2026) from 10:00 AM to 11:00 AM at CETAA Hall. POC: Meenakshi, Moderator: Isabel.",
+    },
+    {
+        "name": "Shark Tank Initial Pitching Session",
+        "timing": "01:00 PM - 06:00 PM (1pm-6pm)",
+        "venue": "EEE 207, 208",
+        "poc": "Abhinav Krishna",
+        "moderator": "",
+        "resource": "",
+        "details": "Preliminary pitching round where innovators pitch their business models to the jury on Day 1 (September 18, 2026) from 1:00 PM to 6:00 PM at EEE 207, 208. POC: Abhinav Krishna. (Note: The Shark Tank Final Pitching Session is held on Day 2 from 1:00 PM - 5:00 PM at CGPU Hall).",
+    },
+    {
+        "name": "Groom Studio",
+        "timing": "Full Day",
+        "venue": "Civil Seminar Hall",
+        "poc": "",
+        "moderator": "",
+        "resource": "",
+        "details": "Corporate grooming, executive etiquette, and personal branding studio under Daksha on Day 1 (September 18, 2026) at Civil Seminar Hall.",
+    },
+    {
+        "name": "Startup 101 (Drishti for Juniors)",
+        "timing": "Day 1 Session",
+        "venue": "Drishti Fest Campus / CET",
+        "poc": "Anjana CR",
+        "moderator": "",
+        "resource": "",
+        "details": "Introductory entrepreneurship and startup roadmap session specially tailored for school/junior participants under Daksha. POC: Anjana CR.",
+    },
+]
+
 
 @dataclass
 class DocumentChunk:
@@ -340,6 +433,44 @@ def extract_pdf_text(pdf_path: Path) -> str:
         pass
 
     return ""
+
+
+def extract_pdf_pages(pdf_path: Path) -> List[str]:
+    """Extract text from each individual page of a PDF file, returning a list of strings per page."""
+    # 1. Try pdftotext CLI per page with layout flag
+    try:
+        from pypdf import PdfReader
+        reader = PdfReader(str(pdf_path))
+        num_pages = len(reader.pages)
+        pages_text = []
+        for i in range(1, num_pages + 1):
+            res = subprocess.run(
+                ["pdftotext", "-f", str(i), "-l", str(i), "-layout", str(pdf_path), "-"],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            if res.returncode == 0 and res.stdout.strip():
+                pages_text.append(clean_whitespace(res.stdout.strip()))
+            else:
+                p_raw = reader.pages[i - 1].extract_text() or ""
+                pages_text.append(clean_whitespace(reconstruct_pdf_lines(p_raw)))
+        if pages_text and any(len(p) > 0 for p in pages_text):
+            return pages_text
+    except Exception:
+        pass
+
+    # 2. Pure pypdf fallback
+    try:
+        from pypdf import PdfReader
+        reader = PdfReader(str(pdf_path))
+        pages_text = []
+        for page in reader.pages:
+            raw = page.extract_text() or ""
+            pages_text.append(clean_whitespace(reconstruct_pdf_lines(raw)))
+        return pages_text
+    except Exception:
+        return []
 
 
 def extract_docx_text(docx_path: Path) -> str:
@@ -643,7 +774,157 @@ def load_all_chunks(data_dir: Path = DATA_DIR) -> List[DocumentChunk]:
             )
             chunk_counter += 1
 
-    # 3. Ingest ai_summit_data.pdf
+    # 5. Ingest DAKSHA26.pdf / DASHA26.pdf (Official Drishti 2026 Daksha Management & Entrepreneurship Events Chart)
+    # Per user specifications: Page 1 = Day 1 events (September 18, 2026), Page 2 = Day 2 events (September 19, 2026)
+    daksha_path = data_dir / "DAKSHA26.pdf"
+    if not daksha_path.exists():
+        daksha_path = data_dir / "DASHA26.pdf"
+    if not daksha_path.exists():
+        for p in data_dir.glob("*da*26*.pdf"):
+            if p.is_file():
+                daksha_path = p
+                break
+
+    if daksha_path.exists():
+        pages = extract_pdf_pages(daksha_path)
+        if pages:
+            # Page 1 = Day 1 Events (September 18, 2026)
+            page_1_text = pages[0]
+            all_chunks.append(
+                DocumentChunk(
+                    chunk_id=f"daksha_day1_complete_{chunk_counter}",
+                    text=(
+                        f"[Drishti 2026 Daksha Management Fest — Day 1 Official Events Schedule (September 18, 2026)]\n"
+                        f"Track: Daksha (Drishti 2026 Management & Entrepreneurship Events)\n"
+                        f"Date: September 18, 2026 (Day 1 / Yesterday)\n"
+                        f"Official Schedule & Events Chart (Page 1):\n{page_1_text}\n\n"
+                        f"Day 1 Daksha Events Lineup:\n"
+                        f"• Trading Workshop: 11:00 AM - 02:00 PM at Mech Seminar Hall 2 (POC: Jiya)\n"
+                        f"• Market verse: Full Day at Classroom IE Block\n"
+                        f"• People's Manager: Full Day at Classroom IE Block\n"
+                        f"• Dare and Deliver: Full Day at Classroom IE Block\n"
+                        f"• Corporate Roadies (Coorporate Roadies): Full Day at Classroom IE Block\n"
+                        f"• CR Final and Prize Distribution: 02:00 PM - 05:00 PM at JC Alexander Hall\n"
+                        f"• Alumni Conclave: 10:00 AM - 11:00 AM at CETAA Hall (Resource: TN Krishnakumar - Alumni Entrepreneur, POC: Meenakshi, Moderator: Isabel)\n"
+                        f"• Shark Tank Initial Pitching Session: 01:00 PM - 06:00 PM at EEE 207, 208 (POC: Abhinav Krishna)\n"
+                        f"• Groom Studio: Full Day at Civil Seminar Hall\n"
+                        f"• Startup 101 (Drishti for Juniors): Day 1 Session (POC: Anjana CR)"
+                    ),
+                    metadata={
+                        "source": "DAKSHA26.pdf",
+                        "edition": 2026,
+                        "day": 1,
+                        "date": "2026-09-18",
+                        "track": "Daksha",
+                    },
+                )
+            )
+            chunk_counter += 1
+
+            for ev in DAKSHA_DAY1_EVENTS:
+                ev_text = (
+                    f"Event Name: {ev['name']}\n"
+                    f"Track: Daksha (Drishti 2026 Management & Entrepreneurship Fest)\n"
+                    f"Edition: Drishti 2026\n"
+                    f"Date: September 18, 2026 (Day 1 / Yesterday)\n"
+                    f"Timing: {ev['timing']}\n"
+                    f"Venue: {ev['venue']}\n"
+                )
+                if ev.get("poc"):
+                    ev_text += f"POC / Coordinator: {ev['poc']}\n"
+                if ev.get("moderator"):
+                    ev_text += f"Moderator: {ev['moderator']}\n"
+                if ev.get("resource"):
+                    ev_text += f"Resource Person / Speaker: {ev['resource']}\n"
+                ev_text += f"Details: {ev['details']}"
+
+                all_chunks.append(
+                    DocumentChunk(
+                        chunk_id=f"daksha_day1_ev_{chunk_counter}",
+                        text=ev_text,
+                        metadata={
+                            "source": "DAKSHA26.pdf",
+                            "edition": 2026,
+                            "day": 1,
+                            "date": "2026-09-18",
+                            "track": "Daksha",
+                            "event_name": ev["name"],
+                            "venue": ev["venue"],
+                        },
+                    )
+                )
+                chunk_counter += 1
+
+            # Page 2 = Day 2 Events (September 19, 2026)
+            if len(pages) >= 2 and pages[1].strip():
+                page_2_text = pages[1].strip()
+                all_chunks.append(
+                    DocumentChunk(
+                        chunk_id=f"daksha_day2_complete_{chunk_counter}",
+                        text=(
+                            f"[Drishti 2026 Daksha Management Fest — Day 2 Official Events Schedule (Today, September 19, 2026)]\n"
+                            f"Track: Daksha (Drishti 2026 Management & Entrepreneurship Events)\n"
+                            f"Date: September 19, 2026 (Day 2 / Today)\n"
+                            f"Official Schedule & Events Chart (Page 2):\n{page_2_text}"
+                        ),
+                        metadata={
+                            "source": "DAKSHA26.pdf",
+                            "edition": 2026,
+                            "day": 2,
+                            "date": "2026-09-19",
+                            "track": "Daksha",
+                        },
+                    )
+                )
+                chunk_counter += 1
+
+                for sub_chunk in chunk_document(page_2_text, chunk_size=800, overlap=100):
+                    all_chunks.append(
+                        DocumentChunk(
+                            chunk_id=f"daksha_day2_part_{chunk_counter}",
+                            text=(
+                                f"[Drishti 2026 Daksha Management Fest — Day 2 Official Events (September 19, 2026)]\n"
+                                f"Track: Daksha (Drishti 2026 Management Events)\n"
+                                f"Date: September 19, 2026 (Day 2 / Today)\n{sub_chunk}"
+                            ),
+                            metadata={
+                                "source": "DAKSHA26.pdf",
+                                "edition": 2026,
+                                "day": 2,
+                                "date": "2026-09-19",
+                                "track": "Daksha",
+                            },
+                        )
+                    )
+                    chunk_counter += 1
+            else:
+                # If page 2 has not yet been rendered in the PDF, link Day 2 Daksha events from the Day 2 master schedule
+                all_chunks.append(
+                    DocumentChunk(
+                        chunk_id=f"daksha_day2_overview_{chunk_counter}",
+                        text=(
+                            "[Drishti 2026 Daksha Management Fest — Day 2 Highlights & Schedule (Today, September 19, 2026)]\n"
+                            "Track: Daksha (Drishti 2026 Management & Entrepreneurship Events)\n"
+                            "Date: September 19, 2026 (Day 2 / Today)\n"
+                            "Key Day 2 Management & Daksha Events happening today:\n"
+                            "• Shark Tank - Final Pitching Session: 01:00 PM - 05:00 PM at CGPU Hall. Top selected teams pitch their startups before the grand jury!\n"
+                            "• GROOM STUDIO: 10:00 AM - 12:00 PM at Mech Seminar Hall 1. Professional grooming and presentation studio.\n"
+                            "• Startup 101 - Drishti for Juniors Quiz: 10:00 AM - 12:00 PM at Civil Seminar Hall 2.\n"
+                            "• Stock Market Masterclass: 10:00 AM - 11:30 AM at CS301.\n"
+                            "• Talk Session by Anoop Ambika (CEO, Kerala Startup Mission): 10:00 AM - 11:00 AM at JC Alexander Hall."
+                        ),
+                        metadata={
+                            "source": "DAKSHA26.pdf",
+                            "edition": 2026,
+                            "day": 2,
+                            "date": "2026-09-19",
+                            "track": "Daksha",
+                        },
+                    )
+                )
+                chunk_counter += 1
+
+    # 6. Ingest ai_summit_data.pdf
     ai_summit_path = data_dir / "ai_summit_data.pdf"
     if ai_summit_path.exists():
         text = extract_pdf_text(ai_summit_path)

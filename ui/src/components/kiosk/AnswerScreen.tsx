@@ -5,6 +5,7 @@ import { GoldButton } from "./GoldButton";
 import { KioskScreen } from "./KioskScreen";
 import { MascotPlaceholder } from "./MascotPlaceholder";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 function useTypewriter(text: string = "", speed: number = 4) {
@@ -113,8 +114,9 @@ export function AnswerScreen({
             title={isTyping ? "Click to show full answer immediately" : undefined}
             className="mt-6 max-h-[56vh] cursor-pointer overflow-y-auto pr-3 [scrollbar-width:thin] [scrollbar-color:rgba(213,180,92,0.3)_transparent]"
           >
-            <div className="max-w-2xl font-sans leading-relaxed text-white">
+            <div className="w-full max-w-3xl font-sans leading-relaxed text-white">
               <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
                 components={{
                   h1: ({ children }) => (
                     <h1 className="mb-2 mt-4 text-2xl font-bold text-amber-400">{children}</h1>
@@ -137,6 +139,30 @@ export function AnswerScreen({
                   li: ({ children }) => <li className="text-gray-200">{children}</li>,
                   strong: ({ children }) => (
                     <strong className="font-semibold text-white">{children}</strong>
+                  ),
+                  table: ({ children }) => (
+                    <div className="my-4 w-full overflow-x-auto rounded-lg border border-[#d5b45c]/30 bg-black/40 p-1 shadow-[0_0_20px_-5px_rgba(213,180,92,0.15)] [scrollbar-width:thin] [scrollbar-color:rgba(213,180,92,0.3)_transparent]">
+                      <table className="w-full min-w-full table-auto border-collapse text-left text-sm text-gray-200">
+                        {children}
+                      </table>
+                    </div>
+                  ),
+                  thead: ({ children }) => (
+                    <thead className="border-b border-[#d5b45c]/40 bg-[#d5b45c]/10 text-xs font-semibold uppercase tracking-wider text-amber-300">
+                      {children}
+                    </thead>
+                  ),
+                  tbody: ({ children }) => (
+                    <tbody className="divide-y divide-[#d5b45c]/15">{children}</tbody>
+                  ),
+                  tr: ({ children }) => (
+                    <tr className="transition-colors hover:bg-white/[0.04]">{children}</tr>
+                  ),
+                  th: ({ children }) => (
+                    <th className="px-3.5 py-2.5 font-semibold text-amber-300">{children}</th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="px-3.5 py-2.5 align-top text-gray-200">{children}</td>
                   ),
                 }}
               >

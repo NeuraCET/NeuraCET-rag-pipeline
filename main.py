@@ -130,17 +130,66 @@ def ensure_ollama() -> subprocess.Popen | None:
     return ollama_proc
 
 
+REQUIRED_PYTHON_PACKAGES = [
+    ("fastapi", "fastapi"),
+    ("uvicorn", "uvicorn"),
+    ("requests", "requests"),
+    ("numpy", "numpy"),
+    ("pypdf", "pypdf"),
+    ("rank_bm25", "rank-bm25"),
+    ("sentence_transformers", "sentence-transformers"),
+    ("docx", "python-docx"),
+]
+
+
+def get_backend_python() -> str:
+    """Return the path to the Python executable used for running the backend."""
+    if sys.platform == "win32":
+        venv_py = ROOT_DIR / ".venv" / "Scripts" / "python.exe"
+    else:
+        venv_py = ROOT_DIR / ".venv" / "bin" / "python"
+    return str(venv_py) if venv_py.exists() else sys.executable
+
+
+def ensure_python_deps():
+    """Verify and automatically install any missing Python dependencies."""
+    py_bin = get_backend_python()
+    log("Dependencies", CYAN, f"Verifying Python dependencies using {py_bin}...")
+
+    missing_packages = []
+    for module_name, pip_name in REQUIRED_PYTHON_PACKAGES:
+        res = subprocess.call(
+            [py_bin, "-c", f"import {module_name}"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        if res != 0:
+            missing_packages.append(pip_name)
+
+    if missing_packages:
+        log("Dependencies", YELLOW, f"Missing Python libraries detected: {', '.join(missing_packages)}")
+        log("Dependencies", YELLOW, "Installing missing libraries automatically...")
+        req_file = ROOT_DIR / "requirements.txt"
+        if req_file.exists():
+            cmd = [py_bin, "-m", "pip", "install", "-r", str(req_file)]
+        else:
+            cmd = [py_bin, "-m", "pip", "install"] + missing_packages
+        code = subprocess.call(cmd)
+        if code != 0:
+            log("Dependencies", RED, "Failed to install dependencies automatically. Please run 'pip install -r requirements.txt' manually.")
+            sys.exit(1)
+        log("Dependencies", GREEN, "All required Python libraries installed successfully.")
+    else:
+        log("Dependencies", GREEN, "All required Python libraries are present.")
+
+
 def start_backend() -> subprocess.Popen:
     """Start the FastAPI backend with uvicorn."""
     log("Backend", GREEN, f"Starting FastAPI backend on port {BACKEND_PORT}...")
     
     # Run uvicorn with reload scoped to src/ directory and unbuffered stdout
     src_dir = str(ROOT_DIR / "src")
-    if sys.platform == "win32":
-        venv_py = ROOT_DIR / ".venv" / "Scripts" / "python.exe"
-    else:
-        venv_py = ROOT_DIR / ".venv" / "bin" / "python"
-    base_py = str(venv_py) if venv_py.exists() else sys.executable
+    base_py = get_backend_python()
     cmd = [
         base_py,
         "-m",
@@ -198,13 +247,17 @@ def start_frontend() -> subprocess.Popen:
     npm_bin = shutil.which("npm.cmd") if sys.platform == "win32" else shutil.which("npm")
     npm_cmd = npm_bin or ("npm.cmd" if sys.platform == "win32" else "npm")
 
-    # Ensure node_modules exists
-    if not (UI_DIR / "node_modules").exists():
-        log("Frontend", YELLOW, "node_modules missing in ui/. Running 'npm install'...")
+    # Ensure node_modules exists and required packages are installed
+    node_modules = UI_DIR / "node_modules"
+    if not node_modules.exists() or not (node_modules / "remark-gfm").exists():
+        log("Frontend", YELLOW, "node_modules or newly added packages missing in ui/. Running 'npm install'...")
         npm_code = subprocess.call([npm_cmd, "install"], cwd=str(UI_DIR), shell=(sys.platform == "win32"))
         if npm_code != 0:
             log("Frontend", RED, "npm install failed.")
             sys.exit(1)
+        log("Frontend", GREEN, "Frontend dependencies installed successfully.")
+    else:
+        log("Frontend", GREEN, "Frontend dependencies verified.")
 
     cmd = [npm_cmd, "run", "dev", "--", "--host", "--port", str(FRONTEND_PORT)]
     proc = subprocess.Popen(
@@ -282,6 +335,7 @@ def main():
     print(f"{BOLD}      Drishti 2026 RAG Assistant — Full Stack       {RESET}")
     print(f"{BOLD}===================================================={RESET}\n")
 
+    ensure_python_deps()
     ensure_ollama()
     start_backend()
     start_frontend()

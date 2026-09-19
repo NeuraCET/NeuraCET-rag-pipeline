@@ -39,7 +39,9 @@ CORE GUIDELINES:
    - Greet them with festive energy, introduce yourself as the Drishti AI guide, and enthusiastically invite them to ask about Drishti 2026 events, workshops, hackathons, and competitions happening today (Day 2) and throughout the fest!
 2. FESTIVAL QUESTIONS:
    - Provide complete, accurate details based on the provided Context (Event Name, Dates, Venue, Fees, Requirements, Coordinators with phone numbers).
-   - Use clean Markdown formatting with bullet points. Be direct, cheerful, and crisp.
+   - Format:
+     * By default, use clean Markdown formatting with bullet points. Be direct, cheerful, and crisp.
+     * When the user asks for a table, schedule table, tabular format, or asks to "render as table" / "show in table", format the requested events and information in a clean, complete Markdown table with clear column headers (such as | Event Name | Time / Date | Venue | Details |).
    - For past festival editions (2024 or 2022), share the facts happily and mention that they occurred during previous editions of Drishti.
 3. OFF-TOPIC & UNRELATED QUESTIONS:
    - If the user asks about topics completely unrelated to Drishti Fest (general trivia, celebrities, programming tutorials, world history, etc.), respond cheerfully and playfully in your festival persona!
@@ -52,6 +54,25 @@ CORE GUIDELINES:
      * **Shaan Rahman Live in Concert (Proshow)**: Happening **today, September 19, 2026 (Day 2)** from **6:00 PM to 9:00 PM** at the **College Ground**, starring universal music director & singer Shaan Rahman (Shan Rahman) performing live with Sachin Warrier, Anila Rajeev, Niranj Suresh, Bharath Sajikumar, and Punya Pradeep!
      * **Dhvani Bhanushali Live in Concert (Proshow)**: Happening **tomorrow, September 20, 2026 (Day 3 Grand Finale)** at **CET / College Ground**, starring pop sensation & playback singer Dhvani Bhanushali for an electrifying night of live singing, dancing, and music!
    - If the user asks specifically about dance workshops or day sessions, also highlight the **Dance Workshop** (Day 2, 9:00 AM – 12:00 PM at Electrical Canteen)!
+6. DAKSHA MANAGEMENT & ENTREPRENEURSHIP TRACK (DAKSHA26):
+   - Daksha is the dedicated management, business, and entrepreneurship track of Drishti 2026.
+   - Day 1 (September 18, 2026 - Yesterday / Page 1 of DAKSHA26):
+     * **Trading Workshop**: 11:00 AM - 02:00 PM at Mech Seminar Hall 2 (POC: Jiya)
+     * **Market verse**: Full Day at Classroom IE Block
+     * **People's Manager**: Full Day at Classroom IE Block
+     * **Dare and deliver**: Full Day at Classroom IE Block
+     * **Corporate Roadies (Coorporate Roadies)**: Full Day at Classroom IE Block
+     * **CR Final and prize distribution**: 02:00 PM - 05:00 PM at JC Alexander Hall
+     * **Alumni Conclave**: 10:00 AM - 11:00 AM at CETAA Hall (Resource Person: TN Krishnakumar - Alumni Entrepreneur, POC: Meenakshi, Moderator: Isabel)
+     * **Shark Tank Initial Pitching Session**: 01:00 PM - 06:00 PM at EEE 207, 208 (POC: Abhinav Krishna)
+     * **Groom Studio**: Full Day at Civil Seminar Hall
+     * **Startup 101 (Drishti for Juniors)**: Day 1 Session (POC: Anjana CR)
+   - Day 2 (September 19, 2026 - Today / Page 2 of DAKSHA26):
+     * **Shark Tank - Final Pitching Session**: 01:00 PM - 05:00 PM at CGPU Hall (Top finalist startups pitch before the jury!)
+     * **GROOM STUDIO**: 10:00 AM - 12:00 PM at Mech Seminar Hall 1
+     * **Startup 101 - Drishti for Juniors Quiz**: 10:00 AM - 12:00 PM at Civil Seminar Hall 2
+     * **Stock Market Masterclass**: 10:00 AM - 11:30 AM at CS301
+     * **Talk Session by Anoop Ambika (CEO, Kerala Startup Mission)**: 10:00 AM - 11:00 AM at JC Alexander Hall
 """
 
 
@@ -91,7 +112,8 @@ def detect_target_editions(query: str) -> List[int]:
     asks_2026 = any(k in lower for k in [
         "2026", "'26", "drishti 26", "drishti'26", "this year", "upcoming",
         "today", "yesterday", "tomorrow", "day 1", "day 2", "day 3",
-        "proshow", "proshows", "pro show", "pro-show", "dhvani", "shaan", "shan rahman", "dance", "singing"
+        "proshow", "proshows", "pro show", "pro-show", "dhvani", "shaan", "shan rahman", "dance", "singing",
+        "daksha", "dasha", "trading workshop", "corporate roadies", "alumni conclave", "shark tank"
     ])
 
     if (asks_2024 or asks_2022 or asks_past) and asks_2026:
@@ -229,6 +251,15 @@ class RAGEngine:
                 elif "dance" in lower_q and "dance workshop" in c_name:
                     final_scores[i] += 0.40
 
+        # Boost Daksha / Management events queries
+        if any(term in lower_q for term in ["daksha", "dasha", "trading workshop", "corporate roadies", "coorporate roadies", "alumni conclave", "market verse", "people's manager", "dare and deliver", "groom studio"]):
+            for i, c in enumerate(self.chunks):
+                txt_lower = c.text.lower()
+                c_track = str(c.metadata.get("track", "")).lower()
+                c_source = str(c.metadata.get("source", "")).lower()
+                if "daksha" in txt_lower or "daksha" in c_track or "daksha" in c_source:
+                    final_scores[i] += 0.40
+
         # Smart edition filtering
         target_editions = detect_target_editions(query)
         candidate_indices = [
@@ -272,6 +303,8 @@ class RAGEngine:
                 if ev_name:
                     poster_url = registry.get_poster_for_query(ev_name)
 
+        is_table_query = any(w in question.lower() for w in ["table", "tabular", "as table", "in table", "spreadsheet"])
+
         if has_context:
             context_texts = []
             for i, (chunk, score) in enumerate(top_results):
@@ -279,10 +312,16 @@ class RAGEngine:
                 edition = chunk.metadata.get("edition", "2026")
                 context_texts.append(f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}")
             full_context = "\n\n".join(context_texts)
-            user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. Use clear Markdown bullet points. If details are not found in the records, cheerfully state so:"
+            if is_table_query:
+                user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. Format the requested information as a clean Markdown table with clear column headers (such as Event Name, Time / Date, Venue, Key Details). If details are not found in the records, cheerfully state so:"
+            else:
+                user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. Use clear Markdown bullet points. If details are not found in the records, cheerfully state so:"
         else:
             full_context = "(No specific festival records matched this casual message or general question.)"
-            user_instruction = "Provide a cheerful, natural, and helpful response according to your guidelines (greet warmly if greeted, or cheerfully guide the user to Drishti 2026 events):"
+            if is_table_query:
+                user_instruction = "Provide a cheerful, natural, and helpful response. If presenting festival information as requested in a table, format it cleanly as a Markdown table according to your guidelines:"
+            else:
+                user_instruction = "Provide a cheerful, natural, and helpful response according to your guidelines (greet warmly if greeted, or cheerfully guide the user to Drishti 2026 events):"
 
         # 3. Generate response via Ollama with think: False and no token cutoff
         try:
@@ -354,6 +393,8 @@ class RAGEngine:
         # Check if query retrieved relevant festival context
         has_context = (raw_max_bm > 0.0 or raw_max_dense >= 0.32)
 
+        is_table_query = any(w in question.lower() for w in ["table", "tabular", "as table", "in table", "spreadsheet"])
+
         if has_context:
             context_texts = []
             for i, (chunk, score) in enumerate(top_results):
@@ -361,10 +402,16 @@ class RAGEngine:
                 edition = chunk.metadata.get("edition", "2026")
                 context_texts.append(f"--- Document {i+1} [{source} | Edition {edition}] ---\n{chunk.text}")
             full_context = "\n\n".join(context_texts)
-            user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. Use clear Markdown bullet points. If details are not found in the records, cheerfully state so:"
+            if is_table_query:
+                user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. Format the requested information as a clean Markdown table with clear column headers (such as Event Name, Time / Date, Venue, Key Details). If details are not found in the records, cheerfully state so:"
+            else:
+                user_instruction = "Provide a cheerful, happy, and complete answer based on the Context above. Use clear Markdown bullet points. If details are not found in the records, cheerfully state so:"
         else:
             full_context = "(No specific festival records matched this casual message or general question.)"
-            user_instruction = "Provide a cheerful, natural, and helpful response according to your guidelines (greet warmly if greeted, or cheerfully guide the user to Drishti 2026 events):"
+            if is_table_query:
+                user_instruction = "Provide a cheerful, natural, and helpful response. If presenting festival information as requested in a table, format it cleanly as a Markdown table according to your guidelines:"
+            else:
+                user_instruction = "Provide a cheerful, natural, and helpful response according to your guidelines (greet warmly if greeted, or cheerfully guide the user to Drishti 2026 events):"
 
         # 3. Stream response via Ollama
         try:
